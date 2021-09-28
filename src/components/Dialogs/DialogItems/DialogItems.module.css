@@ -1,0 +1,18 @@
+.dialog {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    
+}
+.active{
+    color: rgb(233, 247, 236);
+}
+
+.dialog {
+    
+}
+
+
+
+.name {
+    padding-top: 20px;
+}

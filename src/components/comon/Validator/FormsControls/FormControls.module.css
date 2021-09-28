@@ -1,0 +1,19 @@
+.formControlErrors textarea {
+    border: solid red 2px ;
+}
+.formControlErrors input {
+    border: solid red 1px ;
+}
+.formError span {
+    padding-left: 10px;
+    color: rgb(64, 26, 204)
+}
+.formError div {
+    color: red
+}
+.classs  textarea{
+   
+}
+.inputPosishn {
+    display: flex;
+}
