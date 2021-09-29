@@ -1,16 +1,12 @@
-import './index.css';
 import reportWebVitals from './reportWebVitals';
 import store from './Redux/redux-store';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {BrowserRouter, HashRouter} from 'react-router-dom';
+import { HashRouter} from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-
-
- let rerenderEntireTree =()=> {
  
   ReactDOM.render(
     <React.StrictMode>
@@ -21,12 +17,6 @@ import { Provider } from 'react-redux';
       </HashRouter>
     </React.StrictMode>,
     document.getElementById('root'));
-}
-
-rerenderEntireTree(store.getState())
-
-
-
 
 
 // If you want to start measuring performance in your app, pass a function

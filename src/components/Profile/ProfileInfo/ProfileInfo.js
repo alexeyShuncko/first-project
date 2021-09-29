@@ -30,7 +30,7 @@ if (e.target.files.length)
                     status={props.status}
                     getUpdateStatus={props.getUpdateStatus} />
 
-                <div>Статус: {props.profile.aboutMe}</div>
+                <div> {props.profile.aboutMe}</div>
                 <div>{props.profile.lookingForAJobDescription}</div>
             </div>
         </div>)
