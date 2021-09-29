@@ -6,7 +6,7 @@ import Paginator from '../comon/paginator/paginator'
 
 
 
-let Users = (props) => {
+const Users = (props) => {
 
     return <div>
 
