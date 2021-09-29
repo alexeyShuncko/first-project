@@ -1,10 +1,10 @@
-import * as axios from "axios";
+import  axios from "axios";
 
 const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
-        'API-KEY': 'a6a524fb-3962-4d79-af1b-094242aa201a'
+        'API-KEY': 'ace81436-452c-44b0-8ef0-b50f3ecf6351'
     }
 })
 
@@ -50,6 +50,20 @@ export const getLogout = () => {
     return instance.delete(`/auth/login`)
     .then(response => response.data)
 }
+
+export const savePhotoProfile = (photoFile) => {
+    const formData = new FormData()
+    formData.append('image', photoFile)
+    return instance.put(`profile/photo`, formData, 
+    {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }
+    )
+        .then(response => response.data)
+}
+
 
 
 
