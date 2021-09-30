@@ -21,13 +21,16 @@ const onStatusChange =(e)=> {
     setStatus(e.currentTarget.value)
 }
 
-    
-        return (<div>
+
+        return (
+        
+        <div>
+            <b>Status</b>:
             {!editMode &&
-                <div>
-                    <span
+                <div> 
+                    <span 
                         onDoubleClick={activateEditMode} >
-                        {props.status || "Status"}</span>
+                             {props.status || "Status"}</span>
                 </div>}
             {editMode &&
                 <div>

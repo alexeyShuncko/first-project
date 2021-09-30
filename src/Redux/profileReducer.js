@@ -1,11 +1,12 @@
 
-import { getProfile, getStatus, savePhotoProfile, updateStatus } from './../API/api';
+import { getProfile, getStatus, savePhotoProfile, updateProfile, updateStatus } from './../API/api';
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const SET_UPDATE_STATUS = 'SET_UPDATE_STATUS'
 const DELETE_POST = 'DELETE_POST'
 const SET_SAVE_PHOTO = 'SET_SAVE_PHOTO'
+const SET_UPDATE_PROFILE = 'SET_UPDATE_PROFILE'
 
 let initialState = {
     posts: [
@@ -56,7 +57,11 @@ const profileReduser = (state = initialState, action) => {
             return {
                 ...state, profile: { ...state.profile, photos: action.photos }
             }
-
+            case SET_UPDATE_PROFILE:
+                return {
+                    ...state, profile: { ...state.profile}
+                }
+            
         default:
             return state
     }
@@ -82,6 +87,9 @@ export const setUpdateStatus = (status) => {
 }
 export const setSavePhoto = (photos) => {
     return { type: SET_SAVE_PHOTO, photos }
+}
+export const setUpdateProfile = (profile) => {
+    return { type: SET_UPDATE_PROFILE, profile }
 }
 
 
@@ -110,6 +118,12 @@ export const savePhoto = (file) => (dispatch) => {
             if (data.resultCode === 0)
                 dispatch(setSavePhoto(data.data.photos))
         })
+}
+
+export const getUpdateProfile = (profile) => (dispatch) => {
+    updateProfile(profile).then(data => {
+         if (data.resultCode === 0) { dispatch(setUserProfile(profile)) }
+    })
 }
 
 

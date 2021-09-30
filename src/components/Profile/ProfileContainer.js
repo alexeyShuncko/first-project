@@ -4,7 +4,7 @@ import Profile from './Profile';
 import { getProfileThunk } from '../../Redux/profileReducer'
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { getUpdateStatus, getStatusThunk, savePhoto } from './../../Redux/profileReducer';
+import { getUpdateStatus, getStatusThunk, savePhoto, getUpdateProfile } from './../../Redux/profileReducer';
 
 
 
@@ -36,10 +36,12 @@ refreshProfile () {
        
         return (
             <Profile {...this.props}
+                isOwner= {!this.props.match.params.userid}
                 profile={this.props.profile}
                 status={this.props.status}
                 getUpdateStatus={this.props.getUpdateStatus}
                 savePhoto={this.props.savePhoto}
+                getUpdateProfile={this.props.getUpdateProfile}
             />
         )
     }
@@ -56,6 +58,6 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps,{ getProfileThunk, getStatusThunk, getUpdateStatus, savePhoto }),
+    connect(mapStateToProps,{ getProfileThunk, getStatusThunk, getUpdateStatus, savePhoto, getUpdateProfile }),
     withRouter
 )(ProfileContainer)
