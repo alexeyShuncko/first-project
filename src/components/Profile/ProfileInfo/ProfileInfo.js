@@ -31,47 +31,51 @@ const ProfileInfo = (props) => {
             <div className={s.cat}>
                 <img alt='' src=
                     {props.profile.photos.large || userPhoto}></img>
-                    {props.isOwner && <input type={'file'} onChange={onMainPhotoUpdate} />}
-               
+                {props.isOwner && <input type={'file'} onChange={onMainPhotoUpdate} />}
+
 
                 <ProfileStatusWithHook
                     status={props.status}
-                    getUpdateStatus={props.getUpdateStatus} 
-                    isOwner={props.isOwner}/>
+                    getUpdateStatus={props.getUpdateStatus}
+                    isOwner={props.isOwner} />
                 <br></br>
                 {editMode
-                    ? <ProfileDataForm 
-                    deactivateEditMode={deactivateEditMode} 
-                    profile={props.profile}
-                    getUpdateProfile={props.getUpdateProfile}/>
-                    : <ProfileData 
-                    profile={props.profile} 
-                    activateEditMode={activateEditMode} 
-                    isOwner={props.isOwner}/>
+                    ? <ProfileDataForm
+                        deactivateEditMode={deactivateEditMode}
+                        profile={props.profile}
+                        getUpdateProfile={props.getUpdateProfile}
+                        error={props.error}
+                        userId={props.userId} />
+                    : <ProfileData
+                        profile={props.profile}
+                        activateEditMode={activateEditMode}
+                        isOwner={props.isOwner} />
                 }
             </div>
         </div>)
 }
 const Contacts = ({ contactTitle, contactValue }) => {
-    return <div className={s.contacts}>
-        <b>{contactTitle}</b>: {contactValue}
-    </div>
+    if (contactValue) {
+        return <div className={s.contacts}>
+            <b>{contactTitle}</b>: {contactValue}
+        </div>
+    }
+    return null
 }
 
 
 const ProfileData = (props) => {
     return <div>
         {props.isOwner &&
-        <div><button onClick={props.activateEditMode}>Редактировать</button></div>}
+            <div><button onClick={props.activateEditMode}>Редактировать</button></div>}
         <div><b>FullName</b>: {props.profile.fullName}</div>
         <div><b>AboutMe</b>: {props.profile.aboutMe}</div>
         <div> <b>LookingForAJob</b>: {props.profile.lookingForAJob ? 'ДА' : 'Нет'}</div>
         {props.profile.lookingForAJob &&
             <div><b>LookingForAJobDescription</b>: {props.profile.lookingForAJobDescription}</div>}
-{props.profile.contacts && // продумать отображение
         <div><b>Contacts</b>: {Object.keys(props.profile.contacts).map(key => {
             return <Contacts key={key} contactTitle={key} contactValue={props.profile.contacts[key]} />
-         })} </div>}
+        })} </div>
     </div>
 }
 

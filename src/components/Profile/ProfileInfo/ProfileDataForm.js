@@ -2,11 +2,13 @@ import React from "react"
 import { Field, Form } from "react-final-form"
 import  s from './ProfileInfo.module.css';
 
+
 const ProfileDataForm = (props) => {
 
-const onSubmit=(values)=> {
-    props.deactivateEditMode()
-    props.getUpdateProfile(values)
+
+const onSubmit = (values, userId) => {
+         props.getUpdateProfile(values,userId)
+            //props.deactivateEditMode() 
 }
 
     return <div>
@@ -37,6 +39,10 @@ const onSubmit=(values)=> {
                             <label>LookingForAJobDescription : </label>
                             <Field name="lookingForAJobDescription" placeholder="" component="input" type="text" />
                         </div>
+
+                        <div><b>Contacts</b>: {Object.keys(props.profile.contacts).map(key => {
+            return <div key={key}><b>{key} : <Field  name = {'contacts.' + key} placeholder="" component="input" type="text" /> </b></div>
+        })} </div>
 
                         <button type="submit" 
                         //disabled={submitting || pristine} сделать видимой невидимой

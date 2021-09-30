@@ -42,6 +42,8 @@ refreshProfile () {
                 getUpdateStatus={this.props.getUpdateStatus}
                 savePhoto={this.props.savePhoto}
                 getUpdateProfile={this.props.getUpdateProfile}
+                error={this.props.error}
+                userId= {this.props.userId}
             />
         )
     }
@@ -53,7 +55,9 @@ let mapStateToProps = (state) => {
         userIdAutorize: state.auth.id,
         profile: state.profileData.profile,
         status: state.profileData.status,
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        error: state.profileData.error,
+        userId: state.auth.id
     }
 }
 

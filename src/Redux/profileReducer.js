@@ -7,6 +7,7 @@ const SET_UPDATE_STATUS = 'SET_UPDATE_STATUS'
 const DELETE_POST = 'DELETE_POST'
 const SET_SAVE_PHOTO = 'SET_SAVE_PHOTO'
 const SET_UPDATE_PROFILE = 'SET_UPDATE_PROFILE'
+const SET_ERROR = 'SET_ERROR'
 
 let initialState = {
     posts: [
@@ -15,7 +16,8 @@ let initialState = {
         { id: 3, like: 25, message: "It's my first post" }
     ],
     profile: null,
-    status: ''
+    status: '',
+    error: ''
 }
 
 const profileReduser = (state = initialState, action) => {
@@ -26,26 +28,20 @@ const profileReduser = (state = initialState, action) => {
         case ADD_POST:
             return {
                 ...state,
-                posts: [...state.posts, { id: state.posts.length + 1, like: 1, message: action.values }],
-
+                posts: [...state.posts, { id: state.posts.length + 1, like: 1, message: action.values }]
             }
-
         case DELETE_POST:
             return {
                 ...state,
                 posts: [...state.posts.filter(p => p.id !== action.postId)]
 
             }
-
-
         case SET_USER_PROFILE:
-
             return {
                 ...state,
                 profile: action.profile
             }
         case SET_STATUS:
-
             return {
                 ...state, status: action.status
             }
@@ -61,6 +57,10 @@ const profileReduser = (state = initialState, action) => {
                 return {
                     ...state, profile: { ...state.profile}
                 }
+                case SET_ERROR:
+            return {
+                ...state, error: action.error
+            }
             
         default:
             return state
@@ -90,6 +90,9 @@ export const setSavePhoto = (photos) => {
 }
 export const setUpdateProfile = (profile) => {
     return { type: SET_UPDATE_PROFILE, profile }
+}
+export const setError = (error) => {
+    return { type: SET_ERROR, error }
 }
 
 
@@ -123,6 +126,10 @@ export const savePhoto = (file) => (dispatch) => {
 export const getUpdateProfile = (profile) => (dispatch) => {
     updateProfile(profile).then(data => {
          if (data.resultCode === 0) { dispatch(setUserProfile(profile)) }
+         else {
+             dispatch(setError(data.messages[0]))
+             alert(data.messages[0])
+        }
     })
 }
 

@@ -65,13 +65,7 @@ export const savePhotoProfile = async (photoFile) => {
 }
 
 export const updateProfile = async (profile) => {
-    const response = await instance.put(`profile`, { 
-      LookingForAJobDescription: profile.lookingForAJobDescription,
-      LookingForAJob: profile.lookingForAJob,
-        FullName: profile.fullName,
-        AboutMe: profile.aboutMe,
-
-         });
+    const response = await instance.put(`profile`, profile);
     return response.data;
 }
 
