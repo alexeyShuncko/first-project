@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import{ Route, withRouter } from 'react-router-dom';
+import{ Route, withRouter, Switch } from 'react-router-dom';
 import './App.css';
 
 import Header from './components/Header/HeaderContainer';
@@ -43,7 +43,7 @@ class App extends Component {
         
 
         <div className='app-wrapper-content'>
-
+<Switch>
           <Route path='/dialogs' 
           render={ withSuspense(DialogsContainer)} />
           <Route path='/profile/:userid?' 
@@ -56,6 +56,9 @@ class App extends Component {
           <Route path='/news' render={() => <News />} />
           <Route path='/music' component={Music} />
           <Route path='/settings' component={Settings} />
+          <Route path='*' 
+          render={ () => <div>404 not found</div> } />
+</Switch>
         </div>
       </div>
     
