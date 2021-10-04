@@ -38,11 +38,12 @@ export const updateStatus = async (status) => {
     const response = await instance.put(`profile/status`, { status: status });
     return response.data;
 }
-export const getLogin = async (email,password,rememberMe) => {
+export const getLogin = async (email,password,rememberMe,captcha) => {
     const response = await instance.post(`/auth/login`, {
         email: email,
         password: password,
-        rememberMe: rememberMe
+        rememberMe: rememberMe,
+        captcha: captcha
     });
     return response.data;
 }
@@ -66,6 +67,10 @@ export const savePhotoProfile = async (photoFile) => {
 
 export const updateProfile = async (profile) => {
     const response = await instance.put(`profile`, profile);
+    return response.data;
+}
+export const getCaptchaURL = async () => {
+    const response = await instance.get(`security/get-captcha-url`);
     return response.data;
 }
 

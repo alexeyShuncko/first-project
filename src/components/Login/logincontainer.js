@@ -4,27 +4,44 @@ import { connect } from 'react-redux';
 import Login from './login';
 
 
-class LoginContainer extends React.Component {
 
-    componentDidMount() {
-     
-    }
-    render() {
-        return <Login 
-        getLoginThunk={this.props.getLoginThunk}
-        isAuth={this.props.isAuth}
-        />
-    }
-    
-}
+// class LoginContainer extends React.Component {
+//     componentDidMount() {
+
+//     }
+//     componentDidUpdate(prevProps) {
+//         if (this.props.captchaUrl !== prevProps.captchaUrl) {
+//             this.render()
+//         }
+//     }
+//     render() {
+//         return (
+//             <Login
+//                 getLoginThunk={this.props.getLoginThunk}
+//                 isAuth={this.props.isAuth}
+//                 captchaUrl={this.props.captchaUrl}
+//             />)
+//     }
+// }
+
+ const LoginContainer = (props) => {
+    return <div>
+         <Login
+             getLoginThunk={props.getLoginThunk}
+             isAuth={props.isAuth}
+             captchaUrl={props.captchaUrl}
+         />
+     </div>
+ }
 
 const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login,
     email: state.auth.email,
     password: state.auth.password,
-    getLoginThunk: getLoginThunk
+    getLoginThunk: getLoginThunk,
+    captchaUrl: state.auth.captchaUrl
 })
 
 
-export default connect(mapStateToProps, { getLoginThunk})(LoginContainer);
+export default connect(mapStateToProps, { getLoginThunk })(LoginContainer);

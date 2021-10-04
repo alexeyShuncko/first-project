@@ -1,7 +1,9 @@
-import { getAuth, getLogin, getLogout } from "../API/api"
+import { getAuth, getCaptchaURL, getLogin, getLogout } from "../API/api"
 const SET_USER_DATA = 'SET_USER_DATA'
 const SET_LOGIN = 'SET_LOGIN'
 const SET_LOGOUT = 'SET_LOGOUT'
+const SET_CAPTCHA = 'SET_CAPTCHA'
+
 
 let initialState = {
     id: null,
@@ -10,7 +12,8 @@ let initialState = {
     //isFetching: true
     isAuth: false,
     password: null,
-    rememberMe: false
+    rememberMe: false,
+    captchaUrl: null
 }
 
 const authReduser = (state = initialState, action) => {
@@ -35,7 +38,8 @@ const authReduser = (state = initialState, action) => {
                 ...state,
                 email: action.email,
                 password: action.password,
-                rememberMe: action.rememberMe
+                rememberMe: action.rememberMe,
+                captchaUrl: null
             }
 
         case SET_LOGOUT:
@@ -43,6 +47,11 @@ const authReduser = (state = initialState, action) => {
                 ...state, ...action.data,
                 isAuth: false
             }
+            case SET_CAPTCHA:
+                return {
+                    ...state, 
+                    captchaUrl: action.captcha
+                }
 
         default:
             return state
@@ -60,7 +69,9 @@ export const setLogout = (data) => { // экшенкриэйтор
     return { type: SET_LOGOUT, data }
 }
 
-
+export const setCaptchaUrl = (captcha) => { // экшенкриэйтор
+    return { type: SET_CAPTCHA, captcha }
+}
 
 export const getAuthThunk = () => (dispatch) => { // санкриэйтор
     return getAuth().then(data => {
@@ -82,14 +93,24 @@ export const getLoginThunk = (email, password, rememberMe,captcha) => (dispatch)
         else if (data.messages[0]==="Incorrect Email or Password") {
         alert('Неправильный пароль')
         }
+        if (data.resultCode === 10) {
+            dispatch(thunkCaptchaUrl())
+        }
     })
 }
+
+export const thunkCaptchaUrl = () => (dispatch) => {
+    getCaptchaURL().then(data => {
+            dispatch(setCaptchaUrl(data.url))
+        }
+    )
+}
+
 export const getLogoutThunk = () => (dispatch) => {
     getLogout().then(data => {
         if (data.resultCode === 0) {
             dispatch(setLogout(data.data))
         }
-
     })
 }
 
