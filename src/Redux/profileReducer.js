@@ -59,7 +59,10 @@ const profileReduser = (state = initialState, action) => {
                 }
                 case SET_ERROR:
             return {
-                ...state, error: action.error
+                ...state, error: action.error.split('')
+                .slice(0,-1)
+                .join('')
+                .slice(30)
             }
             
         default:
@@ -123,12 +126,15 @@ export const savePhoto = (file) => (dispatch) => {
         })
 }
 
-export const getUpdateProfile = (profile) => (dispatch) => {
+export const getUpdateProfile = (profile,userId) => (dispatch) => {
     updateProfile(profile).then(data => {
-         if (data.resultCode === 0) { dispatch(setUserProfile(profile)) }
+         if (data.resultCode === 0) { 
+             dispatch(getProfileThunk(userId))
+             dispatch(setError(''))
+            }
          else {
              dispatch(setError(data.messages[0]))
-             alert(data.messages[0])
+            
         }
     })
 }

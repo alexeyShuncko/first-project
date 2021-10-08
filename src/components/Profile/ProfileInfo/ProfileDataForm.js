@@ -5,13 +5,17 @@ import  s from './ProfileInfo.module.css';
 
 const ProfileDataForm = (props) => {
 
-
-const onSubmit = (values, userId) => {
+const userId = props.userId
+const onSubmit = (values) => {
          props.getUpdateProfile(values,userId)
-            //props.deactivateEditMode() 
+        //  setTimeout (()=> {
+        //     props.deactivateEditMode() 
+        // },2000)
 }
 
+
     return <div>
+       
        
         <div>
             <Form
@@ -43,18 +47,19 @@ const onSubmit = (values, userId) => {
                         <div><b>Contacts</b>: {Object.keys(props.profile.contacts).map(key => {
             return <div key={key}><b>{key} : <Field  name = {'contacts.' + key} placeholder="" component="input" type="text" /> </b></div>
         })} </div>
-
+<div className={s.button}>
                         <button type="submit" 
                         //disabled={submitting || pristine} сделать видимой невидимой
                         >
-                            Добавить
+                            Изменить
                         </button>
                         <button type="button" 
                         onClick={props.deactivateEditMode}
                         >
                             Назад
                         </button>
-
+                        {props.error && <span className={s.error}>Некоректные данные в поле: <b>{props.error}</b></span>}
+</div>
                     </form>
                 )}
             />

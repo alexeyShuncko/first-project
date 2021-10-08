@@ -13,3 +13,13 @@
 .contacts {
     padding-left: 20px;
 }
+.error {
+ color: red;
+ border: solid;
+ margin-left: 20px;
+ border-radius: 10px;
+ padding: 5px;
+}
+.button {
+    margin-top: 10px;
+}
