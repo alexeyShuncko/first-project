@@ -23,3 +23,7 @@
 .button {
     margin-top: 10px;
 }
+
+.field {
+   border: solid red; 
+}

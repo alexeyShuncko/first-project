@@ -17,7 +17,7 @@ let initialState = {
     ],
     profile: null,
     status: '',
-    error: ''
+    error: []
 }
 
 const profileReduser = (state = initialState, action) => {
@@ -59,10 +59,11 @@ const profileReduser = (state = initialState, action) => {
                 }
                 case SET_ERROR:
             return {
-                ...state, error: action.error.split('')
+                ...state, error: action.error.map( e => e.split('')
                 .slice(0,-1)
                 .join('')
-                .slice(30)
+                .toLowerCase()
+                .slice(30))
             }
             
         default:
@@ -130,10 +131,10 @@ export const getUpdateProfile = (profile,userId) => (dispatch) => {
     updateProfile(profile).then(data => {
          if (data.resultCode === 0) { 
              dispatch(getProfileThunk(userId))
-             dispatch(setError(''))
+             dispatch(setError([]))
             }
          else {
-             dispatch(setError(data.messages[0]))
+             dispatch(setError(data.messages))
             
         }
     })

@@ -16,6 +16,7 @@ const Profile = (props) => {
             getUpdateProfile={props.getUpdateProfile}
             error={props.error}
             userId={props.userId}
+            setError= {props.setError}
              />
             <MyPostsContainer /> 
         </div>

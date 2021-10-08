@@ -45,7 +45,8 @@ const ProfileInfo = (props) => {
                         profile={props.profile}
                         getUpdateProfile={props.getUpdateProfile}
                         error={props.error}
-                        userId={props.userId} />
+                        userId={props.userId}
+                        setError= {props.setError} />
                     : <ProfileData
                         profile={props.profile}
                         activateEditMode={activateEditMode}
