@@ -69,7 +69,7 @@ const ProfileDataForm = (props) => {
                             >
                                 Назад
                             </button>
-                            {props.error.length !== 0  && <span className={s.error}>Некорректные данные в поле: <b>{props.error.join(',')}</b></span>}
+                            {props.error.length !== 0  && <span className={s.error}>Некорректные данные в {props.error.length > 1 ? 'полях': 'поле' }: <b>{props.error.join(', ')}</b></span>}
                         </div>
                     </form>
                 )}

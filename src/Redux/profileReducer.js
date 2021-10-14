@@ -53,19 +53,19 @@ const profileReduser = (state = initialState, action) => {
             return {
                 ...state, profile: { ...state.profile, photos: action.photos }
             }
-            case SET_UPDATE_PROFILE:
-                return {
-                    ...state, profile: { ...state.profile}
-                }
-                case SET_ERROR:
+        case SET_UPDATE_PROFILE:
             return {
-                ...state, error: action.error.map( e => e.split('')
-                .slice(0,-1)
-                .join('')
-                .toLowerCase()
-                .slice(30))
+                ...state, profile: { ...state.profile }
             }
-            
+        case SET_ERROR:
+            return {
+                ...state, error: action.error.map(e => e.split('')
+                    .slice(0, -1)
+                    .join('')
+                    .toLowerCase()
+                    .slice(30))
+            }
+
         default:
             return state
     }
@@ -127,15 +127,15 @@ export const savePhoto = (file) => (dispatch) => {
         })
 }
 
-export const getUpdateProfile = (profile,userId) => (dispatch) => {
+export const getUpdateProfile = (profile, userId) => (dispatch) => {
     updateProfile(profile).then(data => {
-         if (data.resultCode === 0) { 
-             dispatch(getProfileThunk(userId))
-             dispatch(setError([]))
-            }
-         else {
-             dispatch(setError(data.messages))
-            
+        if (data.resultCode === 0) {
+            dispatch(getProfileThunk(userId))
+            dispatch(setError([]))
+        }
+        else {
+            dispatch(setError(data.messages))
+
         }
     })
 }

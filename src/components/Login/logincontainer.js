@@ -30,6 +30,7 @@ import Login from './login';
              getLoginThunk={props.getLoginThunk}
              isAuth={props.isAuth}
              captchaUrl={props.captchaUrl}
+             errorLogin={props.errorLogin}
          />
      </div>
  }
@@ -40,7 +41,8 @@ const mapStateToProps = (state) => ({
     email: state.auth.email,
     password: state.auth.password,
     getLoginThunk: getLoginThunk,
-    captchaUrl: state.auth.captchaUrl
+    captchaUrl: state.auth.captchaUrl,
+    errorLogin: state.auth.errorLogin
 })
 
 

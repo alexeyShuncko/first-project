@@ -1,11 +1,22 @@
-import React from "react"
+import React, { useState } from "react"
 import { Form, Field } from 'react-final-form'
 import { Redirect } from "react-router";
-import { Input } from "../comon/Validator/FormsControls/FormControls";
 import s from './login.module.css'
 
 
+
 const LoginForm =(props)=> {
+
+  let [editMode, setEditMode] = useState(false)
+
+  const activateEditMode = () => {
+      setEditMode(true)
+  }
+  const deActivateEditMode = () => {
+    setEditMode(false)
+}
+
+
  
    const onSubmit = (values) => {
 
@@ -19,10 +30,12 @@ const LoginForm =(props)=> {
       password,
       rememberMe,captcha)
   }
+  
 
     return (
       <Form className={s.loginForm}
         onSubmit={onSubmit}
+
         validate={(values) => {
           const errors = {};
           if (!values.Login) {
@@ -31,19 +44,42 @@ const LoginForm =(props)=> {
           if (!values.Password) {
             errors.Password = "Введите пароль";
           }
-        
           return errors;
         }}
+
         render={({ handleSubmit, form, submitting, pristine, values }) => (
           <form onSubmit={handleSubmit} className={s.form} >
 
-            <div>
-              <Field name="Login" component={Input} type="text" placeholder="Email"/>
-            </div>
 
-            <div>
-              <Field name="Password" component={Input} type="password" placeholder="Password" />
-            </div>
+            <Field name="Login">
+              {({ input, meta }) => (
+                <div>
+                  <label>Емаил: </label>
+                  <input className={meta.error && meta.touched ? s.inputError : s.input} {...input} type="text" placeholder="Email" />
+                  {meta.error && meta.touched && <span className={s.error}>{meta.error}</span>}
+                  {props.errorLogin==="Enter valid Email"&& <span className={s.error}>Введите корректный email</span>}
+                </div>
+              )}
+            </Field>
+            
+            <Field name="Password" >
+              {({ input, meta }) => (
+                <div>
+                  <label>Пароль: </label>
+                  <input 
+                  className={meta.error && meta.touched ? s.inputError : s.input} {...input} 
+                  type={!editMode ?"password":"text"}  
+                  placeholder="Password" />
+                  {!editMode 
+                  ? <button  type="button" onClick={activateEditMode}>Показать</button>
+                  :<button  type="button" onClick={deActivateEditMode}>Спрятать</button>}
+                  {meta.error && meta.touched && <span className={s.error}>{meta.error}</span>}
+                  {props.errorLogin==="Incorrect Email or Password" && <span className={s.error}>Введите корректный пароль</span>}
+                 
+                </div>
+              )}
+            </Field>
+          
 
             <div>
               <label>Remember my</label>
@@ -56,7 +92,7 @@ const LoginForm =(props)=> {
             </div>}
             {props.captchaUrl &&   
             <div>
-               <Field name="Captcha" component={Input} type="text" placeholder="" />
+               <Field name="Captcha" component="input" type="text" placeholder="" />
             </div>}
         
             <div className={s.buttons}>
@@ -87,6 +123,7 @@ const Login = (props) => {
       getLoginThunk={props.getLoginThunk}
       isAuth={props.isAuth}
       captchaUrl={props.captchaUrl}
+      errorLogin={props.errorLogin}
     />
   </div>
 }

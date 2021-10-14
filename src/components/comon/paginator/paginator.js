@@ -12,7 +12,7 @@ const Paginator = ({ totalUsersCount, pageSize, currentPage, onPageChanged, port
     }
     let portionCount = Math.ceil(pagesCount / portionsize)
 
-    let [portionNumber, setPortionNumber] = useState(1)
+    let [portionNumber, setPortionNumber] = useState(Math.ceil(currentPage/portionsize))
 
     let leftPortionPageNumber = (portionNumber - 1) * portionsize + 1
     let rightPortionPageNumber = portionNumber * portionsize

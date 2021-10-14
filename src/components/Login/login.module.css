@@ -1,3 +1,20 @@
 .form {
  
 }
+
+.error {
+    color: red;
+    border: solid;
+    margin-left: 20px;
+    border-radius: 10px;
+    padding: 5px;
+   }
+   
+   .inputError {
+       border: solid red;
+       border-radius: 5px;
+       margin-bottom: 15px;
+   }
+   .input {
+    margin-bottom: 15px;
+}
