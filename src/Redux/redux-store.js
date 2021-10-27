@@ -5,6 +5,8 @@ import profileReduser from "./profileReducer";
 import usersReduser from "./usersReducer";
 import  thunkMiddleware from "redux-thunk"
 import appReduser from "./AppReducer";
+import diagrammReduser from "./diagrammReducer";
+
 
 let reducers = combineReducers(
     {
@@ -12,7 +14,8 @@ let reducers = combineReducers(
         messagesData: messagesReduser,
         usersPage: usersReduser,
         auth: authReduser,
-        app: appReduser
+        app: appReduser,
+        expenses: diagrammReduser 
     }
 )
 

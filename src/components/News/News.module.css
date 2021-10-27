@@ -1,6 +1,54 @@
 .formExpenses {
-    margin: 20px;
+    margin-top: 70px;
+    margin-left: 10px;
+
 }
 .button {
     margin: 10px;
+}
+.legend {
+    width: 20px;
+    background-color: rgb(34, 34, 209);
+    display: inline-block;
+    margin-left: 20px;
+    
+}
+.legend1 {
+    width: 20px;
+    background-color: #fde23e;
+    display: inline-block;
+    margin-left: 20px;
+}
+.legend2 {
+    width: 20px;
+    background-color: #57d9ff;
+    display: inline-block;
+    margin-left: 20px;
+}
+.legend3 {
+    width: 20px;
+    background-color: #169928;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.newsItems {
+    display: flex;
+flex-direction: row;
+}
+.Legend {
+    display: flex;
+    flex-direction: column; 
+    margin-top: 200px;
+}
+
+.diagramm {
+    margin-top: 10px;
+    margin-left: 30px;
+}
+.diagrammFragment {
+    margin-left: 30px;
+}
+.statistic {
+    margin-left: 30px;
 }
