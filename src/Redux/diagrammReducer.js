@@ -2,12 +2,12 @@ const ADD_DIAGRAMM = 'ADD_DIAGRAMM'
 
 
 let initialState = {
-    diagramm: {
-        food: 10,
-        alcohol: 20,
-        apartment: 30,
-        transport: 40
-    }
+    diagramm: [
+        {name: 'food', color: '' },
+        {alcohol: 20},
+        {apartment: 30},
+        {transport: 40}
+    ]
 }
 
 const diagrammReduser = (state = initialState, action) => {

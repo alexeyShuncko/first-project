@@ -1,10 +1,11 @@
 .formExpenses {
     margin-top: 70px;
     margin-left: 10px;
+    width: 300px;
 
 }
-.button {
-    margin: 10px;
+.inputDiagramm button {
+    margin-top: 10px;
 }
 .legend {
     width: 20px;
@@ -47,8 +48,58 @@ flex-direction: row;
     margin-left: 30px;
 }
 .diagrammFragment {
-    margin-left: 30px;
+    width: 380px;
+    text-align: center;
 }
 .statistic {
     margin-left: 30px;
+}
+
+.inputDiagramm Field {
+    flex: 2;
+}
+.inputDiagramm label {
+    flex: 1;
+}
+.inputDiagramm  {
+    display: flex;
+    justify-content: flex-end;
+}
+.apartment {
+    background-color: #57d9ff;
+    height: 30px;
+    width: 120px;
+    text-align: center;
+    border-radius: 5px;
+}
+.transport {
+    background-color: #169928;
+    height: 30px;
+    width: 120px;
+    text-align: center;
+    border-radius: 5px;
+
+}
+.alcohol {
+    background-color: rgb(34, 34, 209);
+    height: 30px;
+    width: 120px;
+    text-align: center;
+    border-radius: 5px;
+}
+.food {
+    background-color: #fde23e;
+    height: 30px;
+    width: 120px;
+    text-align: center;
+    border-radius: 5px;
+}
+.option {
+    height: 30px;
+    width: 120px;
+    text-align: center;
+    border-radius: 5px;
+}
+.summ {
+    border-bottom: solid #fde23e;
 }

@@ -25,7 +25,7 @@ class News extends React.Component {
                 </div>
                 <div className={s.diagrammFragment}>
                     <div>
-                      <h2>  Диаграмма расходов в процентах </h2>
+                      <h2>  Диаграмма расходов за всё время, в процентах </h2>
                     </div>
                     <div><canvas id="tutorial" className={s.diagramm}></canvas></div>
 

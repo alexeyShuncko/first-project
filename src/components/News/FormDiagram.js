@@ -6,13 +6,17 @@ import { Field } from 'react-final-form';
 
 export const FormDiagram = (props) => {
 
-    const onSubmit = (values) => {
-        props.addDiagramm(values)
+    const onSubmit = (values, form) => {
+        console.log(values)
+        if (values.food !== '' || values.alcohol !== '' || values.apartment !== '' || values.transport !== '') {
+            props.addDiagramm(values)
+            form.reset()
+        }
     }
 
     return (
         <div className={s.formExpenses}>
-            <h2>Ежедневные данные</h2>
+            <h2>Сумма денег, потраченых на :</h2>
             <Form
                 onSubmit={onSubmit}
                 // initialValues={{
@@ -22,34 +26,40 @@ export const FormDiagram = (props) => {
                 render={({ handleSubmit, form, submitting, pristine, values }) => (
                     <form onSubmit={handleSubmit} className={s.form}>
 
-                        <div>
-                            <label>Еда : </label>
-                            <Field name="food" placeholder="" component="input" type="text" />
+                        <div className={s.inputDiagramm}>
+                            <label > Еду : </label>
+                            <Field 
+                            max="500" 
+                            autoComplete="off" 
+                            name="food" 
+                            placeholder="... рублей" 
+                            component="input" 
+                            type="number" />
                         </div>
-                        <div>
-                            <label>Алкоголь : </label>
-                            <Field name="alcohol" placeholder="" component="input" type="text" />
+                        <div className={s.inputDiagramm}>
+                            <label >Алкоголь : </label>
+                            <Field autoComplete="off" name="alcohol" placeholder="... рублей" component="input" type="number" />
                         </div>
-                        <div>
-                            <label>Квартира : </label>
-                            <Field name="apartment" placeholder="" component="input" type="text" />
+                        <div className={s.inputDiagramm}>
+                            <label>Квартиру : </label>
+                            <Field autoComplete="off" name="apartment" placeholder="... рублей" component="input" type="number" />
                         </div>
-                        <div>
+                        <div className={s.inputDiagramm}>
                             <label>Транспорт : </label>
-                            <Field name="transport" placeholder="" component="input" type="text" />
+                            <Field autoComplete="off" name="transport" placeholder="... рублей" component="input" type="number" />
                         </div>
 
-                        <div className={s.button}>
+                        <div className={s.inputDiagramm}>
                             <button type="submit"
-                            //disabled={submitting || pristine} //сделать видимой невидимой
+                             disabled={submitting || pristine} //сделать видимой невидимой
                             >
                                 Добавить
                             </button>
-                            <button type="button"
+                            {/* <button type="button"
                                 onClick={form.reset}
                             >
                                 Очистить
-                            </button>
+                            </button> */}
 
                         </div>
                     </form>

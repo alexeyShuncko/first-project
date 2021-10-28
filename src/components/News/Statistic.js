@@ -3,21 +3,37 @@ import { Field, Form } from "react-final-form";
 import s from './News.module.css';
 
 const Statistic = (props) => {
-
-   const onSubmit =(values)=> {
-    if (values.favorite === 'food') {
-       <span>{props.food}</span>
+ 
+    const onSubmit = (values) => {
+        if (values.favorite === 'food') {
+            return <span>Всего потрачено : <b>{props.diagramm.food} рублей.</b></span>
+        }
+        else if (values.favorite === 'alcohol') {
+            return <span>Всего потрачено :<b> {props.diagramm.alcohol} рублей.</b></span>
+        }
+        else if (values.favorite === 'apartment') {
+            return <span>Всего потрачено :<b> {props.diagramm.apartment} рублей.</b></span>
+        }
+        else if (values.favorite === 'transport') {
+            return <span>Всего потрачено :<b> {props.diagramm.transport} рублей.</b></span>
+        }
     }
-    else if (values.favorite === 'alcohol' ) {
-
+    const colorInput =(values)=> {
+        if (values.favorite === 'food') {
+            return s.food
+        }
+        else if (values.favorite === 'alcohol') {
+            return s.alcohol
+        }
+        else if (values.favorite === 'apartment') {
+            return s.apartment
+        }
+        else if (values.favorite === 'transport') {
+            return s.transport
+        }
+        return s.option
     }
-    else if ( values.favorite === 'apartment') {
-        
-    }
-    else if (values.favorite === 'transport' ) {
-        
-    }
-    }
+    
 
     return (
         <div className={s.statistic}>
@@ -32,15 +48,15 @@ const Statistic = (props) => {
 
                         <div>
                             <label>Категория : </label>
-                            <Field name="favorite" component="select">
-                            <option />
-                                <option value="food">Еда</option>
-                                <option value="alcohol">Алкоголь</option>
-                                <option value="apartment">Квартира</option>
-                                <option value="transport">Транспорт</option>
+                            <Field name="favorite" component="select" className={colorInput(values)} >
+                            <option className={s.option}/>
+                                <option value="food" className={s.food}>Еда</option>
+                                <option value="alcohol" className={s.alcohol}>Алкоголь</option>
+                                <option value="apartment" className={s.apartment}>Квартира</option>
+                                <option value="transport"  className={s.transport}>Транспорт</option>
                             </Field>
                         </div>
-                        <div><span> {values.favorite ? onSubmit(values)   : null }</span>
+                        <div className={s.summ}> {values.favorite ? onSubmit(values)   : null }
                         <span>
                       
                         </span>
