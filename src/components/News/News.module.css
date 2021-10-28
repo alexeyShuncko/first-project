@@ -2,45 +2,30 @@
     margin-top: 70px;
     margin-left: 10px;
     width: 300px;
-
 }
 .inputDiagramm button {
     margin-top: 10px;
-}
-.legend {
-    width: 20px;
-    background-color: rgb(34, 34, 209);
-    display: inline-block;
-    margin-left: 20px;
     
 }
-.legend1 {
-    width: 20px;
-    background-color: #fde23e;
-    display: inline-block;
-    margin-left: 20px;
+.period {
+    margin-top: 10px;
 }
-.legend2 {
-    width: 20px;
-    background-color: #57d9ff;
-    display: inline-block;
-    margin-left: 20px;
-}
-.legend3 {
-    width: 20px;
-    background-color: #169928;
-    display: inline-block;
-    margin-left: 20px;
-}
-
-.newsItems {
-    display: flex;
-flex-direction: row;
+.button {
+    margin-top: 10px;
 }
 .Legend {
     display: flex;
     flex-direction: column; 
     margin-top: 200px;
+}
+.legend {
+    width: 20px;
+    display: inline-block;
+    margin-left: 20px;
+}
+.newsItems {
+    display: flex;
+flex-direction: row;
 }
 
 .diagramm {
@@ -65,41 +50,12 @@ flex-direction: row;
     display: flex;
     justify-content: flex-end;
 }
-.apartment {
-    background-color: #57d9ff;
-    height: 30px;
-    width: 120px;
-    text-align: center;
-    border-radius: 5px;
-}
-.transport {
-    background-color: #169928;
-    height: 30px;
-    width: 120px;
-    text-align: center;
-    border-radius: 5px;
 
-}
-.alcohol {
-    background-color: rgb(34, 34, 209);
-    height: 30px;
-    width: 120px;
+.option option{
     text-align: center;
-    border-radius: 5px;
-}
-.food {
-    background-color: #fde23e;
-    height: 30px;
-    width: 120px;
-    text-align: center;
-    border-radius: 5px;
 }
 .option {
     height: 30px;
     width: 120px;
-    text-align: center;
     border-radius: 5px;
-}
-.summ {
-    border-bottom: solid #fde23e;
 }

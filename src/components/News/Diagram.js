@@ -16,20 +16,20 @@ const Diagram = (props) => {
         ctx.fill();
     }
     console.log(props) // изменение объекта расходов 
-    
+
     const myVinyls =
     {
         food:
-            props.food ? Number(props.food)
+            props.food ? Number(props.food.summ)
                 : 15,
         alcohol:
-            props.alcohol ? Number(props.alcohol)
+            props.alcohol ? Number(props.alcohol.summ)
                 : 15,
         apartment:
-            props.apartment ? Number(props.apartment)
+            props.apartment ? Number(props.apartment.summ)
                 : 15,
         transport:
-            props.transport ? Number(props.transport)
+            props.transport ? Number(props.transport.summ)
                 : 15
     }
 
@@ -93,7 +93,12 @@ const Diagram = (props) => {
         {
             canvas: myCanvas,
             data: myVinyls,
-            colors: ['#fde23e', 'rgb(34, 34, 209)', '#57d9ff', '#169928']
+            colors: [
+            props.food.color, 
+            props.alcohol.color, 
+            props.apartment.color, 
+            props.transport.color
+        ]
         }
     )
     myPiechart.draw();

@@ -7,19 +7,19 @@ const Legend = (props) => {
     return (
     <div className={s.Legend}>  
         <div>
-            <span className={s.legend1}>&nbsp;</span>
+            <span className={s.legend} style={{ backgroundColor: ` ${props.diagramm.food.color}` }}>&nbsp;</span>
             <span> - Еда </span>
         </div>
         <div>
-            <span className={s.legend}>&nbsp;</span>
+            <span className={s.legend} style={{ backgroundColor: ` ${props.diagramm.alcohol.color}` }}>&nbsp;</span>
             <span> - Алкоголь </span>
         </div>
         <div>
-            <span className={s.legend2}>&nbsp;</span>
+            <span className={s.legend} style={{ backgroundColor: ` ${props.diagramm.apartment.color}` }}>&nbsp;</span>
             <span> - Квартира </span>
         </div>
         <div>
-            <span className={s.legend3} >&nbsp;</span>
+            <span className={s.legend} style={{ backgroundColor: ` ${props.diagramm.transport.color}` }}>&nbsp;</span>
             <span> - Транспорт </span>
         </div>
     </div>

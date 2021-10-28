@@ -31,7 +31,7 @@ class News extends React.Component {
 
                 </div>
 
-                <Legend />
+                <Legend diagramm={this.props.diagramm}/>
 
                 <Statistic  diagramm={this.props.diagramm}/>
 
@@ -41,7 +41,7 @@ class News extends React.Component {
 }
 let mapStateToProps = (state) => {
     return {
-        diagramm: state.expenses.diagramm
+        diagramm: state.expenses
     }
 }
 
