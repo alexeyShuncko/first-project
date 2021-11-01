@@ -4,7 +4,7 @@ import Diagram from './Diagram';
 import { FormDiagram } from './FormDiagram';
 import Legend from './Legend';
 import { connect } from 'react-redux';
-import { addDiagramm } from './../../Redux/diagrammReducer';
+import { addDiagramm, addActiv } from './../../Redux/diagrammReducer';
 import Statistic from './Statistic';
 
 
@@ -13,9 +13,21 @@ class News extends React.Component {
     componentDidMount() {
         Diagram(this.props.diagramm)
     }
-    componentDidUpdate() {
-        Diagram(this.props.diagramm)
-    }
+     componentDidUpdate(prevProps) {
+         if (this.props.diagramm.food !== prevProps.diagramm.food ) {
+             Diagram(this.props.diagramm)
+         }
+         else if (this.props.diagramm.alcohol !== prevProps.diagramm.alcohol ) {
+            Diagram(this.props.diagramm)
+        }
+        else if (this.props.diagramm.apartment !== prevProps.diagramm.apartment ) {
+            Diagram(this.props.diagramm)
+        }
+        else if (this.props.diagramm.transport !== prevProps.diagramm.transport ) {
+            Diagram(this.props.diagramm)
+        }
+       
+     }
 
     render() {
         return (
@@ -33,7 +45,7 @@ class News extends React.Component {
 
                 <Legend diagramm={this.props.diagramm}/>
 
-                <Statistic  diagramm={this.props.diagramm}/>
+                <Statistic  diagramm={this.props.diagramm} addActiv={this.props.addActiv}/>
 
             </div>
         )
@@ -45,7 +57,7 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { addDiagramm })(News)
+export default connect(mapStateToProps, { addDiagramm,addActiv })(News)
 
 
 

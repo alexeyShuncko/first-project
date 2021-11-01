@@ -24,17 +24,17 @@ export const FormDiagram = (props) => {
             if (yy < 10) yy = '0' + yy;
     
             var HH = date.getHours();
-            if (dd < 10) HH = '0' + HH;
+            if (HH < 10) HH = '0' + HH;
     
             var MM = date.getMinutes();
-            if (dd < 10) MM = '0' + MM;
+            if (MM < 10) MM = '0' + MM;
     
-            var SS = date.getSeconds();
-            if (dd < 10) SS = '0' + SS;
+            // var SS = date.getSeconds();
+            // if (SS < 10) SS = '0' + SS;
     
            
           
-            return dd + '.' + mm + '.' + yy + ' ' + HH + '-' + MM +  '-' + SS;
+            return '20'+ yy + '-' + mm + '-' + dd + ' ' + HH + ':' + MM ;
           }
         const timer = formatDate(time)
 

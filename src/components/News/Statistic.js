@@ -1,20 +1,18 @@
-import React, { useState } from "react";
-import { Field, Form } from "react-final-form";
+import React from "react";
+import { Field, Form} from "react-final-form";
 import s from './News.module.css';
+import StatisticDate from './StatisticDate/StatisticDate';
 
 const Statistic = (props) => {
 
-
-    let [editMode, setEditMode] = useState(false)
-
-    const activateEditMode = () => {
-        setEditMode(true)
+    const color =(e)=> {
+        if (e.target.value !== props.diagramm.activ) {
+     props.addActiv(e.target.value)
+     console.log(e.target.value)}
     }
-    const deActivateEditMode = () => {
-      setEditMode(false)
-  }
 
-    const onSubmit = (values) => {
+    const colorBorder =(values)=> {
+
         if (values.favorite === 'food') {
             return <span style={{ borderBottom: `solid ${props.diagramm.food.color}` }}>
                 Всего потрачено : <b>{props.diagramm.food.summ} рублей.</b></span>
@@ -32,6 +30,12 @@ const Statistic = (props) => {
                 Всего потрачено :<b> {props.diagramm.transport.summ} рублей.</b></span>
         }
     }
+
+
+    const onSubmit = (values) => {   
+       
+    }
+
     const colorInput = (values) => {
         if (values.favorite === 'food') {
             return props.diagramm.food.color
@@ -47,17 +51,11 @@ const Statistic = (props) => {
         }
         return s.option
     }
-    const statCategory = (values) => {
-        console.log(11)
-        return <span>Привет</span>
-    }
 
-
+   
     return (
         <div className={s.statistic}>
             <div ><h2>Статистика</h2></div>
-
-
             <Form
                 onSubmit={onSubmit}
 
@@ -66,7 +64,8 @@ const Statistic = (props) => {
 
                         <div>
                             <label>Категория : </label>
-                            <Field name="favorite" component="select" className={s.option} style={{ backgroundColor: ` ${colorInput(values)}` }}>
+                            <Field  onClick={color}
+                            name="favorite" component="select" className={s.option} style={{ backgroundColor: ` ${colorInput(values)}` }}>
                                 <option />
                                 <option value="food" style={{ backgroundColor: ` ${props.diagramm.food.color}` }}>Еда</option>
                                 <option value="alcohol" style={{ backgroundColor: ` ${props.diagramm.alcohol.color}` }}>Алкоголь</option>
@@ -74,34 +73,17 @@ const Statistic = (props) => {
                                 <option value="transport" style={{ backgroundColor: ` ${props.diagramm.transport.color}` }} >Транспорт</option>
                             </Field>
                         </div>
-                        <div> {values.favorite ? onSubmit(values) : null}
-                            <span>
-
-                            </span>
-                        </div>
-                        <div className={s.period}>
-                            <label>Период : </label>
-                            <Field name="periodS" component="input" type="time"></Field>
-                            <Field name="periodPo" component="input" type="time"></Field>
-                        </div>
+                        <div> {values.favorite ? colorBorder(values) : null} </div>                       
                     </form>
                 )}
+               
+           
             />
-            <div className={s.button}>
-                {!editMode && <button onClick={activateEditMode}>
-                    Показать
-                </button>}
-                {editMode && <div>
-                Привет 
-                <button onClick={deActivateEditMode}>
-                    Убрать
-                </button></div>}
-            <div>
-
+             <div className={s.button}>
+                <StatisticDate diagramm={props.diagramm} />
+                </div>
             </div>
 
-        </div>
-        </div>
     )
 }
 export default Statistic
