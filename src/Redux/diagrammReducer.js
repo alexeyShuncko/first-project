@@ -1,5 +1,9 @@
 const ADD_DIAGRAMM = 'ADD_DIAGRAMM'
 const ADD_ACTIV = 'ADD_ACTIV'
+const ADD_SALARY = 'ADD_SALARY'
+const ADD_PERIOD_PO = 'ADD_PERIOD_PO'
+const ADD_PERIOD_S = 'ADD_PERIOD_S'
+
 
 
 let initialState = { 
@@ -14,7 +18,12 @@ let initialState = {
      alcohol:   {name: 'alcohol', color: '#2222d1' , data: [ { id: 1, time: '2021-10-28 19:04', num: 15} ] , summ: 15},
      apartment:   {name: 'apartment', color: '#57d9ff' , data: [ { id: 1, time: '2021-10-28 19:04', num: 25} ] , summ: 25},   
      transport:   {name: 'transport', color: '#169928' , data: [ { id: 1, time: '2021-10-28 19:04', num: 25} ] , summ: 25},
-    activ: ''
+    activ: '',
+    salary: 700,
+    periodPo: '',
+    periodS: '',
+    periodPoTime: '',
+    periodSTime: ''
 }
 
 const diagrammReduser = (state = initialState, action) => {
@@ -29,7 +38,7 @@ const diagrammReduser = (state = initialState, action) => {
                     action.values.food
                         ? {
                             ...state.food,
-                            data: [...state.food.data, { id: state.food.data.length + 1, time: action.time , num: Number(action.values.food) }],
+                            data: [...state.food.data, { id: state.food.data.length + 1, time: action.time , num: Number(action.values.food)}],
                             summ: state.food.summ + Number(action.values.food)
                         }
                         : state.food,
@@ -38,7 +47,7 @@ const diagrammReduser = (state = initialState, action) => {
                  action.values.alcohol 
                  ? {
                     ...state.alcohol,
-                    data: [...state.alcohol.data, { id: state.alcohol.data.length + 1, time: action.time , num: Number(action.values.alcohol) }],
+                    data: [...state.alcohol.data, { id: state.alcohol.data.length + 1, time: action.time , num: Number(action.values.alcohol)}],
                     summ: state.alcohol.summ + Number(action.values.alcohol)
                 }
                  : state.alcohol,
@@ -47,7 +56,7 @@ const diagrammReduser = (state = initialState, action) => {
                  action.values.apartment 
                  ? {
                     ...state.apartment,
-                    data: [...state.apartment.data, { id: state.apartment.data.length + 1, time: action.time , num: Number(action.values.apartment) }],
+                    data: [...state.apartment.data, { id: state.apartment.data.length + 1, time: action.time , num: Number(action.values.apartment)}],
                     summ: state.apartment.summ + Number(action.values.apartment)
                 }
                  : state.apartment,
@@ -56,7 +65,7 @@ const diagrammReduser = (state = initialState, action) => {
                  action.values.transport 
                  ? {
                     ...state.transport,
-                    data: [...state.transport.data, { id: state.transport.data.length + 1, time: action.time , num: Number(action.values.transport) }],
+                    data: [...state.transport.data, { id: state.transport.data.length + 1, time: action.time , num: Number(action.values.transport)}],
                     summ: state.transport.summ + Number(action.values.transport)
                 }
                  : state.transport
@@ -65,7 +74,20 @@ const diagrammReduser = (state = initialState, action) => {
                 return {
                 ...state, activ: action.activ 
             }
+            case ADD_SALARY:
+                return {
+                ...state, salary: Number(action.salary)
+            }
             
+
+             case ADD_PERIOD_PO:
+                return {
+                ...state, periodPo: action.periodPo
+            }
+            case ADD_PERIOD_S:
+                return {
+                ...state, periodS: action.periodS
+            }
            
         default:
             return state
@@ -77,6 +99,15 @@ export const addDiagramm = (values, time) => {
 }
 export const addActiv = (activ) => {
     return { type:  ADD_ACTIV, activ }
+}
+export const addSalary = (salary) => {
+    return { type:  ADD_SALARY, salary }
+}
+export const addPeriodPo = (periodPo) => {
+    return { type:  ADD_PERIOD_PO, periodPo }
+}
+export const addPeriodS = (periodS) => {
+    return { type:  ADD_PERIOD_S, periodS }
 }
 
 

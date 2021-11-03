@@ -5,29 +5,29 @@ import StatisticDate from './StatisticDate/StatisticDate';
 
 const Statistic = (props) => {
 
-    const color =(e)=> {
+    const colorActiv = (e) => {
         if (e.target.value !== props.diagramm.activ) {
-     props.addActiv(e.target.value)
-     console.log(e.target.value)}
+            props.addActiv(e.target.value)
+        }
     }
 
     const colorBorder =(values)=> {
 
         if (values.favorite === 'food') {
             return <span style={{ borderBottom: `solid ${props.diagramm.food.color}` }}>
-                Всего потрачено : <b>{props.diagramm.food.summ} рублей.</b></span>
+                Всего потрачено : <b>{props.diagramm.food.summ.toFixed(2)} рублей.</b></span>
         }
         else if (values.favorite === 'alcohol') {
             return <span style={{ borderBottom: `solid ${props.diagramm.alcohol.color}` }}>
-                Всего потрачено :<b> {props.diagramm.alcohol.summ} рублей.</b></span>
+                Всего потрачено :<b> {props.diagramm.alcohol.summ.toFixed(2)} рублей.</b></span>
         }
         else if (values.favorite === 'apartment') {
             return <span style={{ borderBottom: `solid ${props.diagramm.apartment.color}` }}>
-                Всего потрачено :<b> {props.diagramm.apartment.summ} рублей.</b></span>
+                Всего потрачено :<b> {props.diagramm.apartment.summ.toFixed(2)} рублей.</b></span>
         }
         else if (values.favorite === 'transport') {
             return <span style={{ borderBottom: `solid ${props.diagramm.transport.color}` }}>
-                Всего потрачено :<b> {props.diagramm.transport.summ} рублей.</b></span>
+                Всего потрачено :<b> {props.diagramm.transport.summ.toFixed(2)} рублей.</b></span>
         }
     }
 
@@ -64,7 +64,7 @@ const Statistic = (props) => {
 
                         <div>
                             <label>Категория : </label>
-                            <Field  onClick={color}
+                            <Field  onClick={colorActiv}
                             name="favorite" component="select" className={s.option} style={{ backgroundColor: ` ${colorInput(values)}` }}>
                                 <option />
                                 <option value="food" style={{ backgroundColor: ` ${props.diagramm.food.color}` }}>Еда</option>
@@ -80,7 +80,9 @@ const Statistic = (props) => {
            
             />
              <div className={s.button}>
-                <StatisticDate diagramm={props.diagramm} />
+                <StatisticDate addPeriodPo={props.addPeriodPo}
+                addPeriodS={props.addPeriodS}
+                diagramm={props.diagramm} />
                 </div>
             </div>
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Field, Form } from "react-final-form";
 import s from '../News.module.css';
+import StatisticDateDiagram from './StatisticDateDiagram';
 
 const StatisticDate = (props) => {
 
@@ -15,11 +16,12 @@ const StatisticDate = (props) => {
         setEditMode(false)
     }
     
-
+  
 
     const statisticPeriod = (values) => {
         if (props.diagramm.activ==='food') { let rew = props.diagramm.food.data.filter(a =>
             a.time <= (values.periodPo + ' ' + values.periodPoTime) && a.time >= (values.periodS + ' ' + values.periodSTime))
+            console.log(rew)
         return rew}
          else if (props.diagramm.activ==='alcohol') { let rew = props.diagramm.alcohol.data.filter(a =>
             a.time <= (values.periodPo + ' ' + values.periodPoTime) && a.time >= (values.periodS + ' ' + values.periodSTime))
@@ -34,9 +36,32 @@ const StatisticDate = (props) => {
     }
 
     const onSubmit = (values) => {
-        activateEditMode()
+        props.addPeriodPo(values.periodPo)
+            props.addPeriodS(values.periodS)
     }
 
+
+
+const qqq =()=> {
+    let eee = props.diagramm
+    var x 
+    let diagramm = { food: props.diagramm.food.data.filter(a => a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) && 
+        a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime)
+        
+        ).map(a => a.num).map(i=>x+=i, x=0 ).reverse()[0],
+
+        alcohol: props.diagramm.alcohol.data.filter(a =>
+            a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime)),
+            apartment:   props.diagramm.apartment.data.filter(a =>
+                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime)),
+                transport: props.diagramm.transport.data.filter(a =>
+                    a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
+    }
+
+
+    StatisticDateDiagram(diagramm,eee)
+}
+  
 
     return (
         <div className={s.statisticDate}>
@@ -62,11 +87,13 @@ const StatisticDate = (props) => {
                         </div>
 
                         <div className={s.button}>
-                            {!editMode && <button
-                                type="submit"
-                            >
+                            {!editMode  && <div>
+                            <button type="submit" >
                                 Показать
-                            </button>}
+                            </button> 
+                            <button onClick={qqq}>
+                                    Диаграмма
+                                </button></div>}
                             {editMode  && <div >
                                 <div className={s.statisticName}>
                                     <span className={s.statisticNameDate}><b>Дата:</b></span>
@@ -80,13 +107,20 @@ const StatisticDate = (props) => {
                                     </div>)
                                 }
                                 <button 
-                                    onClick={deActivateEditMode}
+                                     onClick={deActivateEditMode}
                                 >
                                     Убрать
-                                </button></div>}
-                            <div>
+                                </button>
+                                </div>}
 
+                            <div >
+                            <canvas id="period" className={s.diagramm}></canvas>
                             </div>
+                            <button type="submit"
+                                     
+                                >
+                                    Убрать
+                                </button>
                         </div>
                     </form>
                 )}

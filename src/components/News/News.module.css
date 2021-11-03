@@ -1,3 +1,5 @@
+
+ 
 .formExpenses {
     margin-top: 70px;
     margin-left: 10px;
@@ -53,6 +55,7 @@
 }
 
 .inputDiagramm Field {
+   
     flex: 2;
 }
 
@@ -108,3 +111,13 @@
     flex: 1;
 }
 
+.salary {
+display: flex;
+flex-direction: row;
+}
+.salaryName{
+    flex: 1;
+}
+.salaryValue {
+    flex: 3;
+}

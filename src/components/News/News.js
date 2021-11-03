@@ -4,7 +4,7 @@ import Diagram from './Diagram';
 import { FormDiagram } from './FormDiagram';
 import Legend from './Legend';
 import { connect } from 'react-redux';
-import { addDiagramm, addActiv } from './../../Redux/diagrammReducer';
+import { addDiagramm, addActiv, addSalary, addPeriodPo, addPeriodS } from './../../Redux/diagrammReducer';
 import Statistic from './Statistic';
 
 
@@ -32,8 +32,12 @@ class News extends React.Component {
     render() {
         return (
             <div className={s.newsItems}>
-                <div className={s.formExpenses}>
-                    <FormDiagram addDiagramm={this.props.addDiagramm} />
+                <div>
+                    <FormDiagram 
+                    addDiagramm={this.props.addDiagramm}
+                    diagramm={this.props.diagramm}
+                    addSalary={this.props.addSalary}
+                     />
                 </div>
                 <div className={s.diagrammFragment}>
                     <div>
@@ -45,7 +49,9 @@ class News extends React.Component {
 
                 <Legend diagramm={this.props.diagramm}/>
 
-                <Statistic  diagramm={this.props.diagramm} addActiv={this.props.addActiv}/>
+                <Statistic  addPeriodPo={this.props.addPeriodPo} 
+                addPeriodS={this.props.addPeriodS}
+                diagramm={this.props.diagramm} addActiv={this.props.addActiv}/>
 
             </div>
         )
@@ -57,7 +63,7 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { addDiagramm,addActiv })(News)
+export default connect(mapStateToProps, { addDiagramm,addActiv, addSalary, addPeriodPo, addPeriodS })(News)
 
 
 
