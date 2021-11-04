@@ -11,9 +11,11 @@ import Statistic from './Statistic';
 class News extends React.Component {
 
     componentDidMount() {
+        console.log('вмонтирован')
         Diagram(this.props.diagramm)
     }
      componentDidUpdate(prevProps) {
+        console.log('изменился')
          if (this.props.diagramm.food !== prevProps.diagramm.food ) {
              Diagram(this.props.diagramm)
          }
@@ -30,6 +32,7 @@ class News extends React.Component {
      }
 
     render() {
+        console.log('render')
         return (
             <div className={s.newsItems}>
                 <div>

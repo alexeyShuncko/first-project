@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Field, Form } from "react-final-form";
 import s from '../News.module.css';
-import StatisticDateDiagram from './StatisticDateDiagram';
+import DiagrammContainer from "./DIagrammContainer";
+
 
 const StatisticDate = (props) => {
 
@@ -10,18 +11,16 @@ const StatisticDate = (props) => {
 
     const activateEditMode = () => {
         setEditMode(true)
-
+        
     }
     const deActivateEditMode = () => {
         setEditMode(false)
     }
     
-  
 
     const statisticPeriod = (values) => {
         if (props.diagramm.activ==='food') { let rew = props.diagramm.food.data.filter(a =>
             a.time <= (values.periodPo + ' ' + values.periodPoTime) && a.time >= (values.periodS + ' ' + values.periodSTime))
-            console.log(rew)
         return rew}
          else if (props.diagramm.activ==='alcohol') { let rew = props.diagramm.alcohol.data.filter(a =>
             a.time <= (values.periodPo + ' ' + values.periodPoTime) && a.time >= (values.periodS + ' ' + values.periodSTime))
@@ -35,32 +34,12 @@ const StatisticDate = (props) => {
        
     }
 
-    const onSubmit = (values) => {
+    const onSubmit = (values, form) => {
         props.addPeriodPo(values.periodPo)
-            props.addPeriodS(values.periodS)
-    }
-
-
-
-const qqq =()=> {
-    let eee = props.diagramm
-    var x 
-    let diagramm = { food: props.diagramm.food.data.filter(a => a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) && 
-        a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime)
+        props.addPeriodS(values.periodS)
+        //form.reset()
         
-        ).map(a => a.num).map(i=>x+=i, x=0 ).reverse()[0],
-
-        alcohol: props.diagramm.alcohol.data.filter(a =>
-            a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime)),
-            apartment:   props.diagramm.apartment.data.filter(a =>
-                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime)),
-                transport: props.diagramm.transport.data.filter(a =>
-                    a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
     }
-
-
-    StatisticDateDiagram(diagramm,eee)
-}
   
 
     return (
@@ -83,18 +62,27 @@ const qqq =()=> {
                                 <Field name="periodPo" component="input" type="date"></Field>
                                 <Field name="periodPoTime" component="input" type="time"></Field>
                             </div>
-
+                            <div> <button type='submit'
+                            disabled={submitting||pristine}
+                            >
+                                Добавить период
+                            </button> 
+                           </div>
                         </div>
 
                         <div className={s.button}>
-                            {!editMode  && <div>
-                            <button type="submit" >
-                                Показать
+                            {!editMode  
+                            ? <div> <button 
+                            onClick={activateEditMode} 
+                            >
+                                Таблица
                             </button> 
-                            <button onClick={qqq}>
-                                    Диаграмма
-                                </button></div>}
-                            {editMode  && <div >
+                           </div>
+                            : <div >
+                                 <button onClick={deActivateEditMode}>
+                                    Убрать Таблицу
+                                </button>
+                              
                                 <div className={s.statisticName}>
                                     <span className={s.statisticNameDate}><b>Дата:</b></span>
                                     <span className={s.statisticNameDate}> <b>Сумма: </b></span>
@@ -106,21 +94,13 @@ const qqq =()=> {
                                         <span className={s.statisticDateNum}> {a.num} </span>
                                     </div>)
                                 }
-                                <button 
-                                     onClick={deActivateEditMode}
-                                >
-                                    Убрать
-                                </button>
+                               
                                 </div>}
-
-                            <div >
-                            <canvas id="period" className={s.diagramm}></canvas>
-                            </div>
-                            <button type="submit"
-                                     
-                                >
-                                    Убрать
-                                </button>
+                                <DiagrammContainer diagramm={props.diagramm} id="period1"  />
+                               
+                                
+                    
+                            
                         </div>
                     </form>
                 )}

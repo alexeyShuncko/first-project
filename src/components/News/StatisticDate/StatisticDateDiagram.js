@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 
 
 const StatisticDateDiagram = (diagramm,eee) => {
@@ -15,22 +15,17 @@ const StatisticDateDiagram = (diagramm,eee) => {
         ctx.closePath();
         ctx.fill();
     }
-    console.log(diagramm) // изменение объекта расходов 
 
     const myVinyls =
     {
         food:
-        diagramm.food ? Number(diagramm.food)
-                : 15,
+        diagramm.food ? Number(diagramm.food) : 15,
         alcohol:
-        diagramm.alcohol ? Number(diagramm.alcohol)
-                : 15,
+        diagramm.alcohol ? Number(diagramm.alcohol) : 15,
         apartment:
-        diagramm.apartment ? Number(diagramm.apartment)
-                : 15,
+        diagramm.apartment ? Number(diagramm.apartment) : 15,
         transport:
-        diagramm.transport ? Number(diagramm.transport)
-                : 15
+        diagramm.transport ? Number(diagramm.transport) : 15
     }
 
 
@@ -102,8 +97,8 @@ const StatisticDateDiagram = (diagramm,eee) => {
         }
     )
     myPiechart.draw();
-}
-
+    
+    }
 
 export default StatisticDateDiagram;
 
