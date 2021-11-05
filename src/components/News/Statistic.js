@@ -80,8 +80,8 @@ const Statistic = (props) => {
            
             />
              <div className={s.button}>
-                <StatisticDate addPeriodPo={props.addPeriodPo}
-                addPeriodS={props.addPeriodS}
+                <StatisticDate 
+                addPeriod={props.addPeriod}
                 diagramm={props.diagramm} />
                 </div>
             </div>

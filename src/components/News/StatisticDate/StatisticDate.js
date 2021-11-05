@@ -35,10 +35,12 @@ const StatisticDate = (props) => {
     }
 
     const onSubmit = (values, form) => {
-        props.addPeriodPo(values.periodPo)
-        props.addPeriodS(values.periodS)
+        props.addPeriod(values.periodS,
+            values.periodPo,
+            values.periodSTime,
+            values.periodPoTime)
+
         //form.reset()
-        
     }
   
 
@@ -72,9 +74,7 @@ const StatisticDate = (props) => {
 
                         <div className={s.button}>
                             {!editMode  
-                            ? <div> <button 
-                            onClick={activateEditMode} 
-                            >
+                            ? <div> <button onClick={activateEditMode} >
                                 Таблица
                             </button> 
                            </div>
@@ -96,10 +96,7 @@ const StatisticDate = (props) => {
                                 }
                                
                                 </div>}
-                                <DiagrammContainer diagramm={props.diagramm} id="period1"  />
-                               
-                                
-                    
+                                <DiagrammContainer diagramm={props.diagramm}  />
                             
                         </div>
                     </form>

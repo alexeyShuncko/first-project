@@ -1,9 +1,8 @@
 const ADD_DIAGRAMM = 'ADD_DIAGRAMM'
 const ADD_ACTIV = 'ADD_ACTIV'
 const ADD_SALARY = 'ADD_SALARY'
-const ADD_PERIOD_PO = 'ADD_PERIOD_PO'
-const ADD_PERIOD_S = 'ADD_PERIOD_S'
-
+const ADD_PERIOD = 'ADD_PERIOD'
+const ADD_SELECT_DIAGRAMM = 'ADD_SELECT_DIAGRAMM'
 
 
 let initialState = { 
@@ -15,7 +14,7 @@ let initialState = {
          {id: 4, time: '2021-11-01 15:01', num: 25},
          {id: 5, time: '2021-11-01 15:06', num: 52}
      ] , summ: 127},
-     alcohol:   {name: 'alcohol', color: '#2222d1' , data: [ { id: 1, time: '2021-10-28 19:04', num: 15} ] , summ: 15},
+     alcohol:   {name: 'alcohol', color: '#2222d1' , data: [ { id: 1, time: '2021-10-28 19:04', num: 40} ] , summ: 40},
      apartment:   {name: 'apartment', color: '#57d9ff' , data: [ { id: 1, time: '2021-10-28 19:04', num: 25} ] , summ: 25},   
      transport:   {name: 'transport', color: '#169928' , data: [ { id: 1, time: '2021-10-28 19:04', num: 25} ] , summ: 25},
     activ: '',
@@ -23,7 +22,8 @@ let initialState = {
     periodPo: '',
     periodS: '',
     periodPoTime: '',
-    periodSTime: ''
+    periodSTime: '',
+    selectDiagramm: 'процентах'
 }
 
 const diagrammReduser = (state = initialState, action) => {
@@ -78,17 +78,19 @@ const diagrammReduser = (state = initialState, action) => {
                 return {
                 ...state, salary: Number(action.salary)
             }
+            case ADD_PERIOD:
+                return {
+                ...state, 
+                periodS: action.periodS, 
+                periodPo: action.periodPo,
+                periodSTime: action.periodSTime,
+                periodPoTime: action.periodPoTime
+            }
+            case ADD_SELECT_DIAGRAMM:
+                return {
+                ...state, selectDiagramm:  action.selectDiagramm
+            }
             
-
-             case ADD_PERIOD_PO:
-                return {
-                ...state, periodPo: action.periodPo
-            }
-            case ADD_PERIOD_S:
-                return {
-                ...state, periodS: action.periodS
-            }
-           
         default:
             return state
     }
@@ -103,12 +105,13 @@ export const addActiv = (activ) => {
 export const addSalary = (salary) => {
     return { type:  ADD_SALARY, salary }
 }
-export const addPeriodPo = (periodPo) => {
-    return { type:  ADD_PERIOD_PO, periodPo }
+export const addPeriod = (periodS,periodPo,periodSTime,periodPoTime) => {
+    return { type:  ADD_PERIOD, periodS,periodPo,periodSTime,periodPoTime}
 }
-export const addPeriodS = (periodS) => {
-    return { type:  ADD_PERIOD_S, periodS }
+export const addSelectDiagramm = (selectDiagramm) => {
+    return { type:  ADD_SELECT_DIAGRAMM, selectDiagramm }
 }
+
 
 
 // export const getUpdateProfile = (profile, userId) => (dispatch) => {

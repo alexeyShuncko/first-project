@@ -50,13 +50,13 @@ const Salary = (props) => {
 
     return (
         <div>
-            {timer === '2021-11-02'
-                ? <div>Обнови ЗП</div>
+            {timer === '2021-11-06'
+                ? <div className={s.salaryUpdate}>Обнови ЗП</div>
                 : null}
 
             <div className={s.salary}>
                 <span className={s.salaryName} title="Нажми, чтобы изменить)" onClick={activateEditMode}> Зарплата: </span>
-                <span className={s.salaryValue}> {props.diagramm.salary}</span>
+                <span className={s.salaryValue}> {props.diagramm.salary}р</span>
             </div>
 
             {editMode
@@ -67,7 +67,10 @@ const Salary = (props) => {
 
                         <div>
                             <label> </label>
-                            <Field  autoComplete="off" 
+                            <Field  
+                             autoFocus={true}
+                            onBlur={deActivateEditMode}
+                            autoComplete="off" 
                             name="salary" 
                             placeholder="... рублей" 
                             component="input" 
@@ -79,9 +82,7 @@ const Salary = (props) => {
                             <button type="submit" disabled={submitting || pristine}>
                                 Добавить
                             </button>
-                            <button type="button" onClick={deActivateEditMode}>
-                                Назад
-                            </button>
+                         
                         </div>
                     </form>
                 )}

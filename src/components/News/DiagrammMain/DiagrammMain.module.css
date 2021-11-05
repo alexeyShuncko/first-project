@@ -1,0 +1,17 @@
+
+.diagrammMain {
+  text-align: center;
+  
+}
+
+.diagrammMainName {
+    font: bold;
+font-size: 20px;
+margin-bottom: 10px;
+
+}
+.diagrammMainDiagramm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

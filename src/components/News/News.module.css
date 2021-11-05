@@ -43,12 +43,13 @@
 .diagramm {
     margin-top: 10px;
     margin-left: 30px;
+     
 }
 
-.diagrammFragment {
+/* .diagrammFragment {
     width: 380px;
     text-align: center;
-}
+} */
 
 .statistic {
     margin-left: 30px;

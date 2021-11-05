@@ -1,11 +1,12 @@
 import React from 'react';
 import s from './News.module.css';
-import Diagram from './Diagram';
+import Diagram from './DiagrammMain/Diagram';
 import { FormDiagram } from './FormDiagram';
 import Legend from './Legend';
 import { connect } from 'react-redux';
-import { addDiagramm, addActiv, addSalary, addPeriodPo, addPeriodS } from './../../Redux/diagrammReducer';
+import { addDiagramm, addActiv, addSalary, addPeriod, addSelectDiagramm } from './../../Redux/diagrammReducer';
 import Statistic from './Statistic';
+import DiagrammMain from './DiagrammMain/DiagrammMain';
 
 
 class News extends React.Component {
@@ -28,6 +29,9 @@ class News extends React.Component {
         else if (this.props.diagramm.transport !== prevProps.diagramm.transport ) {
             Diagram(this.props.diagramm)
         }
+        else if (this.props.diagramm.selectDiagramm !== prevProps.diagramm.selectDiagramm ) {
+            Diagram(this.props.diagramm)
+        }
        
      }
 
@@ -43,17 +47,15 @@ class News extends React.Component {
                      />
                 </div>
                 <div className={s.diagrammFragment}>
-                    <div>
-                      <h2>  Диаграмма расходов за всё время, в процентах </h2>
-                    </div>
-                    <div><canvas id="tutorial" className={s.diagramm}></canvas></div>
-
+                    <DiagrammMain 
+                    addSelectDiagramm={this.props.addSelectDiagramm}
+                    diagramm={this.props.diagramm}/>
                 </div>
 
                 <Legend diagramm={this.props.diagramm}/>
 
-                <Statistic  addPeriodPo={this.props.addPeriodPo} 
-                addPeriodS={this.props.addPeriodS}
+                <Statistic 
+                addPeriod={this.props.addPeriod}
                 diagramm={this.props.diagramm} addActiv={this.props.addActiv}/>
 
             </div>
@@ -66,7 +68,7 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { addDiagramm,addActiv, addSalary, addPeriodPo, addPeriodS })(News)
+export default connect(mapStateToProps, { addDiagramm,addActiv, addSalary, addPeriod ,addSelectDiagramm})(News)
 
 
 
