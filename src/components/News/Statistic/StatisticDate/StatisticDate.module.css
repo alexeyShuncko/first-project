@@ -1,0 +1,33 @@
+
+.period {
+    margin-top: 10px;  
+}
+
+.statisticName {
+    display: flex;
+}
+.statisticNameDate {
+    flex: 1;
+    text-align: center;
+}
+.statisticDate { 
+    display: flex;
+}
+.statisticDateTime {
+    flex: 1;
+    border: solid black 1px;
+    border-right: none;  
+}
+.statisticDateNum {
+    flex: 1;
+    text-align: center;
+    border: solid black 1px; 
+}
+.periodStatistic {
+    display: flex;
+    justify-content: flex-end;
+}
+.periodStatistic label {
+    flex: 1;
+}
+

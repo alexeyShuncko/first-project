@@ -1,0 +1,27 @@
+.button {
+    margin-top: 10px;
+}
+
+.button button {
+    margin-top: 10px;
+}
+
+.statistic {
+    margin-left: 30px;
+}
+
+.statisticName {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.option option {
+    text-align: center;
+}
+
+.option {
+    height: 30px;
+    width: 120px;
+    border-radius: 5px;
+}

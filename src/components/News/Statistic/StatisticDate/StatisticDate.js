@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Field, Form } from "react-final-form";
-import s from '../News.module.css';
-import DiagrammContainer from "./DIagrammContainer";
+import s from './StatisticDate.module.css';
+import DiagrammContainer from "./DIagrammContainer/DIagrammContainer";
 
 
 const StatisticDate = (props) => {

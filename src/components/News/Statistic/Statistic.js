@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, Form} from "react-final-form";
-import s from './News.module.css';
+import s from './Statistic.module.css';
 import StatisticDate from './StatisticDate/StatisticDate';
 
 const Statistic = (props) => {
@@ -55,7 +55,7 @@ const Statistic = (props) => {
    
     return (
         <div className={s.statistic}>
-            <div ><h2>Статистика</h2></div>
+            <div className={s.statisticName}>Статистика</div>
             <Form
                 onSubmit={onSubmit}
 

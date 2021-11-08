@@ -3,6 +3,7 @@ const ADD_ACTIV = 'ADD_ACTIV'
 const ADD_SALARY = 'ADD_SALARY'
 const ADD_PERIOD = 'ADD_PERIOD'
 const ADD_SELECT_DIAGRAMM = 'ADD_SELECT_DIAGRAMM'
+const ADD_SALARY_VALUE_TRUE = 'ADD_SALARY_VALUE_TRUE'
 
 
 let initialState = { 
@@ -18,7 +19,7 @@ let initialState = {
      apartment:   {name: 'apartment', color: '#57d9ff' , data: [ { id: 1, time: '2021-10-28 19:04', num: 25} ] , summ: 25},   
      transport:   {name: 'transport', color: '#169928' , data: [ { id: 1, time: '2021-10-28 19:04', num: 25} ] , summ: 25},
     activ: '',
-    salary: 700,
+    salary: { salaryNum: 700, salaryDate: '2021-11-08 21:01:25', salaryValueTrue: false },
     periodPo: '',
     periodS: '',
     periodPoTime: '',
@@ -76,7 +77,11 @@ const diagrammReduser = (state = initialState, action) => {
             }
             case ADD_SALARY:
                 return {
-                ...state, salary: Number(action.salary)
+                ...state, salary: {...state.salary, 
+                    salaryNum: action.salary, 
+                    
+                    salaryDate: state.salary.salaryValueTrue === false ?`2021-11-08 21:${action.salary}:25`: state.salary.salaryDate,
+                    salaryValueTrue: true}
             }
             case ADD_PERIOD:
                 return {
@@ -90,6 +95,11 @@ const diagrammReduser = (state = initialState, action) => {
                 return {
                 ...state, selectDiagramm:  action.selectDiagramm
             }
+            case  ADD_SALARY_VALUE_TRUE:
+                return {
+                ...state, salary:  {...state.salary,salaryValueTrue: action.value }
+            }
+           
             
         default:
             return state
@@ -112,6 +122,9 @@ export const addSelectDiagramm = (selectDiagramm) => {
     return { type:  ADD_SELECT_DIAGRAMM, selectDiagramm }
 }
 
+export const addSalaryValueTrue = (value) => {
+    return { type:  ADD_SALARY_VALUE_TRUE, value }
+}
 
 
 // export const getUpdateProfile = (profile, userId) => (dispatch) => {

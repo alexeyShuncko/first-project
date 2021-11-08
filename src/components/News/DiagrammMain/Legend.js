@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './News.module.css';
+import s from './Legend.module.css';
 
 
 const Legend = (props) => {

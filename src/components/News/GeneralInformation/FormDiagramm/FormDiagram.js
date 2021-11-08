@@ -1,14 +1,11 @@
 import React from 'react';
 import { Form } from 'react-final-form';
-import s from './News.module.css';
+import s from './FormDiagram.module.css';
 import { Field } from 'react-final-form';
-import Salary from './Salary/Salary';
+import Salary from '../Salary/Salary';
 
 
 export const FormDiagram = (props) => {
-
-
-    
 
     const onSubmit = (values, form) => {
        
@@ -49,6 +46,7 @@ export const FormDiagram = (props) => {
             <Salary 
             diagramm={props.diagramm}
             addSalary={props.addSalary}
+            addSalaryValueTrue={props.addSalaryValueTrue}
             />
             <h2>Сумма денег, потраченных на :</h2>
             <Form

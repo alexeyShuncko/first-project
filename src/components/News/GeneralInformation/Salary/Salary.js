@@ -1,13 +1,12 @@
 import React from 'react';
 import { Form } from 'react-final-form';
-import s from '../News.module.css';
+import s from './Salary.module.css';
 import { Field } from 'react-final-form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 const Salary = (props) => {
 
-    
     let [editMode, setEditMode] = useState(false)
 
     const activateEditMode = () => {
@@ -17,6 +16,11 @@ const Salary = (props) => {
     const deActivateEditMode = () => {
         setEditMode(false)
     }
+        useEffect(() => {
+            if (timer >= props.diagramm.salary.salaryDate && props.diagramm.salary.salaryValueTrue)
+            { props.addSalaryValueTrue(false)
+             console.log(11)}}, 
+        );
 
     const time = new Date()
         function formatDate(date) {
@@ -29,9 +33,16 @@ const Salary = (props) => {
           
             var yy = date.getFullYear() % 100;
             if (yy < 10) yy = '0' + yy;
+            var HH = date.getHours();
+            if (HH < 10) HH = '0' + HH;
     
+            var MM = date.getMinutes();
+            if (MM < 10) MM = '0' + MM;
+    
+             var SS = date.getSeconds();
+             if (SS < 10) SS = '0' + SS;
           
-            return '20'+ yy + '-' + mm + '-' + dd  ;
+             return '20'+ yy + '-' + mm + '-' + dd + ' ' + HH + ':' + MM + ':' + SS;
           }
         const timer = formatDate(time)
     
@@ -41,22 +52,22 @@ const Salary = (props) => {
     props.diagramm.apartment.summ +
     props.diagramm.transport.summ
 
-    const onSubmit = (values, form) => {
-        if (values.salary) {
-        props.addSalary(values.salary)}
+    const onSubmit = (values) => {
+        props.addSalary(values.salary)
         deActivateEditMode()
-        form.reset()
-    }
+}
 
     return (
+        
         <div>
-            {timer === '2021-11-06'
+            
+            {timer >= props.diagramm.salary.salaryDate 
                 ? <div className={s.salaryUpdate}>Обнови ЗП</div>
                 : null}
 
             <div className={s.salary}>
                 <span className={s.salaryName} title="Нажми, чтобы изменить)" onClick={activateEditMode}> Зарплата: </span>
-                <span className={s.salaryValue}> {props.diagramm.salary}р</span>
+                <span className={s.salaryValue}> {props.diagramm.salary.salaryNum}р</span>
             </div>
 
             {editMode
@@ -69,7 +80,6 @@ const Salary = (props) => {
                             <label> </label>
                             <Field  
                              autoFocus={true}
-                            onBlur={deActivateEditMode}
                             autoComplete="off" 
                             name="salary" 
                             placeholder="... рублей" 
@@ -82,6 +92,13 @@ const Salary = (props) => {
                             <button type="submit" disabled={submitting || pristine}>
                                 Добавить
                             </button>
+                            <button type="button" onClick={deActivateEditMode}>
+                                Назад
+                            </button>
+                         
+                        </div>
+                        <div >
+                           
                          
                         </div>
                     </form>
@@ -95,7 +112,7 @@ const Salary = (props) => {
             </div>
             <div >
                 <span > Должно остаться: </span>
-                <span > {(props.diagramm.salary - totalSumm).toFixed(2)} </span>
+                <span > {(props.diagramm.salary.salaryNum - totalSumm).toFixed(2)} </span>
             </div>
         </div>
     )

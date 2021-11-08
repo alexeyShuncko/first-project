@@ -1,0 +1,23 @@
+
+.formExpenses {
+    margin-top: 70px;
+    margin-left: 10px;
+    width: 300px;
+}
+
+.inputDiagramm button {
+    margin-top: 10px;
+}
+.inputDiagramm Field {
+   
+    flex: 2;
+}
+
+.inputDiagramm label {
+    flex: 1;
+}
+
+.inputDiagramm {
+    display: flex;
+    justify-content: flex-end;
+}
