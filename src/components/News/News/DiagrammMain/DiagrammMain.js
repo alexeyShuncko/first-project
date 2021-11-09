@@ -18,7 +18,6 @@ const DiagrammMain = (props) => {
     }
 
     const onSelectChange = (e) => {
-        console.log(e.target.value)
         props.addSelectDiagramm(e.target.value)
         deActivateEditMode()
     }
@@ -30,8 +29,12 @@ const DiagrammMain = (props) => {
         <div className={s.diagrammMain}>
 
             <div className={s.diagrammMainName}>
-                Диаграмма расходов за всё время, {!editMode ? <div onClick={activateEditMode}>в {props.diagramm.selectDiagramm} </div>
-                    : <Form
+                Диаграмма расходов за всё время, 
+                {!editMode 
+                ? <div className={s.diagrammMainNameValue}
+                onClick={activateEditMode} 
+                title="Нажми, чтобы изменить)">в {props.diagramm.selectDiagramm} </div>
+                : <Form
                         onSubmit={onSubmit}
 
                         render={({ handleSubmit, form, submitting, pristine, values }) => (

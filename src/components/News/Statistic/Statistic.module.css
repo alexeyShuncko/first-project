@@ -7,13 +7,23 @@
 }
 
 .statistic {
-    margin-left: 30px;
+    display: flex;
+   
+}
+.statisticItem1 {
+    flex: 1;
+   text-align: center;
+}
+.statisticItem2 {
+    flex: 2;
 }
 
 .statisticName {
     font-weight: bold;
     font-size: 20px;
     margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center;
 }
 
 .option option {
@@ -25,3 +35,4 @@
     width: 120px;
     border-radius: 5px;
 }
+

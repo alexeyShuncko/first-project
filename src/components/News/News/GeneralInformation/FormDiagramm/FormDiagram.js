@@ -5,7 +5,7 @@ import { Field } from 'react-final-form';
 import Salary from '../Salary/Salary';
 
 
-export const FormDiagram = (props) => {
+ const FormDiagram = (props) => {
 
     const onSubmit = (values, form) => {
        
@@ -48,19 +48,16 @@ export const FormDiagram = (props) => {
             addSalary={props.addSalary}
             addSalaryValueTrue={props.addSalaryValueTrue}
             />
-            <h2>Сумма денег, потраченных на :</h2>
+            <div className={s.formExpensesName}>Сумма денег, потраченных на :</div>
+            <div className={s.formExpensesFild}>
             <Form
                 onSubmit={onSubmit}
-                // initialValues={{
-                //     ...props.profile
-                // }}
-
                 render={({ handleSubmit, form, submitting, pristine, values }) => (
-                    <form onSubmit={handleSubmit} className={s.form}>
+                    <form onSubmit={handleSubmit} >
 
-                        <div className={s.inputDiagramm}>
-                            <label > Еду : </label>
-                            <Field 
+                        <div className={s.formItems}>
+                            <label className={s.formItemsLabel}> Еду : </label>
+                            <Field className={s.formItemsField}
                             max="500" 
                             autoComplete="off" 
                             name="food" 
@@ -70,27 +67,29 @@ export const FormDiagram = (props) => {
                             step={0.01}
                             />
                         </div>
-                        <div className={s.inputDiagramm}>
-                            <label >Алкоголь : </label>
-                            <Field  autoComplete="off" 
+                        <div className={s.formItems}>
+                            <label className={s.formItemsLabel}>Алкоголь : </label>
+                            <Field  className={s.formItemsField}
+                            autoComplete="off" 
                             name="alcohol" 
                             placeholder="... рублей" 
                             component="input" 
                             type="number" 
                             step={0.01}/>
                         </div>
-                        <div className={s.inputDiagramm}>
-                            <label>Квартиру : </label>
-                            <Field autoComplete="off" 
+                        <div className={s.formItems}>
+                            <label className={s.formItemsLabel}>Квартиру : </label>
+                            <Field className={s.formItemsField}  
+                            autoComplete="off" 
                             name="apartment" 
                             placeholder="... рублей" 
                             component="input" 
                             type="number" 
                             step={0.01}/>
                         </div>
-                        <div className={s.inputDiagramm}>
-                            <label>Транспорт : </label>
-                            <Field 
+                        <div className={s.formItems}>
+                            <label className={s.formItemsLabel}>Транспорт : </label>
+                            <Field className={s.formItemsField}
                             autoComplete="off" 
                             name="transport" 
                             placeholder="... рублей" 
@@ -99,26 +98,21 @@ export const FormDiagram = (props) => {
                             step={0.01}/>
                         </div>
 
-                        <div className={s.inputDiagramm}>
+                        <div className={s.formItemsButton}>
                             <button type="submit"
                              disabled={submitting || pristine} //сделать видимой невидимой
                             >
                                 Добавить
                             </button>
-                            {/* <button type="button"
-                                onClick={form.reset}
-                            >
-                                Очистить
-                            </button> */}
-
                         </div>
                     </form>
                 )}
             />
+            </div>
         </div>
     )
 }
 
-
+export default FormDiagram
 
 

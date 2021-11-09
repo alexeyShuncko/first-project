@@ -1,7 +1,17 @@
 
-.period {
-    margin-top: 10px;  
+.statisticDate { 
+    display: flex;  
 }
+.statisticDateItem {
+flex:1;
+
+
+}
+.statisticDateDiagramm {
+    flex:1;
+    text-align: center;
+}
+
 
 .statisticName {
     display: flex;
@@ -10,24 +20,29 @@
     flex: 1;
     text-align: center;
 }
-.statisticDate { 
-    display: flex;
-}
+
 .statisticDateTime {
     flex: 1;
     border: solid black 1px;
     border-right: none;  
 }
+
 .statisticDateNum {
     flex: 1;
     text-align: center;
     border: solid black 1px; 
 }
+
+
+
 .periodStatistic {
     display: flex;
-    justify-content: flex-end;
+    
 }
 .periodStatistic label {
     flex: 1;
 }
 
+.statisticDateTable {
+ text-align: center;
+}

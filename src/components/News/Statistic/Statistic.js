@@ -2,6 +2,9 @@ import React from "react";
 import { Field, Form} from "react-final-form";
 import s from './Statistic.module.css';
 import StatisticDate from './StatisticDate/StatisticDate';
+import { addDiagramm, addSalary, addSelectDiagramm, 
+    addActiv, addPeriod, addSalaryValueTrue} from '../../../Redux/diagrammReducer';
+import { connect } from 'react-redux';
 
 const Statistic = (props) => {
 
@@ -55,12 +58,12 @@ const Statistic = (props) => {
    
     return (
         <div className={s.statistic}>
-            <div className={s.statisticName}>Статистика</div>
+            <div className={s.statisticItem1}>
             <Form
                 onSubmit={onSubmit}
 
                 render={({ handleSubmit, form, submitting, pristine, values }) => (
-                    <form onSubmit={handleSubmit} className={s.form}>
+                    <form onSubmit={handleSubmit} >
 
                         <div>
                             <label>Категория : </label>
@@ -76,10 +79,9 @@ const Statistic = (props) => {
                         <div> {values.favorite ? colorBorder(values) : null} </div>                       
                     </form>
                 )}
-               
-           
             />
-             <div className={s.button}>
+            </div>
+             <div className={s.statisticItem2}>
                 <StatisticDate 
                 addPeriod={props.addPeriod}
                 diagramm={props.diagramm} />
@@ -88,4 +90,10 @@ const Statistic = (props) => {
 
     )
 }
-export default Statistic
+let mapStateToProps = (state) => {
+    return {
+        diagramm: state.expenses
+    }
+}
+export default connect (mapStateToProps,{ addDiagramm, addActiv, 
+    addSalary, addPeriod, addSelectDiagramm, addSalaryValueTrue})(Statistic)

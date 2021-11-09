@@ -1,0 +1,36 @@
+
+.formExpenses {
+    margin-top: 50px;
+    margin-left: 10px;  
+}
+.formExpensesFild{
+    display: flex;
+    flex-direction: column;
+}
+
+.formItemsButton {
+    display: flex;
+    margin-top: 10px;
+     justify-content: flex-end; 
+   
+}
+.formItems {
+display: flex;
+}
+.formItemsField {
+   
+    flex: 1;
+}
+
+.formItemsLabel{
+    flex: 1;
+ 
+}
+
+
+.formExpensesName {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}

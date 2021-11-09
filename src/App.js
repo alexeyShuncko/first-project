@@ -7,7 +7,7 @@ import Header from './components/Header/HeaderContainer';
 import LoginContainer from './components/Login/logincontainer';
 import Music from './components/Music/Music';
 import Nav from './components/Nav/Nav';
-import News from './components/News/News';
+//import News from './components/News/News';
 
 
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
@@ -19,6 +19,7 @@ import { initialiseApp } from './Redux/AppReducer'
 import { compose } from 'redux';
 import Preloader from './components/comon/preloader/Preloader';
 import { withSuspense } from './HOC/withSuspense';
+import NewsContainer from './components/News/NewsContainer';
 
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
@@ -53,7 +54,10 @@ class App extends Component {
            <Route path='/login' 
           render={ () => <LoginContainer /> } />
 
-          <Route path='/news' render={() => <News />} />
+          <Route path='/news' render={() => <NewsContainer />} />
+          <Route path='/main' render={() => <NewsContainer />} />
+          <Route path='/statistic' render={() => <NewsContainer />} />
+          <Route path='/setting' render={() => <NewsContainer />} />
           <Route path='/music' component={Music} />
           <Route path='/settings' component={Settings} />
           <Route path='*' 

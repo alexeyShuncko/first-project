@@ -19,7 +19,7 @@ let initialState = {
      apartment:   {name: 'apartment', color: '#57d9ff' , data: [ { id: 1, time: '2021-10-28 19:04', num: 25} ] , summ: 25},   
      transport:   {name: 'transport', color: '#169928' , data: [ { id: 1, time: '2021-10-28 19:04', num: 25} ] , summ: 25},
     activ: '',
-    salary: { salaryNum: 700, salaryDate: '2021-11-08 21:01:25', salaryValueTrue: false },
+    salary: { salaryNum: 700, salaryDate: '2021-11-09', salaryValueTrue: false },
     periodPo: '',
     periodS: '',
     periodPoTime: '',
@@ -80,7 +80,7 @@ const diagrammReduser = (state = initialState, action) => {
                 ...state, salary: {...state.salary, 
                     salaryNum: action.salary, 
                     
-                    salaryDate: state.salary.salaryValueTrue === false ?`2021-11-08 21:${action.salary}:25`: state.salary.salaryDate,
+                    salaryDate: state.salary.salaryValueTrue === false ?`2021-${action.months+1}-09 `: state.salary.salaryDate,
                     salaryValueTrue: true}
             }
             case ADD_PERIOD:
@@ -112,8 +112,8 @@ export const addDiagramm = (values, time) => {
 export const addActiv = (activ) => {
     return { type:  ADD_ACTIV, activ }
 }
-export const addSalary = (salary) => {
-    return { type:  ADD_SALARY, salary }
+export const addSalary = (salary,months) => {
+    return { type:  ADD_SALARY, salary,months }
 }
 export const addPeriod = (periodS,periodPo,periodSTime,periodPoTime) => {
     return { type:  ADD_PERIOD, periodS,periodPo,periodSTime,periodPoTime}

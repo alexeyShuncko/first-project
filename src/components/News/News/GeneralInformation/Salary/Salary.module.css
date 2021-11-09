@@ -1,13 +1,4 @@
-.salary {
-display: flex;
-flex-direction: row;
-}
-.salaryName{
-    flex: 1;
-}
-.salaryValue {
-    flex: 3;
-}
+
 .salaryUpdate {
     font-weight: bold;
     font-size: 20px;

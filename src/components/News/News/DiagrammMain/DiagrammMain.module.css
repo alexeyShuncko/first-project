@@ -15,3 +15,7 @@
   justify-content: center;
   flex-direction: row;
 }
+.diagrammMainNameValue {
+  width: 150px;
+  margin-left: 155px;
+}

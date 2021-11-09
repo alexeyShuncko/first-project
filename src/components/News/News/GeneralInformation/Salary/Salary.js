@@ -45,6 +45,15 @@ const Salary = (props) => {
              return '20'+ yy + '-' + mm + '-' + dd + ' ' + HH + ':' + MM + ':' + SS;
           }
         const timer = formatDate(time)
+
+        const month = new Date()
+        function formatMonth(date) {
+    
+             var mm = date.getMonth() + 1;
+             if (mm < 10) mm = '0' + mm;
+             return  mm ;
+          }
+        const months = formatMonth(month)
     
 
     const totalSumm =  props.diagramm.food.summ +
@@ -53,7 +62,7 @@ const Salary = (props) => {
     props.diagramm.transport.summ
 
     const onSubmit = (values) => {
-        props.addSalary(values.salary)
+        props.addSalary(values.salary,months)
         deActivateEditMode()
 }
 
@@ -66,8 +75,9 @@ const Salary = (props) => {
                 : null}
 
             <div className={s.salary}>
-                <span className={s.salaryName} title="Нажми, чтобы изменить)" onClick={activateEditMode}> Зарплата: </span>
-                <span className={s.salaryValue}> {props.diagramm.salary.salaryNum}р</span>
+                <span className={s.salaryName} 
+                title="Нажми, чтобы изменить)" onClick={activateEditMode}>Зарплата: </span>
+                <span className={s.salaryValue}>{props.diagramm.salary.salaryNum}р</span>
             </div>
 
             {editMode

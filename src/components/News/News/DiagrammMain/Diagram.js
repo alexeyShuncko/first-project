@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Diagram = (props) => {
+const Diagram = (food,alcohol,apartment,transport,selectDiagramm) => {
 
     let myCanvas = document.getElementById('tutorial');
     myCanvas.width = 300;
@@ -15,24 +15,24 @@ const Diagram = (props) => {
         ctx.closePath();
         ctx.fill();
     }
-    console.log(props) // изменение объекта расходов 
+    console.log() // изменение объекта расходов 
 
     const myVinyls =
     {
         food:
-            props.food ? Number(props.food.summ)
+            food ? Number(food.summ)
                 : 15,
         alcohol:
-            props.alcohol ? Number(props.alcohol.summ)
+            alcohol ? Number(alcohol.summ)
                 : 15,
         apartment:
-            props.apartment ? Number(props.apartment.summ)
+            apartment ? Number(apartment.summ)
                 : 15,
         transport:
-            props.transport ? Number(props.transport.summ)
+            transport ? Number(transport.summ)
                 : 15
     }
-    const totalSumm = Number(props.food.summ) + Number(props.alcohol.summ) + Number(props.apartment.summ) + Number(props.transport.summ)
+    const totalSumm = Number(food.summ) + Number(alcohol.summ) + Number(apartment.summ) + Number(transport.summ)
 
 
     class Piechart {
@@ -74,7 +74,7 @@ const Diagram = (props) => {
                     var labelText = Math.round(100 * val / total_value);// подпись диаграммы cтиль
                     this.ctx.fillStyle = 'white';
                     this.ctx.font = 'bold 19px Arial';
-                    if (props.selectDiagramm === 'процентах') { this.ctx.fillText(labelText + '%', labelX, labelY) }
+                    if (selectDiagramm === 'процентах') { this.ctx.fillText(labelText + '%', labelX, labelY) }
                     else   { this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
 
                     start_angle += slice_angle;
@@ -89,10 +89,10 @@ const Diagram = (props) => {
             canvas: myCanvas,
             data: myVinyls,
             colors: [
-                props.food.color,
-                props.alcohol.color,
-                props.apartment.color,
-                props.transport.color
+                food.color,
+                alcohol.color,
+                apartment.color,
+                transport.color
             ]
         }
     )
