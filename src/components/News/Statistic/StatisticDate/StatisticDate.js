@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Field, Form } from "react-final-form";
 import s from './StatisticDate.module.css';
 import DiagrammContainer from "./DIagrammContainer/DIagrammContainer";
 
@@ -8,107 +7,84 @@ const StatisticDate = (props) => {
 
 
     let [editMode, setEditMode] = useState(false)
+    let [editVal, setEditVal] = useState(false)
 
     const activateEditMode = () => {
-        setEditMode(true)
+        if (props.diagramm.activ && props.diagramm.periodPo && props.diagramm.periodS) {
+            setEditMode(true)
+            setEditVal(false)
+        }
+        else setEditVal(true)
     }
     const deActivateEditMode = () => {
         setEditMode(false)
     }
 
-
-    const statisticPeriod = (values) => {
+    const statisticPeriod = () => {
+        console.log()
         if (props.diagramm.activ === 'food') {
             let rew = props.diagramm.food.data.filter(a =>
-                a.time <= (values.periodPo + ' ' + values.periodPoTime) && a.time >= (values.periodS + ' ' + values.periodSTime))
+                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
+                && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
             return rew
         }
         else if (props.diagramm.activ === 'alcohol') {
             let rew = props.diagramm.alcohol.data.filter(a =>
-                a.time <= (values.periodPo + ' ' + values.periodPoTime) && a.time >= (values.periodS + ' ' + values.periodSTime))
+                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
+                && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
             return rew
         }
         else if (props.diagramm.activ === 'apartment') {
             let rew = props.diagramm.apartment.data.filter(a =>
-                a.time <= (values.periodPo + ' ' + values.periodPoTime) && a.time >= (values.periodS + ' ' + values.periodSTime))
+                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
+                && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
+            console.log(rew)
             return rew
         }
         else if (props.diagramm.activ === 'transport') {
             let rew = props.diagramm.transport.data.filter(a =>
-                a.time <= (values.periodPo + ' ' + values.periodPoTime) && a.time >= (values.periodS + ' ' + values.periodSTime))
+                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
+                && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
             return rew
         }
 
     }
 
-    const onSubmit = (values, form) => {
-        props.addPeriod(values.periodS,
-            values.periodPo,
-            values.periodSTime,
-            values.periodPoTime)
-
-        //form.reset()
-    }
-
-
     return (
         <div className={s.statisticDate}>
             <div className={s.statisticDateItem}>
-                <Form
-                    onSubmit={onSubmit}
-
-                    render={({ handleSubmit, form, submitting, pristine, values }) => (
-                        <form onSubmit={handleSubmit}>
-
-                            <div className={s.period}>
-                                <label>Период : </label>
-                                <div className={s.periodStatistic}>
-                                    <label>C: </label>
-                                    <Field name="periodS" component="input" type="date"></Field>
-                                    <Field name="periodSTime" component="input" type="time"></Field>
-                                </div>
-                                <div className={s.periodStatistic}>
-                                    <label>По: </label>
-                                    <Field name="periodPo" component="input" type="date"></Field>
-                                    <Field name="periodPoTime" component="input" type="time"></Field>
-                                </div>
-
-                                <div> <button type='submit'
-                                    disabled={submitting || pristine}>
-                                    Добавить период
-                                </button>
-                                </div>
-                                
+                <div className={s.statisticDateTable}>
+                    {!editMode
+                        ? <div>
+                            <button onClick={activateEditMode} >
+                                Таблица
+                            </button>
+                        </div>
+                        : <div >
+                            <button onClick={deActivateEditMode}>
+                                Убрать
+                            </button>
+                            <div className={s.statisticName}>
+                                <span className={s.statisticNameDate}><b>Дата:</b></span>
+                                <span className={s.statisticNameDate}> <b>Сумма: </b></span>
                             </div>
+                            {props.diagramm.activ && statisticPeriod().map(a =>
+                                <div key={a.id} className={s.statisticDate}>
+                                    <span className={s.statisticDateTime}>  {a.time}  </span>
+                                    <span className={s.statisticDateNum}> {a.num} </span>
+                                </div>)
+                            }
 
-                            <div className={s.statisticDateTable}>
-                                {!editMode
-                                    ? <div> <button onClick={activateEditMode} >
-                                        Таблица
-                                    </button>
-                                    </div>
-                                    : <div >
-                                        <button onClick={deActivateEditMode}>
-                                            Убрать Таблицу
-                                        </button>
-
-                                        <div className={s.statisticName}>
-                                            <span className={s.statisticNameDate}><b>Дата:</b></span>
-                                            <span className={s.statisticNameDate}> <b>Сумма: </b></span>
-                                        </div>
-
-                                        {props.diagramm.activ && statisticPeriod(values).map(a =>
-                                            <div key={a.id} className={s.statisticDate}>
-                                                <span className={s.statisticDateTime}>  {a.time}  </span>
-                                                <span className={s.statisticDateNum}> {a.num} </span>
-                                            </div>)
-                                        }
-
-                                    </div>}
-                            </div>
-                        </form>
-                    )}
-                />
+                        </div>}
+                    {editVal && !props.diagramm.activ
+                        ? <div className={s.categoryVal}>Выбери категорию</div>
+                        : null
+                    }
+                    {editVal && (!props.diagramm.periodPo || !props.diagramm.periodS)
+                        ? <div className={s.categoryVal}>Выбери период</div>
+                        : null
+                    }
+                </div>
             </div>
             <div className={s.statisticDateDiagramm}>
                 <DiagrammContainer diagramm={props.diagramm} />

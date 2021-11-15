@@ -7,3 +7,15 @@
     text-align: center;
     margin-bottom: 10px;
 }
+.salaryName {
+    font-weight: bold;
+    font-size: 20px;
+}
+.totalSummName{
+    font-weight: bold;
+    font-size: 20px;
+}
+.balanceName {
+    font-weight: bold;
+    font-size: 20px;
+}

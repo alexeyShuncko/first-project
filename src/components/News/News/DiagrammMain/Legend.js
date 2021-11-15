@@ -6,8 +6,11 @@ const Legend = (props) => {
 
     return (
     <div className={s.Legend}>  
-        <div>
-            <span className={s.legend} style={{ backgroundColor: ` ${props.diagramm.food.color}` }}>&nbsp;</span>
+        <div>{1===2 
+        ?<span className={s.legend} style={{ backgroundColor: ` ${props.diagramm.food.color}` }}>&nbsp;</span>
+        : <input type= "color"></input>
+        }
+            
             <span> - Еда </span>
         </div>
         <div>

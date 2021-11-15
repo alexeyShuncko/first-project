@@ -33,16 +33,13 @@ flex:1;
     border: solid black 1px; 
 }
 
-
-
-.periodStatistic {
-    display: flex;
-    
-}
-.periodStatistic label {
-    flex: 1;
-}
-
 .statisticDateTable {
  text-align: center;
+}
+
+.categoryVal {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    border: solid green 2px;
 }

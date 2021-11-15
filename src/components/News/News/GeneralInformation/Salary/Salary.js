@@ -116,12 +116,12 @@ const Salary = (props) => {
             />
             : null}
             <div >
-                <span> Всего потрачено: </span>
+                <span className={s.totalSummName}> Всего потрачено: </span>
                 <span> {totalSumm.toFixed(2)}
                 </span>
             </div>
             <div >
-                <span > Должно остаться: </span>
+                <span className={s.balanceName}> Должно остаться: </span>
                 <span > {(props.diagramm.salary.salaryNum - totalSumm).toFixed(2)} </span>
             </div>
         </div>

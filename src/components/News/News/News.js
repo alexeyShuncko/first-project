@@ -3,7 +3,7 @@ import s from './News.module.css';
 import Diagram from './DiagrammMain/Diagram';
 import  FormDiagram  from './GeneralInformation/FormDiagramm/FormDiagram';
 import { connect } from 'react-redux';
-import { addDiagramm, addActiv, addSalary, addPeriod, 
+import { addDiagramm, addActiv, addSalary, 
     addSelectDiagramm, addSalaryValueTrue } from '../../../Redux/diagrammReducer';
 import DiagrammMain from './DiagrammMain/DiagrammMain';
 
@@ -51,7 +51,7 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    { addDiagramm, addActiv, addSalary, addPeriod, addSelectDiagramm, addSalaryValueTrue })(News)
+    { addDiagramm, addActiv, addSalary, addSelectDiagramm, addSalaryValueTrue })(News)
 
 
 
