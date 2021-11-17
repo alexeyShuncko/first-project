@@ -27,8 +27,8 @@ let initialState = {
     salary: { salaryNum: 700, salaryDate: '2021-11-09', salaryValueTrue: false },
     periodPo: '',
     periodS: '',
-    periodPoTime: '',
-    periodSTime: '',
+    periodPoTime: '23:59',
+    periodSTime: '00:01',
     selectDiagramm: 'процентах'
 }
 
