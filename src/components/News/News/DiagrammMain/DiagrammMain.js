@@ -52,7 +52,11 @@ const DiagrammMain = (props) => {
             </div>
             <div className={s.diagrammMainDiagramm}>
                 <canvas id="tutorial" className={s.diagramm}></canvas>
-                <div><Legend diagramm={props.diagramm} /></div>
+                <div>
+                    <Legend 
+                diagramm={props.diagramm} 
+                addEditColor={props.addEditColor}/>
+                </div>
             </div>
 
         </div>

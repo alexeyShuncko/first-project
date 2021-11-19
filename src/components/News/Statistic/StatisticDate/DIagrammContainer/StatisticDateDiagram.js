@@ -4,8 +4,8 @@
 const StatisticDateDiagram = (diagramm,eee) => {
 
     let myCanvas = document.getElementById('period');
-    myCanvas.width = 200;
-    myCanvas.height = 200;
+    myCanvas.width = 250;
+    myCanvas.height = 300;
 
     function drawPieSlice(ctx, centerX, centerY, radius, startAngle, endAngle, color) {
         ctx.fillStyle = color;
@@ -19,14 +19,15 @@ const StatisticDateDiagram = (diagramm,eee) => {
     const myVinyls =
     {
         food:
-        diagramm.food ? Number(diagramm.food) : 15,
+        diagramm.food ? Number(diagramm.food) : 0,
         alcohol:
-        diagramm.alcohol ? Number(diagramm.alcohol) : 15,
+        diagramm.alcohol ? Number(diagramm.alcohol) :0,
         apartment:
-        diagramm.apartment ? Number(diagramm.apartment) : 15,
+        diagramm.apartment ? Number(diagramm.apartment) : 0,
         transport:
-        diagramm.transport ? Number(diagramm.transport) : 15
+        diagramm.transport ? Number(diagramm.transport) : 0
     }
+
 
 
     class Piechart {
@@ -42,7 +43,7 @@ const StatisticDateDiagram = (diagramm,eee) => {
 
                 for (let categ in this.options.data) {
                     let val = this.options.data[categ];
-                    total_value += val;
+                    total_value += val
 
                     var start_angle = 0;
                     for (let categ in this.options.data) {
@@ -67,14 +68,14 @@ const StatisticDateDiagram = (diagramm,eee) => {
                     for (let categ in this.options.data) {
                         let val = this.options.data[categ];
                         slice_angle = 2 * Math.PI * val / total_value;
-                        var pieRadius = Math.min(this.canvas.width / 2, this.canvas.height / 2);
+                        var pieRadius = Math.max(this.canvas.width / 2, this.canvas.height / 2);
                         var labelX = this.canvas.width / 2 + (pieRadius / 2) * Math.cos(start_angle + slice_angle / 2);
                         var labelY = this.canvas.height / 2 + (pieRadius / 2) * Math.sin(start_angle + slice_angle / 2);
 
 
                         var labelText = Math.round(100 * val / total_value);
                         this.ctx.fillStyle = 'white';
-                        this.ctx.font = 'bold 20px Arial';
+                        this.ctx.font = 'bold 18px Arial';
                         this.ctx.fillText(labelText + '%', labelX, labelY);
                         start_angle += slice_angle;
                     };

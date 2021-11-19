@@ -32,7 +32,10 @@ const Diagram = (food,alcohol,apartment,transport,selectDiagramm) => {
             transport ? Number(transport.summ)
                 : 15
     }
-    const totalSumm = Number(food.summ) + Number(alcohol.summ) + Number(apartment.summ) + Number(transport.summ)
+    const totalSumm = Number(food.summ) + 
+    Number(alcohol.summ) + 
+    Number(apartment.summ) + 
+    Number(transport.summ)
 
 
     class Piechart {

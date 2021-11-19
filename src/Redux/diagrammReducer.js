@@ -7,6 +7,8 @@ const ADD_PERIOD_S_TIME = 'ADD_PERIOD_S_TIME'
 const ADD_PERIOD_PO_TIME = 'ADD_PERIOD_PO_TIME'
 const ADD_SELECT_DIAGRAMM = 'ADD_SELECT_DIAGRAMM'
 const ADD_SALARY_VALUE_TRUE = 'ADD_SALARY_VALUE_TRUE'
+const ADD_EDIT_COLOR = 'ADD_EDIT_COLOR'
+
 
 
 let initialState = {
@@ -29,7 +31,8 @@ let initialState = {
     periodS: '',
     periodPoTime: '23:59',
     periodSTime: '00:01',
-    selectDiagramm: 'процентах'
+    selectDiagramm: 'процентах',
+    editColor: ''
 }
 
 const diagrammReduser = (state = initialState, action) => {
@@ -105,11 +108,6 @@ const diagrammReduser = (state = initialState, action) => {
                 ...state,
                 periodSTime: action.periodSTime
             }
-        case ADD_PERIOD_PO_TIME:
-            return {
-                ...state,
-                periodPoTime: action.periodPoTime
-            }
 
         case ADD_SELECT_DIAGRAMM:
             return {
@@ -119,6 +117,14 @@ const diagrammReduser = (state = initialState, action) => {
             return {
                 ...state, salary: { ...state.salary, salaryValueTrue: action.value }
             }
+            case ADD_EDIT_COLOR:
+                return {
+                    ...state,
+                    food: {...state.food, color: action.qqq === 'food' ? action.editColor : state.food.color},
+                    alcohol: {...state.alcohol, color: action.qqq === 'alcohol' ? action.editColor : state.alcohol.color},
+                    apartment: {...state.apartment, color: action.qqq === 'apartment' ? action.editColor : state.apartment.color},
+                    transport: {...state.transport, color: action.qqq === 'transport' ? action.editColor : state.transport.color}
+                }
 
 
         default:
@@ -146,6 +152,9 @@ export const addPeriodSTime = (periodSTime) => {
 }
 export const addPeriodPoTime = (periodPoTime) => {
     return { type: ADD_PERIOD_PO_TIME, periodPoTime }
+}
+export const addEditColor = (editColor, qqq) => {
+    return { type: ADD_EDIT_COLOR, editColor, qqq }
 }
 export const addSelectDiagramm = (selectDiagramm) => {
     return { type: ADD_SELECT_DIAGRAMM, selectDiagramm }

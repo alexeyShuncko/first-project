@@ -4,7 +4,7 @@ import Diagram from './DiagrammMain/Diagram';
 import  FormDiagram  from './GeneralInformation/FormDiagramm/FormDiagram';
 import { connect } from 'react-redux';
 import { addDiagramm, addActiv, addSalary, 
-    addSelectDiagramm, addSalaryValueTrue } from '../../../Redux/diagrammReducer';
+    addSelectDiagramm, addSalaryValueTrue, addEditColor } from '../../../Redux/diagrammReducer';
 import DiagrammMain from './DiagrammMain/DiagrammMain';
 
 
@@ -20,8 +20,7 @@ const News =(props)=> {
             props.diagramm.apartment,
             props.diagramm.transport, props.diagramm.selectDiagramm]
     );
-   
-        console.log('render2')
+    
         return (
             <div className={s.news}>
                 
@@ -34,10 +33,11 @@ const News =(props)=> {
                     />
                 </div>
 
-                <div className={s.newsItems}>
+                <div className={s.newsItems1}>
                     <DiagrammMain
                         addSelectDiagramm={props.addSelectDiagramm}
-                        diagramm={props.diagramm} />
+                        diagramm={props.diagramm} 
+                        addEditColor={props.addEditColor}/>
                 </div>
 
             </div>
@@ -51,7 +51,7 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    { addDiagramm, addActiv, addSalary, addSelectDiagramm, addSalaryValueTrue })(News)
+    { addDiagramm, addActiv, addSalary, addSelectDiagramm, addSalaryValueTrue , addEditColor })(News)
 
 
 

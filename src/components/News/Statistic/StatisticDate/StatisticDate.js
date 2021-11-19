@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from './StatisticDate.module.css';
 import DiagrammContainer from "./DIagrammContainer/DIagrammContainer";
 
@@ -8,7 +8,9 @@ const StatisticDate = (props) => {
 
     let [editMode, setEditMode] = useState(false)
     let [editVal, setEditVal] = useState(false)
+    let [tableVal, setTableVal] = useState(false)
 
+    
     const activateEditMode = () => {
         if (props.diagramm.activ && props.diagramm.periodPo && props.diagramm.periodS) {
             setEditMode(true)
@@ -18,10 +20,9 @@ const StatisticDate = (props) => {
     }
     const deActivateEditMode = () => {
         setEditMode(false)
+        setTableVal(false)
     }
-
     const statisticPeriod = () => {
-        console.log()
         if (props.diagramm.activ === 'food') {
             let rew = props.diagramm.food.data.filter(a =>
                 a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
@@ -38,7 +39,6 @@ const StatisticDate = (props) => {
             let rew = props.diagramm.apartment.data.filter(a =>
                 a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
                 && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
-            console.log(rew)
             return rew
         }
         else if (props.diagramm.activ === 'transport') {
@@ -47,34 +47,47 @@ const StatisticDate = (props) => {
                 && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
             return rew
         }
+        return []
 
     }
 
+    const tableStatistic = statisticPeriod()
+
+    useEffect(() => {
+        if (tableStatistic.length === 0) { setTableVal(true) }
+        else setTableVal(false)
+    }, [tableStatistic]
+
+    )
     return (
         <div className={s.statisticDate}>
             <div className={s.statisticDateItem}>
                 <div className={s.statisticDateTable}>
+                    <div>Таблица расходов по выбранной категории за выбранный период. </div>
                     {!editMode
                         ? <div>
                             <button onClick={activateEditMode} >
-                                Таблица
+                                Показать
                             </button>
                         </div>
                         : <div >
                             <button onClick={deActivateEditMode}>
                                 Убрать
                             </button>
-                            <div className={s.statisticName}>
-                                <span className={s.statisticNameDate}><b>Дата:</b></span>
-                                <span className={s.statisticNameDate}> <b>Сумма: </b></span>
-                            </div>
-                            {props.diagramm.activ && statisticPeriod().map(a =>
+
+                            {tableVal
+                                ? <div className={s.categoryVal}>Нет расходов на {props.diagramm.activ} за выбранный период</div>
+                                : <div className={s.statisticName}>
+                                    <span className={s.statisticNameDate}><b>Дата:</b></span>
+                                    <span className={s.statisticNameDate}> <b>Сумма: </b></span>
+                                </div>
+                            }
+                            {props.diagramm.activ && tableStatistic.map(a =>
                                 <div key={a.id} className={s.statisticDate}>
                                     <span className={s.statisticDateTime}>  {a.time}  </span>
                                     <span className={s.statisticDateNum}> {a.num} </span>
                                 </div>)
                             }
-
                         </div>}
                     {editVal && !props.diagramm.activ
                         ? <div className={s.categoryVal}>Выбери категорию</div>
@@ -84,6 +97,10 @@ const StatisticDate = (props) => {
                         ? <div className={s.categoryVal}>Выбери период</div>
                         : null
                     }
+                    {/* {tableVal 
+                        ? <div className={s.categoryVal}>Нет расходов за выбранный период</div>
+                        : null
+                    } */}
                 </div>
             </div>
             <div className={s.statisticDateDiagramm}>
