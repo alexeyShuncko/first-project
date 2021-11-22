@@ -4,7 +4,9 @@ import Diagram from './DiagrammMain/Diagram';
 import  FormDiagram  from './GeneralInformation/FormDiagramm/FormDiagram';
 import { connect } from 'react-redux';
 import { addDiagramm, addActiv, addSalary, 
-    addSelectDiagramm, addSalaryValueTrue, addEditColor } from '../../../Redux/diagrammReducer';
+    addSelectDiagramm, addSalaryValueTrue, addEditColor,
+     getDollarUpdate, addSalarySpentSelect, addSalaryRemainderSelect,
+     addSalaryValue } from '../../../Redux/diagrammReducer';
 import DiagrammMain from './DiagrammMain/DiagrammMain';
 
 
@@ -29,7 +31,11 @@ const News =(props)=> {
                         addDiagramm={props.addDiagramm}
                         diagramm={props.diagramm}
                         addSalary={props.addSalary}
+                        getDollarUpdate={props.getDollarUpdate}
                         addSalaryValueTrue={props.addSalaryValueTrue}
+                        addSalarySpentSelect={props.addSalarySpentSelect}
+                        addSalaryRemainderSelect={props.addSalaryRemainderSelect}
+                        addSalaryValue={props.addSalaryValue}
                     />
                 </div>
 
@@ -39,6 +45,7 @@ const News =(props)=> {
                         diagramm={props.diagramm} 
                         addEditColor={props.addEditColor}/>
                 </div>
+                
 
             </div>
         )
@@ -51,7 +58,9 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    { addDiagramm, addActiv, addSalary, addSelectDiagramm, addSalaryValueTrue , addEditColor })(News)
+    { addDiagramm, addActiv, addSalary, addSelectDiagramm, 
+        addSalaryValueTrue , addEditColor, getDollarUpdate,
+        addSalarySpentSelect, addSalaryRemainderSelect, addSalaryValue })(News)
 
 
 

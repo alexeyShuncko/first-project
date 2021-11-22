@@ -2,7 +2,8 @@ import React from 'react';
 import { Form } from 'react-final-form';
 import s from './FormDiagram.module.css';
 import { Field } from 'react-final-form';
-import Salary from '../Salary/Salary';
+import Salary from './Salary/Salary';
+import DollarRate from './DollarRate/DollarRate';
 
 
  const FormDiagram = (props) => {
@@ -47,6 +48,9 @@ import Salary from '../Salary/Salary';
             diagramm={props.diagramm}
             addSalary={props.addSalary}
             addSalaryValueTrue={props.addSalaryValueTrue}
+            addSalarySpentSelect={props.addSalarySpentSelect}
+            addSalaryRemainderSelect={props.addSalaryRemainderSelect}
+            addSalaryValue={props.addSalaryValue}
             />
             <div className={s.formExpensesName}>Сумма денег, потраченных на :</div>
             <div className={s.formExpensesFild}>
@@ -109,6 +113,10 @@ import Salary from '../Salary/Salary';
                 )}
             />
             </div>
+            <DollarRate
+            getDollarUpdate={props.getDollarUpdate}
+            dollar={props.diagramm.dollar}
+            />
         </div>
     )
 }

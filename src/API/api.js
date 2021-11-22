@@ -8,6 +8,12 @@ const instance = axios.create({
     }
 })
 
+export const getDollar = async () => {
+    const response = await axios.get('https://www.nbrb.by/api/exrates/rates/431');
+    return response.data;
+}
+
+
 export const getUser = async (currentPage, pageSize) => {
     const response = await instance.get(`users?page=${currentPage}&count=${pageSize}`);
     return response.data;

@@ -53,6 +53,14 @@ const StatisticDate = (props) => {
 
     const tableStatistic = statisticPeriod()
 
+    function arraySum(array){
+        var sum = 0;
+        for(var i = 0; i < array.length; i++){
+            sum += array[i];
+            }
+        return sum
+        }
+
     useEffect(() => {
         if (tableStatistic.length === 0) { setTableVal(true) }
         else setTableVal(false)
@@ -88,6 +96,11 @@ const StatisticDate = (props) => {
                                     <span className={s.statisticDateNum}> {a.num} </span>
                                 </div>)
                             }
+                            {!tableVal && <div className={s.statisticDateSumm} >
+                                Потрачено на {props.diagramm.activ} за выбранный период: 
+                                <div className={s.statisticDateSummValue}>{arraySum(tableStatistic.map(a =>a.num))} рублей.</div>
+                                </div>}
+                            
                         </div>}
                     {editVal && !props.diagramm.activ
                         ? <div className={s.categoryVal}>Выбери категорию</div>

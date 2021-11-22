@@ -1,0 +1,28 @@
+
+.salary {
+    display: flex;
+}
+
+.salaryUpdate {
+    font-weight: bold;
+    font-size: 20px;
+    border: solid red 2px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.salaryName {
+    font-weight: bold;
+    font-size: 20px;
+}
+.salaryValue {
+    flex: 2;
+    align-self: flex-end;
+    text-align: center;
+}
+
+.salaryValuta {
+    flex: 7;
+    align-self: flex-end;
+ 
+}

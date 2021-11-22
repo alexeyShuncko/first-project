@@ -1,0 +1,20 @@
+.salarySpent {
+    display: flex;
+  
+}
+.salarySpentValue {
+    flex: 2;
+    align-self: flex-end;
+    text-align: center;
+   
+}
+.totalSummName{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.salarySpentValuta {
+    flex: 5;
+    align-self: flex-end;
+ 
+}

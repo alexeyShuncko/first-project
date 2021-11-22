@@ -43,3 +43,10 @@ flex:1;
     font-size: 15px;
     border: solid green 2px;
 }
+
+.statisticDateSumm {
+    margin-top: 10px;   
+}
+.statisticDateSummValue {
+    font-weight: bold;
+}

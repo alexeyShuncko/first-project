@@ -1,3 +1,6 @@
+import { getDollar } from './../API/api';
+
+
 const ADD_DIAGRAMM = 'ADD_DIAGRAMM'
 const ADD_ACTIV = 'ADD_ACTIV'
 const ADD_SALARY = 'ADD_SALARY'
@@ -8,7 +11,10 @@ const ADD_PERIOD_PO_TIME = 'ADD_PERIOD_PO_TIME'
 const ADD_SELECT_DIAGRAMM = 'ADD_SELECT_DIAGRAMM'
 const ADD_SALARY_VALUE_TRUE = 'ADD_SALARY_VALUE_TRUE'
 const ADD_EDIT_COLOR = 'ADD_EDIT_COLOR'
-
+const ADD_DOLLAR = 'ADD_DOLLAR'
+const ADD_SALARY_SPENT_SELECT = 'ADD_SALARY_SPENT_SELECT'
+const ADD_SALARY_REMAINDER_SELECT = 'ADD_SALARY_REMAINDER_SELECT'
+const ADD_SALARY_VALUE = 'ADD_SALARY_VALUE'
 
 
 let initialState = {
@@ -26,13 +32,19 @@ let initialState = {
     apartment: { name: 'apartment', color: '#57d9ff', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
     transport: { name: 'transport', color: '#169928', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
     activ: '',
-    salary: { salaryNum: 700, salaryDate: '2021-11-09', salaryValueTrue: false },
+    salary: { salaryNum: 700.01, salaryDate: '2021-11-09', salaryValueTrue: false },
     periodPo: '',
     periodS: '',
     periodPoTime: '23:59',
     periodSTime: '00:01',
     selectDiagramm: 'процентах',
-    editColor: ''
+    dollar: {
+        Cur_OfficialRate: '',
+        Date: ''
+    },
+    salarySpentSelect: 'BYN',
+    salaryRemainderSelect: 'BYN',
+    salaryValue: 'BYN'
 }
 
 const diagrammReduser = (state = initialState, action) => {
@@ -117,19 +129,58 @@ const diagrammReduser = (state = initialState, action) => {
             return {
                 ...state, salary: { ...state.salary, salaryValueTrue: action.value }
             }
-            case ADD_EDIT_COLOR:
+        case ADD_EDIT_COLOR:
+            return {
+                ...state,
+                food: { ...state.food, color: action.qqq === 'food' ? action.editColor : state.food.color },
+                alcohol: { ...state.alcohol, color: action.qqq === 'alcohol' ? action.editColor : state.alcohol.color },
+                apartment: { ...state.apartment, color: action.qqq === 'apartment' ? action.editColor : state.apartment.color },
+                transport: { ...state.transport, color: action.qqq === 'transport' ? action.editColor : state.transport.color }
+            }
+
+        case ADD_DOLLAR:
+            return {
+                ...state,
+                dollar: {...state.dollar,
+                    Cur_OfficialRate: action.dollar,
+                    Date: action.data.slice(0, -9)
+                }
+            }
+        case ADD_SALARY_SPENT_SELECT:
+            return {
+                ...state,
+                salarySpentSelect: action.select
+            }
+        case ADD_SALARY_REMAINDER_SELECT:
+            return {
+                ...state,
+                salaryRemainderSelect: action.select
+            }
+            case ADD_SALARY_VALUE:
                 return {
                     ...state,
-                    food: {...state.food, color: action.qqq === 'food' ? action.editColor : state.food.color},
-                    alcohol: {...state.alcohol, color: action.qqq === 'alcohol' ? action.editColor : state.alcohol.color},
-                    apartment: {...state.apartment, color: action.qqq === 'apartment' ? action.editColor : state.apartment.color},
-                    transport: {...state.transport, color: action.qqq === 'transport' ? action.editColor : state.transport.color}
+                    salaryValue: action.select
                 }
 
+
+            
 
         default:
             return state
     }
+}
+
+export const addDollar = (dollar,data) => {
+    return { type: ADD_DOLLAR, dollar,data }
+}
+export const addSalaryValue = (select) => {
+    return { type: ADD_SALARY_VALUE, select }
+}
+export const addSalarySpentSelect = (select) => {
+    return { type: ADD_SALARY_SPENT_SELECT, select }
+}
+export const addSalaryRemainderSelect = (select) => {
+    return { type: ADD_SALARY_REMAINDER_SELECT, select }
 }
 
 export const addDiagramm = (values, time) => {
@@ -165,18 +216,12 @@ export const addSalaryValueTrue = (value) => {
 }
 
 
-// export const getUpdateProfile = (profile, userId) => (dispatch) => {
-//     updateProfile(profile).then(data => {
-//         if (data.resultCode === 0) {
-//             dispatch(getProfileThunk(userId))
-//             dispatch(setError([]))
-//         }
-//         else {
-//             dispatch(setError(data.messages))
+export const getDollarUpdate = () => (dispatch) => {
 
-//         }
-//     })
-// }
+    getDollar().then(data => {
+        dispatch(addDollar(data.Cur_OfficialRate, data.Date))
+    })
 
+}
 
 export default diagrammReduser
