@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Diagram = (food,alcohol,apartment,transport,selectDiagramm) => {
+const Diagram = (food,alcohol,apartment,transport,selectDiagramm,Cur_OfficialRate) => {
 
     let myCanvas = document.getElementById('tutorial');
     myCanvas.width = 300;
@@ -66,7 +66,7 @@ const Diagram = (food,alcohol,apartment,transport,selectDiagramm) => {
                         this.colors[color_index % this.colors.length]
                     );
 
-                    console.log(slice_angle)
+                  
                     var pieRadius = Math.max(400/ 2, 300/ 2);
                      
                     var labelX = 300/ 2 + (pieRadius / 2) * Math.cos(start_angle + slice_angle / 2)                    
@@ -78,8 +78,8 @@ const Diagram = (food,alcohol,apartment,transport,selectDiagramm) => {
                     this.ctx.fillStyle = 'white';
                     this.ctx.font = 'bold 19px Arial';
                     if (selectDiagramm === 'процентах') { this.ctx.fillText(labelText + '%', labelX, labelY) }
-                    else   { this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
-
+                    else  if (selectDiagramm === 'рублях'){ this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
+                    else  if (selectDiagramm === 'долларах'){ this.ctx.fillText((val/Cur_OfficialRate).toFixed(0) + '$', labelX, labelY) }
                     start_angle += slice_angle;
                     color_index++;
                 }

@@ -4,3 +4,8 @@
     font-size: 15px;
     border: solid green 2px;
 }
+
+.diagrammSummValue {
+    font-weight: bold;
+    border-bottom: solid 2px ;
+}

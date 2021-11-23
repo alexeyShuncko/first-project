@@ -16,11 +16,11 @@ const News =(props)=> {
         Diagram(props.diagramm.food, 
             props.diagramm.alcohol,
             props.diagramm.apartment,
-            props.diagramm.transport, props.diagramm.selectDiagramm)
+            props.diagramm.transport, props.diagramm.selectDiagramm, props.diagramm.dollar.Cur_OfficialRate)
          }, [props.diagramm.food, 
             props.diagramm.alcohol,
             props.diagramm.apartment,
-            props.diagramm.transport, props.diagramm.selectDiagramm]
+            props.diagramm.transport, props.diagramm.selectDiagramm,props.diagramm.dollar.Cur_OfficialRate]
     );
     
         return (

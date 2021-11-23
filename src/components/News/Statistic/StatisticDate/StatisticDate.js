@@ -22,40 +22,37 @@ const StatisticDate = (props) => {
         setEditMode(false)
         setTableVal(false)
     }
-    const statisticPeriod = () => {
-        if (props.diagramm.activ === 'food') {
-            let rew = props.diagramm.food.data.filter(a =>
-                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
-                && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
-            return rew
-        }
-        else if (props.diagramm.activ === 'alcohol') {
-            let rew = props.diagramm.alcohol.data.filter(a =>
-                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
-                && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
-            return rew
-        }
-        else if (props.diagramm.activ === 'apartment') {
-            let rew = props.diagramm.apartment.data.filter(a =>
-                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
-                && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
-            return rew
-        }
-        else if (props.diagramm.activ === 'transport') {
-            let rew = props.diagramm.transport.data.filter(a =>
-                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
-                && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
-            return rew
+
+    const diagramm = props.diagramm
+   
+    function itemSelect(array) {
+        for (let item of Object.values(array)) {
+            if (item.name === props.diagramm.activ) {
+                let rew = item.data.filter(a =>
+                    a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
+                    && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
+                    return rew}
         }
         return []
-
+    } 
+    function colorInput(array) {
+        for (let item of Object.values(array)) {
+            if (item.name === props.diagramm.activ) {
+               let color = item.color   
+               return color
+            }
+        }
+    }
+    
+    const styles = {
+        borderBottom: `solid 2px ${colorInput(diagramm)}`
     }
 
-    const tableStatistic = statisticPeriod()
+    const tableStatistic = itemSelect(diagramm)
 
     function arraySum(array){
-        var sum = 0;
-        for(var i = 0; i < array.length; i++){
+        let sum = 0;
+        for(let i = 0; i < array.length; i++){
             sum += array[i];
             }
         return sum
@@ -91,14 +88,14 @@ const StatisticDate = (props) => {
                                 </div>
                             }
                             {props.diagramm.activ && tableStatistic.map(a =>
-                                <div key={a.id} className={s.statisticDate}>
+                                <div key={a.id}  className={s.statisticDate}>
                                     <span className={s.statisticDateTime}>  {a.time}  </span>
                                     <span className={s.statisticDateNum}> {a.num} </span>
                                 </div>)
                             }
                             {!tableVal && <div className={s.statisticDateSumm} >
                                 Потрачено на {props.diagramm.activ} за выбранный период: 
-                                <div className={s.statisticDateSummValue}>{arraySum(tableStatistic.map(a =>a.num))} рублей.</div>
+                                <div style={styles} className={s.statisticDateSummValue}>{arraySum(tableStatistic.map(a =>a.num))} рублей.</div>
                                 </div>}
                             
                         </div>}

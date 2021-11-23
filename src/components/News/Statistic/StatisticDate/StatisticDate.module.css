@@ -48,5 +48,6 @@ flex:1;
     margin-top: 10px;   
 }
 .statisticDateSummValue {
+    border-bottom: solid 1px;
     font-weight: bold;
 }

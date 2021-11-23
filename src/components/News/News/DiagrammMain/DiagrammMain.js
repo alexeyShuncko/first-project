@@ -44,7 +44,7 @@ const DiagrammMain = (props) => {
 
                                     <option value="процентах" >в процентах</option>
                                     <option value="рублях">в рублях</option>
-
+                                    <option value="долларах">в долларах</option>
                                 </Field>
                             </form>
                         )}

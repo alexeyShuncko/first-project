@@ -1,10 +1,12 @@
 import React from "react";
-import { Field, Form} from "react-final-form";
+import { Field, Form } from "react-final-form";
 import s from './Statistic.module.css';
 import StatisticDate from './StatisticDate/StatisticDate';
-import { addDiagramm, addSalary, addSelectDiagramm, 
-    addActiv, addPeriodSTime, addSalaryValueTrue,addPeriodS, 
-    addPeriodPo, addPeriodPoTime} from '../../../Redux/diagrammReducer';
+import {
+    addDiagramm, addSalary, addSelectDiagramm,
+    addActiv, addPeriodSTime, addSalaryValueTrue, addPeriodS,
+    addPeriodPo, addPeriodPoTime
+} from '../../../Redux/diagrammReducer';
 import { connect } from 'react-redux';
 
 const Statistic = (props) => {
@@ -39,86 +41,78 @@ const Statistic = (props) => {
         }
     }
 
-    const colorBorder =()=> {
+    const diagramm = props.diagramm
 
-        if (props.diagramm.activ === 'food') {
-            return <span style={{ borderBottom: `solid ${props.diagramm.food.color}` }}>
-                Всего потрачено : <b>{props.diagramm.food.summ.toFixed(2)} рублей.</b></span>
-        }
-        else if (props.diagramm.activ === 'alcohol') {
-            return <span style={{ borderBottom: `solid ${props.diagramm.alcohol.color}` }}>
-                Всего потрачено :<b> {props.diagramm.alcohol.summ.toFixed(2)} рублей.</b></span>
-        }
-        else if (props.diagramm.activ === 'apartment') {
-            return <span style={{ borderBottom: `solid ${props.diagramm.apartment.color}` }}>
-                Всего потрачено :<b> {props.diagramm.apartment.summ.toFixed(2)} рублей.</b></span>
-        }
-        else if (props.diagramm.activ === 'transport') {
-            return <span style={{ borderBottom: `solid ${props.diagramm.transport.color}` }}>
-                Всего потрачено :<b> {props.diagramm.transport.summ.toFixed(2)} рублей.</b></span>
+    function itemSelect(array) {
+        for (let item of Object.values(array)) {
+            if (item.name === props.diagramm.activ) {
+                return <>
+                    <span >
+                        Потрачено : <b>{item.summ.toFixed(2)} рублей.</b></span>
+                    <div>Или : <b>{(item.summ / props.diagramm.dollar.Cur_OfficialRate).toFixed(2)} $</b></div>
+                    <div style={{ borderBottom: `solid ${item.color}` }}>
+                        Или : <b>{(item.summ / 4.29).toFixed(0)} бут. по 1,5л аксамитного</b></div>
+                </>
+            }
         }
     }
-
-
-    const onSubmit = (values) => {   
-      
+    function colorInput(array) {
+        let color =''
+        for (let item of Object.values(array)) {
+            if (item.name === props.diagramm.activ) {
+                color = item.color   
+            }
+        }
+        return color
     }
 
-    const colorInput = () => {
-        if (props.diagramm.activ === 'food') {
-            return props.diagramm.food.color
-        }
-        else if (props.diagramm.activ === 'alcohol') {
-            return props.diagramm.alcohol.color
-        }
-        else if (props.diagramm.activ === 'apartment') {
-            return props.diagramm.apartment.color
-        }
-        else if (props.diagramm.activ === 'transport') {
-            return props.diagramm.transport.color
-        }
-        return s.option
+    const styles = {
+        backgroundColor: colorInput(diagramm)
     }
- 
+   
+
+    const onSubmit = (values) => {
+
+    }
 
     return (
         <div className={s.statistic}>
             <div className={s.statisticItem1}>
-            <Form
-                onSubmit={onSubmit}
-                 initialValues={{
-                     ...props.diagramm
-                 }}
+                <Form
+                    onSubmit={onSubmit}
+                    initialValues={{
+                        ...props.diagramm
+                    }}
 
-                render={({ handleSubmit, form, submitting, pristine, values }) => (
-                    <form onSubmit={handleSubmit} >
+                    render={({ handleSubmit, form, submitting, pristine, values }) => (
+                        <form onSubmit={handleSubmit} >
 
-                        <div className={s.categoryStatistic}>
-                            <label className={s.categoryStatisticName} >Категория : </label>
-                            <Field  onClick={colorActiv}
-                            name="favorite" component="select" className={s.option} 
-                            style={{ backgroundColor: ` ${colorInput()}`}} 
-                            >
-                                <option>{props.diagramm.activ} </option>
-                                <option value="food" style={{ backgroundColor: ` ${props.diagramm.food.color}` }}>Еда</option>
-                                <option value="alcohol" style={{ backgroundColor: ` ${props.diagramm.alcohol.color}` }}>Алкоголь</option>
-                                <option value="apartment" style={{ backgroundColor: ` ${props.diagramm.apartment.color}` }} >Квартира</option>
-                                <option value="transport" style={{ backgroundColor: ` ${props.diagramm.transport.color}` }} >Транспорт</option>
-                            </Field>
-                        
-                        <div> {props.diagramm.activ ? colorBorder() : null} </div> 
-                        </div>
-                        <div className={s.period}>
+                            <div className={s.categoryStatistic}>
+                                <label className={s.categoryStatisticName} >Категория : </label>
+                                <Field onClick={colorActiv}
+                                    name="favorite" component="select" className={s.option}
+                                    style={styles}
+                                >
+                                    <option>{props.diagramm.activ} </option>
+                                    <option value="food" style={{ backgroundColor: ` ${props.diagramm.food.color}` }}>Еда</option>
+                                    <option value="alcohol" style={{ backgroundColor: ` ${props.diagramm.alcohol.color}` }}>Алкоголь</option>
+                                    <option value="apartment" style={{ backgroundColor: ` ${props.diagramm.apartment.color}` }} >Квартира</option>
+                                    <option value="transport" style={{ backgroundColor: ` ${props.diagramm.transport.color}` }} >Транспорт</option>
+                                </Field>
+
+                                <div> {props.diagramm.activ ? itemSelect(diagramm) : null} </div>
+                            </div>
+                            <div className={s.period}>
                                 <label className={s.categoryStatisticName}>Период : </label>
                                 <div className={s.periodStatistic}>
                                     <label>C: </label>
-                                    <Field onBlur= {periodS} name="periodS" component="input" type="date"></Field>
-                                    <Field onBlur= {periodSTime} name="periodSTime" component="input" type="time"></Field>
+                                    <Field onBlur={periodS} name="periodS" component="input" type="date"></Field>
+                                    <Field onBlur={periodSTime} name="periodSTime" component="input" type="time"></Field>
                                 </div>
                                 <div className={s.periodStatistic}>
                                     <label>По: </label>
-                                    <Field  onBlur= {periodPo} name="periodPo" component="input" type="date"></Field>
-                                    <Field onBlur= {periodPoTime} name="periodPoTime" component="input" type="time"></Field>
+                                    <Field onBlur={periodPo} name="periodPo" component="input" type="date"></Field>
+                                    <Field onBlur={periodPoTime} name="periodPoTime" component="input" type="time"></Field>
                                 </div>
 
                                 {/* <div> <button type='submit'
@@ -129,16 +123,16 @@ const Statistic = (props) => {
                                 </button>
                                 </div> */}
 
-                            </div>                      
-                    </form>
-                )}
-            />
+                            </div>
+                        </form>
+                    )}
+                />
             </div>
-             <div className={s.statisticItem2}>
-                <StatisticDate 
-                diagramm={props.diagramm} />
-                </div>
+            <div className={s.statisticItem2}>
+                <StatisticDate
+                    diagramm={props.diagramm} />
             </div>
+        </div>
 
     )
 }
@@ -147,5 +141,7 @@ let mapStateToProps = (state) => {
         diagramm: state.expenses
     }
 }
-export default connect (mapStateToProps,{ addDiagramm, addActiv, 
-    addSalary, addPeriodS, addPeriodPo, addPeriodSTime , addPeriodPoTime,  addSelectDiagramm, addSalaryValueTrue})(Statistic)
+export default connect(mapStateToProps, {
+    addDiagramm, addActiv,
+    addSalary, addPeriodS, addPeriodPo, addPeriodSTime, addPeriodPoTime, addSelectDiagramm, addSalaryValueTrue
+})(Statistic)

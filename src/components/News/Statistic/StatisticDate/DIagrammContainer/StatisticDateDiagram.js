@@ -19,13 +19,13 @@ const StatisticDateDiagram = (diagramm,eee) => {
     const myVinyls =
     {
         food:
-        diagramm.food ? Number(diagramm.food) : 0,
+        diagramm ? Number(diagramm[0]) : 0,
         alcohol:
-        diagramm.alcohol ? Number(diagramm.alcohol) :0,
+        diagramm ? Number(diagramm[1]) :0,
         apartment:
-        diagramm.apartment ? Number(diagramm.apartment) : 0,
+        diagramm ? Number(diagramm[2]) : 0,
         transport:
-        diagramm.transport ? Number(diagramm.transport) : 0
+        diagramm ? Number(diagramm[3]) : 0
     }
 
 
@@ -76,7 +76,7 @@ const StatisticDateDiagram = (diagramm,eee) => {
                         var labelText = Math.round(100 * val / total_value);
                         this.ctx.fillStyle = 'white';
                         this.ctx.font = 'bold 18px Arial';
-                        this.ctx.fillText(labelText + '%', labelX, labelY);
+                        if (labelText !== 0) this.ctx.fillText(labelText + '%', labelX, labelY);
                         start_angle += slice_angle;
                     };
 
