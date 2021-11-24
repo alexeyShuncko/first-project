@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import FormSelectDiagramm from "../../../helpers/FormSelectDiagramm/FormSelectDiagramm";
 import s from './DiagrammContainer.module.css';
+import DiagrammTotal from "./DiagrammTotal/DiagrammTotal";
 import StatisticDateDiagram from './StatisticDateDiagram';
 
 
@@ -53,12 +55,18 @@ const DiagrammContainer = (props) => {
         return diagramm
     }
     const diagramm = itemSelect(eee)
+const total = arraySum(diagramm)
+const select = props.diagramm.selectDiagrammStat
+const Cur_OfficialRate =props.diagramm.dollar.Cur_OfficialRate
 
+const addSelect =(e)=> {
+    props.addSelectDiagrammStat(e.target.value)
+}
 
     useEffect(() => {
 
         if (edit === true) {
-            StatisticDateDiagram(diagramm, eee)
+            StatisticDateDiagram(diagramm, eee, select, Cur_OfficialRate)
             setDiagrammVal(false)
             setDiagrammSumm(true)
 
@@ -67,7 +75,7 @@ const DiagrammContainer = (props) => {
             }
         }
 
-    }, [props.diagramm, edit, diagramm, eee]
+    }, [props.diagramm, edit, diagramm, eee, select, Cur_OfficialRate]
         //  [props.diagramm.food, 
         //     props.diagramm.alcohol,
         //     props.diagramm.apartment,
@@ -77,7 +85,11 @@ const DiagrammContainer = (props) => {
 
     return (
         <>
-            <div>Диаграмма расходов по всем категориям за выбранный период.</div>
+            <div >Диаграмма расходов по всем категориям 
+               <div className={s.select}>
+                   <span className={s.selectText}>за выбранный период в </span>
+               <span className={s.selectValue}><FormSelectDiagramm addSelect={addSelect}/></span> </div> 
+            </div>
 
             {!edit
                 ? <div >
@@ -98,7 +110,9 @@ const DiagrammContainer = (props) => {
             }
             {diagrammSumm && <div>
                 Всего потрачено за выбранный период:
-                <div className={s.diagrammSummValue}>{arraySum(diagramm)} рублей.</div>
+                <DiagrammTotal 
+                total={total} 
+                dollar={props.diagramm.dollar.Cur_OfficialRate} />
             </div>
             }
 

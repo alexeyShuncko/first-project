@@ -77,9 +77,9 @@ const Diagram = (food,alcohol,apartment,transport,selectDiagramm,Cur_OfficialRat
                     var labelText = Math.round(100 * val / total_value);// подпись диаграммы cтиль
                     this.ctx.fillStyle = 'white';
                     this.ctx.font = 'bold 19px Arial';
-                    if (selectDiagramm === 'процентах') { this.ctx.fillText(labelText + '%', labelX, labelY) }
-                    else  if (selectDiagramm === 'рублях'){ this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
-                    else  if (selectDiagramm === 'долларах'){ this.ctx.fillText((val/Cur_OfficialRate).toFixed(0) + '$', labelX, labelY) }
+                    if (selectDiagramm === '%') { this.ctx.fillText(labelText + '%', labelX, labelY) }
+                    else  if (selectDiagramm === 'BYN'){ this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
+                    else  if (selectDiagramm === 'USD'){ this.ctx.fillText((val/Cur_OfficialRate).toFixed(0) + '$', labelX, labelY) }
                     start_angle += slice_angle;
                     color_index++;
                 }

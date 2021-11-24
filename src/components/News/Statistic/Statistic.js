@@ -5,7 +5,7 @@ import StatisticDate from './StatisticDate/StatisticDate';
 import {
     addDiagramm, addSalary, addSelectDiagramm,
     addActiv, addPeriodSTime, addSalaryValueTrue, addPeriodS,
-    addPeriodPo, addPeriodPoTime
+    addPeriodPo, addPeriodPoTime, addSelectDiagrammStat
 } from '../../../Redux/diagrammReducer';
 import { connect } from 'react-redux';
 
@@ -17,25 +17,21 @@ const Statistic = (props) => {
         }
     }
     const periodS = (e) => {
-        console.log('попал 1')
         if (e.target.value !== props.diagramm.periodS) {
             props.addPeriodS(e.target.value)
         }
     }
     const periodPo = (e) => {
-        console.log('попал 2')
         if (e.target.value !== props.diagramm.periodPo) {
             props.addPeriodPo(e.target.value)
         }
     }
     const periodSTime = (e) => {
-        console.log('попал 3')
         if (e.target.value !== props.diagramm.periodSTime) {
             props.addPeriodSTime(e.target.value)
         }
     }
     const periodPoTime = (e) => {
-        console.log('попал 4')
         if (e.target.value !== props.diagramm.periodPoTime) {
             props.addPeriodPoTime(e.target.value)
         }
@@ -69,11 +65,19 @@ const Statistic = (props) => {
     const styles = {
         backgroundColor: colorInput(diagramm)
     }
-   
 
-    const onSubmit = (values) => {
-
+    function optionInput(array) {
+        let select = []
+        for (let item of Object.values(array)) {
+           if(item.name)
+           select.push( <option value={item.name} key={select.length +1}
+                style={{ backgroundColor: ` ${item.color}` }}>{item.name}</option>)
+        }
+        return select
     }
+
+   
+    const onSubmit = (values) => { }
 
     return (
         <div className={s.statistic}>
@@ -89,15 +93,12 @@ const Statistic = (props) => {
 
                             <div className={s.categoryStatistic}>
                                 <label className={s.categoryStatisticName} >Категория : </label>
-                                <Field onClick={colorActiv}
-                                    name="favorite" component="select" className={s.option}
-                                    style={styles}
-                                >
+
+                                <Field onClick={colorActiv} name="favorite" 
+                                component="select" className={s.option}
+                                    style={styles}>
                                     <option>{props.diagramm.activ} </option>
-                                    <option value="food" style={{ backgroundColor: ` ${props.diagramm.food.color}` }}>Еда</option>
-                                    <option value="alcohol" style={{ backgroundColor: ` ${props.diagramm.alcohol.color}` }}>Алкоголь</option>
-                                    <option value="apartment" style={{ backgroundColor: ` ${props.diagramm.apartment.color}` }} >Квартира</option>
-                                    <option value="transport" style={{ backgroundColor: ` ${props.diagramm.transport.color}` }} >Транспорт</option>
+                                    {optionInput(diagramm)}
                                 </Field>
 
                                 <div> {props.diagramm.activ ? itemSelect(diagramm) : null} </div>
@@ -130,6 +131,7 @@ const Statistic = (props) => {
             </div>
             <div className={s.statisticItem2}>
                 <StatisticDate
+                addSelectDiagrammStat={props.addSelectDiagrammStat}
                     diagramm={props.diagramm} />
             </div>
         </div>
@@ -142,6 +144,8 @@ let mapStateToProps = (state) => {
     }
 }
 export default connect(mapStateToProps, {
-    addDiagramm, addActiv,
-    addSalary, addPeriodS, addPeriodPo, addPeriodSTime, addPeriodPoTime, addSelectDiagramm, addSalaryValueTrue
+    addDiagramm, addActiv, addSalary,
+     addPeriodS, addPeriodPo, addPeriodSTime,
+      addPeriodPoTime, addSelectDiagramm, addSalaryValueTrue,
+      addSelectDiagrammStat
 })(Statistic)

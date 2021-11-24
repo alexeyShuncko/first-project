@@ -10,27 +10,23 @@ import DollarRate from './DollarRate/DollarRate';
 
     const onSubmit = (values, form) => {
        
-
         const time = new Date()
         function formatDate(date) {
     
-            var dd = date.getDate();
+            let dd = date.getDate();
             if (dd < 10) dd = '0' + dd;
           
-            var mm = date.getMonth() + 1;
+            let mm = date.getMonth() + 1;
             if (mm < 10) mm = '0' + mm;
           
-            var yy = date.getFullYear() % 100;
+            let yy = date.getFullYear() % 100;
             if (yy < 10) yy = '0' + yy;
     
-            var HH = date.getHours();
+            let HH = date.getHours();
             if (HH < 10) HH = '0' + HH;
     
-            var MM = date.getMinutes();
+            let MM = date.getMinutes();
             if (MM < 10) MM = '0' + MM;
-    
-            // var SS = date.getSeconds();
-            // if (SS < 10) SS = '0' + SS;
           
             return '20'+ yy + '-' + mm + '-' + dd + ' ' + HH + ':' + MM ;
           }

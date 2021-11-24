@@ -15,7 +15,18 @@
   justify-content: center;
   flex-direction: row;
 }
-.diagrammMainNameValue {
-  width: 150px;
-  margin-left: 200px;
+
+.select {
+display: flex;
+}
+
+.selectText {
+flex: 3;
+text-align: end;
+}
+.selectValue {
+flex: 2;
+text-align: left;
+margin-left: 3px;
+font-weight: bold;
 }

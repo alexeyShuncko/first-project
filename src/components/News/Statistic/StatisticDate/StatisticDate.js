@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import s from './StatisticDate.module.css';
 import DiagrammContainer from "./DIagrammContainer/DIagrammContainer";
+import StatisticTableSumm from "./StatisticTableSumm/StatisticTableSumm";
 
 
 const StatisticDate = (props) => {
@@ -9,7 +10,6 @@ const StatisticDate = (props) => {
     let [editMode, setEditMode] = useState(false)
     let [editVal, setEditVal] = useState(false)
     let [tableVal, setTableVal] = useState(false)
-
     
     const activateEditMode = () => {
         if (props.diagramm.activ && props.diagramm.periodPo && props.diagramm.periodS) {
@@ -57,8 +57,10 @@ const StatisticDate = (props) => {
             }
         return sum
         }
+        const total = arraySum(tableStatistic.map(a => a.num))
 
     useEffect(() => {
+        
         if (tableStatistic.length === 0) { setTableVal(true) }
         else setTableVal(false)
     }, [tableStatistic]
@@ -81,7 +83,10 @@ const StatisticDate = (props) => {
                             </button>
 
                             {tableVal
-                                ? <div className={s.categoryVal}>Нет расходов на {props.diagramm.activ} за выбранный период</div>
+                                ? <div className={s.categoryVal}>Нет расходов на {props.diagramm.activ.slice(-1) === 'а' 
+                                ? props.diagramm.activ.slice(0, -1) + 'у'
+                                : props.diagramm.activ
+                            } <div>за выбранный период</div></div>
                                 : <div className={s.statisticName}>
                                     <span className={s.statisticNameDate}><b>Дата:</b></span>
                                     <span className={s.statisticNameDate}> <b>Сумма: </b></span>
@@ -94,8 +99,14 @@ const StatisticDate = (props) => {
                                 </div>)
                             }
                             {!tableVal && <div className={s.statisticDateSumm} >
-                                Потрачено на {props.diagramm.activ} за выбранный период: 
-                                <div style={styles} className={s.statisticDateSummValue}>{arraySum(tableStatistic.map(a =>a.num))} рублей.</div>
+                                Потрачено на <span className={s.categorySumm}> {props.diagramm.activ.slice(-1) === 'а' 
+                                ? props.diagramm.activ.slice(0, -1) + 'у'
+                                : props.diagramm.activ
+                            } </span> <div> за выбранный период: </div>
+                              <StatisticTableSumm 
+                              total={total} 
+                              styles={styles}
+                              dollar={props.diagramm.dollar.Cur_OfficialRate} />
                                 </div>}
                             
                         </div>}
@@ -107,14 +118,12 @@ const StatisticDate = (props) => {
                         ? <div className={s.categoryVal}>Выбери период</div>
                         : null
                     }
-                    {/* {tableVal 
-                        ? <div className={s.categoryVal}>Нет расходов за выбранный период</div>
-                        : null
-                    } */}
                 </div>
             </div>
             <div className={s.statisticDateDiagramm}>
-                <DiagrammContainer diagramm={props.diagramm} />
+                <DiagrammContainer 
+                 addSelectDiagrammStat={props.addSelectDiagrammStat}
+                diagramm={props.diagramm} />
             </div>
 
 

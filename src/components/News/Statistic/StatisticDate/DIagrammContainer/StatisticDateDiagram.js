@@ -1,7 +1,7 @@
 //import React from 'react';
 
 
-const StatisticDateDiagram = (diagramm,eee) => {
+const StatisticDateDiagram = (diagramm,eee, selectDiagramm,Cur_OfficialRate ) => {
 
     let myCanvas = document.getElementById('period');
     myCanvas.width = 250;
@@ -76,7 +76,10 @@ const StatisticDateDiagram = (diagramm,eee) => {
                         var labelText = Math.round(100 * val / total_value);
                         this.ctx.fillStyle = 'white';
                         this.ctx.font = 'bold 18px Arial';
-                        if (labelText !== 0) this.ctx.fillText(labelText + '%', labelX, labelY);
+                        if (selectDiagramm === '%' && labelText !== 0) { this.ctx.fillText(labelText + '%', labelX, labelY) }
+                    else  if (selectDiagramm === 'BYN' && labelText !== 0){ this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
+                    else  if (selectDiagramm === 'USD' && labelText !== 0){ this.ctx.fillText((val/Cur_OfficialRate).toFixed(0) + '$', labelX, labelY) }
+                        
                         start_angle += slice_angle;
                     };
 

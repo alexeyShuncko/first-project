@@ -47,7 +47,8 @@ flex:1;
 .statisticDateSumm {
     margin-top: 10px;   
 }
-.statisticDateSummValue {
-    border-bottom: solid 1px;
+
+.categorySumm {
     font-weight: bold;
+    border-bottom: solid 1px;
 }

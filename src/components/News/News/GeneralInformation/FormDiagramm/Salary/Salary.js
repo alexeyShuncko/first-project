@@ -108,7 +108,7 @@ const Salary = (props) => {
                                     type="number"
                                     step="0.01" />
                             </div>
-                            <Field
+                            <Field className={s.fieldBynUsd}
                                 name="valuta" component="select" >
                                 <option>Валюта</option>
                                 <option value="BYN">BYN</option>

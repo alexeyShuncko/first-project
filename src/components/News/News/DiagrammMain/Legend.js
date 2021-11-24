@@ -19,46 +19,33 @@ const Legend = (props) => {
         deActivateEditMode()
     }
 
+    const diagramm = props.diagramm
 
+    function itemSelect(diagramm) {
+        let legend = []
+
+        for (let item of Object.values(diagramm)) {
+
+            if (item.data) {
+                let qqq = <div key={legend.length + 1}>
+                    {!editMode
+                        ? <span onClick={activateEditMode} className={s.legend} style={{ backgroundColor: ` ${item.color}` }}>&nbsp;</span>
+                        : <input name={item.name} defaultValue={item.color}
+                            className={s.inputColorValue} onBlur={onSelectChange} type="color"></input>
+                    }
+                    <span> - {item.name} </span>
+                </div>
+                legend.push(qqq)
+            }
+        }
+        return legend
+    }
 
     return (
-    <div className={s.Legend}>  
-        <div>{!editMode
-        ?<span onClick={activateEditMode} className={s.legend} style={{ backgroundColor: ` ${props.diagramm.food.color}` }}>&nbsp;</span>
-        : <input name='food' defaultValue={props.diagramm.food.color}
-        className={s.inputColorValue} onBlur={onSelectChange} type= "color"></input>
-        }
-            <span> - Еда </span>
+        <div className={s.Legend}>
+            {itemSelect(diagramm)}
         </div>
-
-        <div>{!editMode
-            ?<span onClick={activateEditMode} className={s.legend} style={{ backgroundColor: ` ${props.diagramm.alcohol.color}` }}>&nbsp;</span>
-            : <input name='alcohol' defaultValue={props.diagramm.alcohol.color}
-            className={s.inputColorValue} onBlur={onSelectChange} type= "color"></input>
-        }
-            <span> - Алкоголь </span>
-        </div>
-
-        <div>{!editMode
-            ?<span onClick={activateEditMode} className={s.legend} style={{ backgroundColor: ` ${props.diagramm.apartment.color}` }}>&nbsp;</span>
-            :<input name='apartment' defaultValue={props.diagramm.apartment.color}
-            className={s.inputColorValue} 
-            onBlur={onSelectChange} type= "color"></input>
-        }
-            <span> - Квартира </span>
-        </div>
-
-        <div>{!editMode
-            ?<span onClick={activateEditMode} className={s.legend} style={{ backgroundColor: ` ${props.diagramm.transport.color}` }}>&nbsp;</span>
-            :<input name='transport' defaultValue={props.diagramm.transport.color}
-            className={s.inputColorValue} onBlur={onSelectChange} type= "color"></input>
-        }
-            <span> - Транспорт </span>
-        </div>
-    </div>
-
     )
-
 }
 export default Legend;
 
