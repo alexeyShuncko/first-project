@@ -41,7 +41,7 @@ const Statistic = (props) => {
 
     function itemSelect(array) {
         for (let item of Object.values(array)) {
-            if (item.name === props.diagramm.activ) {
+            if (item.nameRus === props.diagramm.activ) {
                 return <>
                     <span >
                         Потрачено : <b>{item.summ.toFixed(2)} рублей.</b></span>
@@ -55,7 +55,7 @@ const Statistic = (props) => {
     function colorInput(array) {
         let color =''
         for (let item of Object.values(array)) {
-            if (item.name === props.diagramm.activ) {
+            if (item.nameRus === props.diagramm.activ) {
                 color = item.color   
             }
         }
@@ -70,8 +70,8 @@ const Statistic = (props) => {
         let select = []
         for (let item of Object.values(array)) {
            if(item.name)
-           select.push( <option value={item.name} key={select.length +1}
-                style={{ backgroundColor: ` ${item.color}` }}>{item.name}</option>)
+           select.push( <option value={item.nameRus} key={select.length +1}
+                style={{ backgroundColor: ` ${item.color}` }}>{item.nameRus}</option>)
         }
         return select
     }

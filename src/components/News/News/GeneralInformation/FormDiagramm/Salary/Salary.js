@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import SalarySpent from './SalarySpent/SalarySpent';
 import SalaryRemainder from './SalaryRemainder/SalaryRemainder';
 import SalaryValue from './SalaryValue/SalaryValue';
+import { HocValuta } from './../../../../HOC/HocValuta';
 
 
 const Salary = (props) => {
@@ -79,18 +80,7 @@ const Salary = (props) => {
                 ? <div className={s.salaryUpdate}>Обнови ЗП</div>
                 : null}
 
-            <div className={s.salary}>
-                <span className={s.salaryName}
-                    title="Нажми, чтобы изменить)" onClick={activateEditMode}>Зарплата: </span>
-                <span className={s.salaryValue}>{props.diagramm.salaryValue === 'BYN' 
-                ? (props.diagramm.salary.salaryNum)
-            : (props.diagramm.salary.salaryNum/props.diagramm.dollar.Cur_OfficialRate).toFixed(2)
-            } </span>
-            <div className={s.salaryValuta}> 
-            <SalaryValue diagramm={props.diagramm}  
-                addSalaryValue={props.addSalaryValue}/></div>
-               
-            </div>
+            {HocValuta(SalaryValue, props, activateEditMode)}
 
             {editMode
                 ? <Form
@@ -100,16 +90,17 @@ const Salary = (props) => {
 
                             <div>
                                 <label> </label>
-                                <Field
+                                <Field 
                                     autoFocus={true}
                                     autoComplete="off"
                                     name="salary"
                                     component="input"
                                     type="number"
-                                    step="0.01" />
+                                    step="0.01" 
+                                    required/>
                             </div>
                             <Field className={s.fieldBynUsd}
-                                name="valuta" component="select" >
+                                name="valuta" component="select" required >
                                 <option>Валюта</option>
                                 <option value="BYN">BYN</option>
                                 <option value="USD">USD</option>
@@ -129,13 +120,10 @@ const Salary = (props) => {
                 />
                 : null}
             <div >
-                <SalarySpent diagramm={props.diagramm}
-                    addSalarySpentSelect={props.addSalarySpentSelect} />
+                {HocValuta(SalarySpent, props)}
             </div>
             <div >
-                <SalaryRemainder
-                    diagramm={props.diagramm}
-                    addSalaryRemainderSelect={props.addSalaryRemainderSelect} />
+                {HocValuta(SalaryRemainder, props)}
             </div>
         </div>
     )

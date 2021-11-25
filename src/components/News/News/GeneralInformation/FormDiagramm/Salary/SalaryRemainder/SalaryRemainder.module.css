@@ -1,20 +1,11 @@
 .salaryRemainder {
-    display: flex;
-  
+    display: flex; 
 }
 .salaryRemainderValue {
-    flex: 2;
     align-self: flex-end;
-    text-align: center;
-   
+   margin-left: 5px;
 }
 .balanceName{
     font-weight: bold;
     font-size: 20px;
-}
-
-.salaryRemainderValuta {
-    flex: 5;
-    align-self: flex-end;
- 
 }

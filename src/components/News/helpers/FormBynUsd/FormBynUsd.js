@@ -6,10 +6,10 @@ import { Field } from 'react-final-form';
 
 const FormBynUsd = (props) => {
 
-  
-    const onSubmit = () => {
+    const onSubmit = (values) => {
+        props.addSelect(values.target.value)
     }
-
+   
     return (
             <Form
                 onSubmit={onSubmit}
@@ -17,8 +17,9 @@ const FormBynUsd = (props) => {
                     <form onSubmit={handleSubmit} className={s.form}>
 
                         <div>
-                            <Field onBlur={props.addSelect} className={s.fieldBynUsd}
+                            <Field onChange={onSubmit} className={s.fieldBynUsd}
                                 name="valuta" component="select" >
+                                  <option>{props.editBYN}</option>
                                 <option value="BYN">BYN</option>
                                 <option value="USD">USD</option>
                             </Field>

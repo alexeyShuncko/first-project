@@ -5,8 +5,7 @@ import  FormDiagram  from './GeneralInformation/FormDiagramm/FormDiagram';
 import { connect } from 'react-redux';
 import { addDiagramm, addActiv, addSalary, 
     addSelectDiagramm, addSalaryValueTrue, addEditColor,
-     getDollarUpdate, addSalarySpentSelect, addSalaryRemainderSelect,
-     addSalaryValue } from '../../../Redux/diagrammReducer';
+     getDollarUpdate } from '../../../Redux/diagrammReducer';
 import DiagrammMain from './DiagrammMain/DiagrammMain';
 
 
@@ -33,9 +32,6 @@ const News =(props)=> {
                         addSalary={props.addSalary}
                         getDollarUpdate={props.getDollarUpdate}
                         addSalaryValueTrue={props.addSalaryValueTrue}
-                        addSalarySpentSelect={props.addSalarySpentSelect}
-                        addSalaryRemainderSelect={props.addSalaryRemainderSelect}
-                        addSalaryValue={props.addSalaryValue}
                     />
                 </div>
 
@@ -59,8 +55,7 @@ let mapStateToProps = (state) => {
 
 export default connect(mapStateToProps,
     { addDiagramm, addActiv, addSalary, addSelectDiagramm, 
-        addSalaryValueTrue , addEditColor, getDollarUpdate,
-        addSalarySpentSelect, addSalaryRemainderSelect, addSalaryValue })(News)
+        addSalaryValueTrue , addEditColor, getDollarUpdate})(News)
 
 
 

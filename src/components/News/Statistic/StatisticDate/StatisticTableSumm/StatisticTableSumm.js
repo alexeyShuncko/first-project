@@ -5,28 +5,20 @@ import FormBynUsd from "../../../helpers/FormBynUsd/FormBynUsd";
 
 const StatisticTableSumm = (props) => {
 
-    let [editBYN, setEditBYN] = useState(false)
+    let [editBYN, setEditBYN] = useState("BYN")
 
-
-    const activEditBYN =()=> {
-        setEditBYN(true)
+    const activEditBYN =(value)=> {
+        if (value !== editBYN)
+       setEditBYN(value) 
     }
-    const deActivEditBYN =()=> {
-        setEditBYN(false)
-    }
-
   
-    return (<>
-        {!editBYN
-            ? <div style={props.styles} className={s.statisticDateSummValue}>
-                <span className={s.itemName}>{props.total} </span>
-                <span className={s.itemValue}><FormBynUsd addSelect={activEditBYN} /></span>
-            </div>
-            : <div style={props.styles} className={s.statisticDateSummValue}>
-               <span className={s.itemName}> {(props.total / props.dollar).toFixed(2)}</span>
-               <span className={s.itemValue}><FormBynUsd addSelect={deActivEditBYN} /></span>
-            </div>}
-    </>
+    return (<div style={props.styles} className={s.item}>
+        {editBYN === "BYN"
+            ?   <span  className={s.itemName}>{props.total} </span>
+            :  <span className={s.itemName}> {(props.total / props.dollar).toFixed(2)}</span>
+    }
+            <span className={s.itemValue}><FormBynUsd addSelect={activEditBYN} editBYN={editBYN} /></span>
+    </div>
     )
 }
 

@@ -18,7 +18,10 @@ const DiagrammMain = (props) => {
                 Диаграмма расходов по всем категориям
                 <div className={s.select}>
                     <span className={s.selectText}> за всё время в </span>
-                    <span className={s.selectValue}> <FormSelectDiagramm addSelect={onSelectChange} /></span>
+                    <span className={s.selectValue}> 
+                    <FormSelectDiagramm 
+                    addSelect={onSelectChange} 
+                    select={props.diagramm.selectDiagramm} /></span>
                 </div>
             </div>
 

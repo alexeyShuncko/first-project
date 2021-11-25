@@ -88,7 +88,10 @@ const addSelect =(e)=> {
             <div >Диаграмма расходов по всем категориям 
                <div className={s.select}>
                    <span className={s.selectText}>за выбранный период в </span>
-               <span className={s.selectValue}><FormSelectDiagramm addSelect={addSelect}/></span> </div> 
+               <span className={s.selectValue}>
+                   <FormSelectDiagramm 
+                   addSelect={addSelect} 
+                   select={select}/></span> </div> 
             </div>
 
             {!edit

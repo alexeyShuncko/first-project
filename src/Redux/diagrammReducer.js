@@ -12,15 +12,12 @@ const ADD_SELECT_DIAGRAMM = 'ADD_SELECT_DIAGRAMM'
 const ADD_SALARY_VALUE_TRUE = 'ADD_SALARY_VALUE_TRUE'
 const ADD_EDIT_COLOR = 'ADD_EDIT_COLOR'
 const ADD_DOLLAR = 'ADD_DOLLAR'
-const ADD_SALARY_SPENT_SELECT = 'ADD_SALARY_SPENT_SELECT'
-const ADD_SALARY_REMAINDER_SELECT = 'ADD_SALARY_REMAINDER_SELECT'
-const ADD_SALARY_VALUE = 'ADD_SALARY_VALUE'
 const ADD_SELECT_DIAGRAMM_STAT = 'ADD_SELECT_DIAGRAMM_STAT'
 
 
 let initialState = {
     food: {
-        name: 'Еда', color: '#fde23e',
+        name: 'food', nameRus: 'Еда', color: '#fde23e',
         data: [
             { id: 1, time: '2021-10-28 19:04', num: 10 },
             { id: 2, time: '2021-11-01 14:59', num: 20 },
@@ -29,9 +26,9 @@ let initialState = {
             { id: 5, time: '2021-11-01 15:06', num: 52 }
         ], summ: 127
     },
-    alcohol: { name: 'Алкоголь', color: '#2222d1', data: [{ id: 1, time: '2021-10-28 19:04', num: 40 }], summ: 40 },
-    apartment: { name: 'Квартира', color: '#57d9ff', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
-    transport: { name: 'Транспорт', color: '#169928', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
+    alcohol: { name: 'alcohol', nameRus: 'Алкоголь', color: '#2222d1', data: [{ id: 1, time: '2021-10-28 19:04', num: 40 }], summ: 40 },
+    apartment: { name: 'apartment', nameRus: 'Квартира', color: '#57d9ff', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
+    transport: { name: 'transport', nameRus: 'Транспорт', color: '#169928', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
     activ: '',
     salary: { salaryNum: 700.01, salaryDate: '2021-11-09', salaryValueTrue: false },
     periodPo: '',
@@ -43,10 +40,7 @@ let initialState = {
     dollar: {
         Cur_OfficialRate: '',
         Date: ''
-    },
-    salarySpentSelect: 'BYN',
-    salaryRemainderSelect: 'BYN',
-    salaryValue: 'BYN'
+    }
 }
 
 const diagrammReduser = (state = initialState, action) => {
@@ -152,24 +146,6 @@ const diagrammReduser = (state = initialState, action) => {
                     Date: action.data.slice(0, -9)
                 }
             }
-        case ADD_SALARY_SPENT_SELECT:
-            return {
-                ...state,
-                salarySpentSelect: action.select
-            }
-        case ADD_SALARY_REMAINDER_SELECT:
-            return {
-                ...state,
-                salaryRemainderSelect: action.select
-            }
-            case ADD_SALARY_VALUE:
-                return {
-                    ...state,
-                    salaryValue: action.select
-                }
-
-
-            
 
         default:
             return state
@@ -179,16 +155,6 @@ const diagrammReduser = (state = initialState, action) => {
 export const addDollar = (dollar,data) => {
     return { type: ADD_DOLLAR, dollar,data }
 }
-export const addSalaryValue = (select) => {
-    return { type: ADD_SALARY_VALUE, select }
-}
-export const addSalarySpentSelect = (select) => {
-    return { type: ADD_SALARY_SPENT_SELECT, select }
-}
-export const addSalaryRemainderSelect = (select) => {
-    return { type: ADD_SALARY_REMAINDER_SELECT, select }
-}
-
 export const addDiagramm = (values, time) => {
     return { type: ADD_DIAGRAMM, values, time }
 }

@@ -1,8 +1,4 @@
 
-.salary {
-    display: flex;
-}
-
 .salaryUpdate {
     font-weight: bold;
     font-size: 20px;
@@ -11,22 +7,6 @@
     text-align: center;
     margin-bottom: 10px;
 }
-.salaryName {
-    font-weight: bold;
-    font-size: 20px;
-}
-.salaryValue {
-    flex: 2;
-    align-self: flex-end;
-    text-align: center;
-}
-
-.salaryValuta {
-    flex: 7;
-    align-self: flex-end;
- 
-}
-
 .fieldBynUsd {
     background-color: rgb(204, 163, 204);
     border: none;

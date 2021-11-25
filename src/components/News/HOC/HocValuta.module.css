@@ -1,4 +1,4 @@
-.item {
+.salary {
     display: flex;
 }
 
@@ -6,8 +6,9 @@
     font-weight: bold;
     font-size: 20px;
 }
-
-.itemValue {
+.salaryValue {
+}
+.salaryValuta {
     align-self: flex-end;
-    margin-left: 5px;
+    margin-left: 3px;
 }

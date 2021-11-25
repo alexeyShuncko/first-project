@@ -6,7 +6,6 @@ import StatisticTableSumm from "./StatisticTableSumm/StatisticTableSumm";
 
 const StatisticDate = (props) => {
 
-
     let [editMode, setEditMode] = useState(false)
     let [editVal, setEditVal] = useState(false)
     let [tableVal, setTableVal] = useState(false)
@@ -27,7 +26,7 @@ const StatisticDate = (props) => {
    
     function itemSelect(array) {
         for (let item of Object.values(array)) {
-            if (item.name === props.diagramm.activ) {
+            if (item.nameRus === props.diagramm.activ) {
                 let rew = item.data.filter(a =>
                     a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
                     && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
@@ -37,7 +36,7 @@ const StatisticDate = (props) => {
     } 
     function colorInput(array) {
         for (let item of Object.values(array)) {
-            if (item.name === props.diagramm.activ) {
+            if (item.nameRus === props.diagramm.activ) {
                let color = item.color   
                return color
             }

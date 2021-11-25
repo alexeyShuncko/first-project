@@ -33,7 +33,7 @@ const Legend = (props) => {
                         : <input name={item.name} defaultValue={item.color}
                             className={s.inputColorValue} onBlur={onSelectChange} type="color"></input>
                     }
-                    <span> - {item.name} </span>
+                    <span> - {item.nameRus} </span>
                 </div>
                 legend.push(qqq)
             }
