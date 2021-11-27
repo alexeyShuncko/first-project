@@ -49,7 +49,8 @@ const FormDiagram = (props) => {
                         {item.nameRus.slice(-1) === 'а'
                             ? item.nameRus.slice(0, -1) + 'у'
                             : item.nameRus}: </label>
-                    <Field className={s.formItemsField}
+                    <Field  
+                    className={s.formItemsField} 
                         max="1000"
                         autoComplete="off"
                         name={item.name}
