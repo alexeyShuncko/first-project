@@ -2,7 +2,7 @@ import React from 'react';
 import s from './NewsContainer.module.css';
 import NavNews from './NavNews/NavNews';
 
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 import News from './News/News';
 import Statistic from './Statistic/Statistic';
 import Setting from './Setting/Setting';
@@ -10,7 +10,6 @@ import Setting from './Setting/Setting';
 
 const NewsContainer = (props) => {
 
-    console.log('render1')
     return (
         <div className={s.newsContainerItems}>
 
@@ -30,5 +29,5 @@ const NewsContainer = (props) => {
     )
 }
 
-export default withRouter(NewsContainer)
+export default NewsContainer
 

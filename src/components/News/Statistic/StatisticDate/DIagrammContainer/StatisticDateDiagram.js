@@ -3,6 +3,8 @@
 
 const StatisticDateDiagram = (diagramm,eee, selectDiagramm,Cur_OfficialRate ) => {
 
+    let color = eee.map(a => a.color)
+
     let myCanvas = document.getElementById('period');
     myCanvas.width = 250;
     myCanvas.height = 300;
@@ -92,12 +94,8 @@ const StatisticDateDiagram = (diagramm,eee, selectDiagramm,Cur_OfficialRate ) =>
         {
             canvas: myCanvas,
             data: myVinyls,
-            colors: [
-                eee.food.color, 
-                eee.alcohol.color, 
-                eee.apartment.color, 
-                eee.transport.color
-        ]
+            colors: color
+        
         }
     )
     myPiechart.draw();

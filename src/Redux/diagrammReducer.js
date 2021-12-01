@@ -13,10 +13,12 @@ const ADD_SALARY_VALUE_TRUE = 'ADD_SALARY_VALUE_TRUE'
 const ADD_EDIT_COLOR = 'ADD_EDIT_COLOR'
 const ADD_DOLLAR = 'ADD_DOLLAR'
 const ADD_SELECT_DIAGRAMM_STAT = 'ADD_SELECT_DIAGRAMM_STAT'
+const ADD_CATEGORY ='ADD_CATEGORY'
 
 
 let initialState = {
-    food: {
+    category: 
+    [{
         name: 'food', nameRus: 'Еда', color: '#fde23e',
         data: [
             { id: 1, time: '2021-10-28 19:04', num: 10 },
@@ -26,9 +28,9 @@ let initialState = {
             { id: 5, time: '2021-11-01 15:06', num: 52 }
         ], summ: 127
     },
-    alcohol: { name: 'alcohol', nameRus: 'Алкоголь', color: '#2222d1', data: [{ id: 1, time: '2021-10-28 19:04', num: 40 }], summ: 40 },
-    apartment: { name: 'apartment', nameRus: 'Квартира', color: '#57d9ff', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
-    transport: { name: 'transport', nameRus: 'Транспорт', color: '#169928', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
+     { name: 'alcohol', nameRus: 'Алкоголь', color: '#2222d1', data: [{ id: 1, time: '2021-10-28 19:04', num: 40 }], summ: 40 },
+     { name: 'apartment', nameRus: 'Квартира', color: '#57d9ff', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
+     { name: 'transport', nameRus: 'Транспорт', color: '#169928', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 }],
     activ: '',
     salary: { salaryNum: 700.01, salaryDate: '2021-11-09', salaryValueTrue: false },
     periodPo: '',
@@ -51,41 +53,17 @@ const diagrammReduser = (state = initialState, action) => {
         case ADD_DIAGRAMM:
             return {
                 ...state,
-                food:
-                    action.values.food
-                        ? {
-                            ...state.food,
-                            data: [...state.food.data, { id: state.food.data.length + 1, time: action.time, num: Number(action.values.food) }],
-                            summ: state.food.summ + Number(action.values.food)
+                category: [
+                    ...state.category.map(a => {
+                        if (a.name === action.name) {
+                            return ({...a,
+                                    data: [...a.data, {
+                                        id: a.data.length + 1, time: action.time,
+                                        num: Number(action.value)
+                                    }],
+                                    summ: a.summ + Number(action.value)})
                         }
-                        : state.food,
-
-                alcohol:
-                    action.values.alcohol
-                        ? {
-                            ...state.alcohol,
-                            data: [...state.alcohol.data, { id: state.alcohol.data.length + 1, time: action.time, num: Number(action.values.alcohol) }],
-                            summ: state.alcohol.summ + Number(action.values.alcohol)
-                        }
-                        : state.alcohol,
-
-                apartment:
-                    action.values.apartment
-                        ? {
-                            ...state.apartment,
-                            data: [...state.apartment.data, { id: state.apartment.data.length + 1, time: action.time, num: Number(action.values.apartment) }],
-                            summ: state.apartment.summ + Number(action.values.apartment)
-                        }
-                        : state.apartment,
-
-                transport:
-                    action.values.transport
-                        ? {
-                            ...state.transport,
-                            data: [...state.transport.data, { id: state.transport.data.length + 1, time: action.time, num: Number(action.values.transport) }],
-                            summ: state.transport.summ + Number(action.values.transport)
-                        }
-                        : state.transport
+                        else return a})]
             }
         case ADD_ACTIV:
             return {
@@ -132,12 +110,13 @@ const diagrammReduser = (state = initialState, action) => {
         case ADD_EDIT_COLOR:
             return {
                 ...state,
-                food: { ...state.food, color: action.qqq === state.food.name ? action.editColor : state.food.color },
-                alcohol: { ...state.alcohol, color: action.qqq === state.alcohol.name ? action.editColor : state.alcohol.color },
-                apartment: { ...state.apartment, color: action.qqq === state.apartment.name ? action.editColor : state.apartment.color },
-                transport: { ...state.transport, color: action.qqq === state.transport.name ? action.editColor : state.transport.color }
+                category: [
+                    ...state.category.map(a => {
+                        if (a.name === action.qqq) {
+                            return ({...a, color: action.editColor})
+                        }
+                        else return a })]
             }
-
         case ADD_DOLLAR:
             return {
                 ...state,
@@ -146,17 +125,25 @@ const diagrammReduser = (state = initialState, action) => {
                     Date: action.data.slice(0, -9)
                 }
             }
-
+            case ADD_CATEGORY:
+                return {
+                    ...state,
+                  category:  [...state.category, { name: state.category.length + 1 , nameRus: action.name, color: action.color, data: [ ], summ: 0 }]
+                }
         default:
             return state
     }
 }
 
+export const addCategory = (name,color) => {
+    return { type: ADD_CATEGORY, name, color}
+}
+
 export const addDollar = (dollar,data) => {
     return { type: ADD_DOLLAR, dollar,data }
 }
-export const addDiagramm = (values, time) => {
-    return { type: ADD_DIAGRAMM, values, time }
+export const addDiagramm = (name, value, time) => {
+    return { type: ADD_DIAGRAMM, name, value, time }
 }
 export const addActiv = (activ) => {
     return { type: ADD_ACTIV, activ }

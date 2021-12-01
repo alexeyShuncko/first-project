@@ -11,15 +11,14 @@ import DiagrammMain from './DiagrammMain/DiagrammMain';
 
 const News =(props)=> {
 
+let arrayTotal = props.diagramm.category.map(a => a.summ)
+let color =props.diagramm.category.map(a => a.color)
+let totalSumm = props.diagramm.category.map(a => a.summ).reduce((acc, num) => acc + num, 0)
+
+
     useEffect(() => {
-        Diagram(props.diagramm.food, 
-            props.diagramm.alcohol,
-            props.diagramm.apartment,
-            props.diagramm.transport, props.diagramm.selectDiagramm, props.diagramm.dollar.Cur_OfficialRate)
-         }, [props.diagramm.food, 
-            props.diagramm.alcohol,
-            props.diagramm.apartment,
-            props.diagramm.transport, props.diagramm.selectDiagramm,props.diagramm.dollar.Cur_OfficialRate]
+        Diagram(arrayTotal,color,totalSumm, props.diagramm.selectDiagramm, props.diagramm.dollar.Cur_OfficialRate)
+         }, [arrayTotal,color,totalSumm, props.diagramm.selectDiagramm,props.diagramm.dollar.Cur_OfficialRate]
     );
     
         return (

@@ -3,10 +3,8 @@ import s from './SalaryRemainder.module.css';
 
 const SalaryRemainder = (props) => {
 
-    const totalSumm = props.diagramm.food.summ +
-        props.diagramm.alcohol.summ +
-        props.diagramm.apartment.summ +
-        props.diagramm.transport.summ
+  
+    const totalSumm = props.diagramm.category.map(a => a.summ).reduce((acc, num) => acc + num, 0)
 
     return (<div className={s.salaryRemainder}>
 

@@ -22,7 +22,7 @@ const StatisticDate = (props) => {
         setTableVal(false)
     }
 
-    const diagramm = props.diagramm
+    const diagramm = props.diagramm.category
    
     function itemSelect(array) {
         for (let item of Object.values(array)) {

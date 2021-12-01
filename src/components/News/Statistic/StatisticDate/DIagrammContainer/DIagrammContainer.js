@@ -25,7 +25,7 @@ const DiagrammContainer = (props) => {
         setDiagrammSumm(false)
     }
 
-    let eee = props.diagramm
+    let eee = props.diagramm.category
 
     function arraySum(array) {
         let sum = 0;
@@ -42,7 +42,7 @@ const DiagrammContainer = (props) => {
         let diagramm = []
         for (let item of Object.values(array)) {
 
-            if (item.data) {
+            if (item.name) {
                 let x
                 let qqq = item.data.filter(a =>
                     a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) &&

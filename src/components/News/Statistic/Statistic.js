@@ -37,7 +37,7 @@ const Statistic = (props) => {
         }
     }
 
-    const diagramm = props.diagramm
+    const diagramm = props.diagramm.category
 
     function itemSelect(array) {
         for (let item of Object.values(array)) {

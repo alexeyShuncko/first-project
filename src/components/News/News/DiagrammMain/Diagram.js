@@ -1,7 +1,8 @@
 import React from 'react';
 
 
-const Diagram = (food,alcohol,apartment,transport,selectDiagramm,Cur_OfficialRate) => {
+const Diagram = (arrayTotal,color,total,selectDiagramm,Cur_OfficialRate) => {
+
 
     let myCanvas = document.getElementById('tutorial');
     myCanvas.width = 300;
@@ -15,28 +16,6 @@ const Diagram = (food,alcohol,apartment,transport,selectDiagramm,Cur_OfficialRat
         ctx.closePath();
         ctx.fill();
     }
-    console.log() // изменение объекта расходов 
-
-    const myVinyls =
-    {
-        food:
-            food ? Number(food.summ)
-                : 15,
-        alcohol:
-            alcohol ? Number(alcohol.summ)
-                : 15,
-        apartment:
-            apartment ? Number(apartment.summ)
-                : 15,
-        transport:
-            transport ? Number(transport.summ)
-                : 15
-    }
-    const totalSumm = Number(food.summ) + 
-    Number(alcohol.summ) + 
-    Number(apartment.summ) + 
-    Number(transport.summ)
-
 
     class Piechart {
         constructor(options) {
@@ -46,7 +25,7 @@ const Diagram = (food,alcohol,apartment,transport,selectDiagramm,Cur_OfficialRat
             this.colors = options.colors;
 
             this.draw = function () {
-                let total_value = totalSumm
+                let total_value = total
                 let color_index = 0;
                 var start_angle = 0;
 
@@ -77,9 +56,9 @@ const Diagram = (food,alcohol,apartment,transport,selectDiagramm,Cur_OfficialRat
                     var labelText = Math.round(100 * val / total_value);// подпись диаграммы cтиль
                     this.ctx.fillStyle = 'white';
                     this.ctx.font = 'bold 19px Arial';
-                    if (selectDiagramm === '%') { this.ctx.fillText(labelText + '%', labelX, labelY) }
-                    else  if (selectDiagramm === 'BYN'){ this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
-                    else  if (selectDiagramm === 'USD'){ this.ctx.fillText((val/Cur_OfficialRate).toFixed(0) + '$', labelX, labelY) }
+                    if (selectDiagramm === '%' && labelText !== 0) { this.ctx.fillText(labelText + '%', labelX, labelY) }
+                    else  if (selectDiagramm === 'BYN' && labelText !== 0){ this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
+                    else  if (selectDiagramm === 'USD' && labelText !== 0){ this.ctx.fillText((val/Cur_OfficialRate).toFixed(0) + '$', labelX, labelY) }
                     start_angle += slice_angle;
                     color_index++;
                 }
@@ -90,13 +69,8 @@ const Diagram = (food,alcohol,apartment,transport,selectDiagramm,Cur_OfficialRat
     var myPiechart = new Piechart(
         {
             canvas: myCanvas,
-            data: myVinyls,
-            colors: [
-                food.color,
-                alcohol.color,
-                apartment.color,
-                transport.color
-            ]
+            data: arrayTotal,
+            colors: color
         }
     )
     myPiechart.draw();

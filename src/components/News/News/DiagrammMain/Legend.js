@@ -19,7 +19,7 @@ const Legend = (props) => {
         deActivateEditMode()
     }
 
-    const diagramm = props.diagramm
+    const diagramm = props.diagramm.category
 
     function itemSelect(diagramm) {
         let legend = []
