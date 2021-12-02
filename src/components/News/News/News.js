@@ -11,9 +11,9 @@ import DiagrammMain from './DiagrammMain/DiagrammMain';
 
 const News =(props)=> {
 
-let arrayTotal = props.diagramm.category.map(a => a.summ)
-let color =props.diagramm.category.map(a => a.color)
-let totalSumm = props.diagramm.category.map(a => a.summ).reduce((acc, num) => acc + num, 0)
+let arrayTotal = props.diagramm.category.map(a =>a && a.summ)
+let color =props.diagramm.category.map(a =>a && a.color)
+let totalSumm = props.diagramm.category.map(a =>a && a.summ).reduce((acc, num) => acc + num, 0)
 
 
     useEffect(() => {

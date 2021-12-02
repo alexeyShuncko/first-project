@@ -69,7 +69,7 @@ const Statistic = (props) => {
     function optionInput(array) {
         let select = []
         for (let item of Object.values(array)) {
-           if(item.name)
+           if(item.nameRus)
            select.push( <option value={item.nameRus} key={select.length +1}
                 style={{ backgroundColor: ` ${item.color}` }}>{item.nameRus}</option>)
         }

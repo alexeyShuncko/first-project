@@ -4,7 +4,7 @@ import s from './SalarySpent.module.css';
 const SalarySpent = (props) => {
 
 
-    const totalSumm = props.diagramm.category.map(a => a.summ).reduce((acc, num) => acc + num, 0)
+    const totalSumm = props.diagramm.category.map(a =>a && a.summ).reduce((acc, num) => acc + num, 0)
 
     return (<div className={s.salarySpent}>
 

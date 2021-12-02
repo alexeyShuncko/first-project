@@ -39,7 +39,6 @@ const FormDiagram = (props) => {
              return '20' + yy + '-' + mm + '-' + dd + ' ' + HH + ':' + MM;
          }
          const timer = formatDate(time)
-
          props.addDiagramm(name,values[name], timer)
         form.reset()
 
@@ -50,7 +49,7 @@ const FormDiagram = (props) => {
     function fieldInput(array) {
         let field = []
         for (let item of Object.values(array)) {
-            if (item.name)
+            if (item.nameRus)
                 field.push(<div key={field.length + 1} className={s.formItems}>
                     <label className={s.formItemsLabel}>
                         {item.nameRus.slice(-1) === 'а'
@@ -60,7 +59,7 @@ const FormDiagram = (props) => {
                         className={s.formItemsField}
                         max="1000"
                         autoComplete="off"
-                        name={item.name}
+                        name={item.nameRus}
                         placeholder="... рублей"
                         component="input"
                         type="number"

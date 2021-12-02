@@ -42,7 +42,7 @@ const DiagrammContainer = (props) => {
         let diagramm = []
         for (let item of Object.values(array)) {
 
-            if (item.name) {
+            if (item.nameRus) {
                 let x
                 let qqq = item.data.filter(a =>
                     a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) &&

@@ -14,12 +14,16 @@ const ADD_EDIT_COLOR = 'ADD_EDIT_COLOR'
 const ADD_DOLLAR = 'ADD_DOLLAR'
 const ADD_SELECT_DIAGRAMM_STAT = 'ADD_SELECT_DIAGRAMM_STAT'
 const ADD_CATEGORY ='ADD_CATEGORY'
+const DELETE_CATEGORY ='DELETE_CATEGORY'
+const RENAME_CATEGORY ='RENAME_CATEGORY'
+
+
 
 
 let initialState = {
     category: 
     [{
-        name: 'food', nameRus: 'Еда', color: '#fde23e',
+         nameRus: 'Еда', color: '#fde23e', id: 1,
         data: [
             { id: 1, time: '2021-10-28 19:04', num: 10 },
             { id: 2, time: '2021-11-01 14:59', num: 20 },
@@ -28,9 +32,9 @@ let initialState = {
             { id: 5, time: '2021-11-01 15:06', num: 52 }
         ], summ: 127
     },
-     { name: 'alcohol', nameRus: 'Алкоголь', color: '#2222d1', data: [{ id: 1, time: '2021-10-28 19:04', num: 40 }], summ: 40 },
-     { name: 'apartment', nameRus: 'Квартира', color: '#57d9ff', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
-     { name: 'transport', nameRus: 'Транспорт', color: '#169928', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 }],
+     {  nameRus: 'Алкоголь', color: '#2222d1', id: 2, data: [{ id: 1, time: '2021-10-28 19:04', num: 40 }], summ: 40 },
+     {  nameRus: 'Квартира', color: '#57d9ff', id: 3, data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
+     {  nameRus: 'Транспорт', color: '#169928', id: 4, data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 }],
     activ: '',
     salary: { salaryNum: 700.01, salaryDate: '2021-11-09', salaryValueTrue: false },
     periodPo: '',
@@ -55,7 +59,7 @@ const diagrammReduser = (state = initialState, action) => {
                 ...state,
                 category: [
                     ...state.category.map(a => {
-                        if (a.name === action.name) {
+                        if (a.nameRus === action.name) {
                             return ({...a,
                                     data: [...a.data, {
                                         id: a.data.length + 1, time: action.time,
@@ -112,7 +116,7 @@ const diagrammReduser = (state = initialState, action) => {
                 ...state,
                 category: [
                     ...state.category.map(a => {
-                        if (a.name === action.qqq) {
+                        if (a.nameRus === action.qqq) {
                             return ({...a, color: action.editColor})
                         }
                         else return a })]
@@ -128,8 +132,25 @@ const diagrammReduser = (state = initialState, action) => {
             case ADD_CATEGORY:
                 return {
                     ...state,
-                  category:  [...state.category, { name: state.category.length + 1 , nameRus: action.name, color: action.color, data: [ ], summ: 0 }]
+                  category:  [...state.category, { nameRus: action.name, color: action.color, id: state.category.length + 10,
+                      data: [ ], summ: 0 }]
                 }
+
+                case DELETE_CATEGORY:
+                    return {
+                        ...state,
+                      category:  [ ...state.category.filter(a => a.nameRus !== action.name)]
+                    }
+                    case RENAME_CATEGORY:
+                        return {
+                            ...state,
+                          category:  [ ...state.category.map(a =>  {
+                              if (a.nameRus === action.name) {
+                            return ({...a,
+                                nameRus: action.rename})}
+                        else return a})]
+                        }
+
         default:
             return state
     }
@@ -137,6 +158,12 @@ const diagrammReduser = (state = initialState, action) => {
 
 export const addCategory = (name,color) => {
     return { type: ADD_CATEGORY, name, color}
+}
+export const deleteCategory = (name) => {
+    return { type: DELETE_CATEGORY, name}
+}
+export const renameCategory = (name, rename) => {
+    return { type: RENAME_CATEGORY, name, rename}
 }
 
 export const addDollar = (dollar,data) => {

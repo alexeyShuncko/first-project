@@ -37,31 +37,34 @@ const Diagram = (arrayTotal,color,total,selectDiagramm,Cur_OfficialRate) => {
                     drawPieSlice(
 
                         this.ctx,
-                        300/ 2,
-                        300 / 2,
-                        Math.min(300 / 2, 300 / 2),
+                        this.canvas.width / 2,
+                        this.canvas.height / 2,
+                        Math.min(this.canvas.width / 2, this.canvas.height / 2),
                         start_angle,
                         start_angle + slice_angle,
                         this.colors[color_index % this.colors.length]
                     );
-
-                  
-                    var pieRadius = Math.max(400/ 2, 300/ 2);
-                     
-                    var labelX = 300/ 2 + (pieRadius / 2) * Math.cos(start_angle + slice_angle / 2)                    
-
-                    var labelY = 300 / 2 + (pieRadius / 2) * Math.sin(start_angle + slice_angle / 2);
-
-
-                    var labelText = Math.round(100 * val / total_value);// подпись диаграммы cтиль
-                    this.ctx.fillStyle = 'white';
-                    this.ctx.font = 'bold 19px Arial';
-                    if (selectDiagramm === '%' && labelText !== 0) { this.ctx.fillText(labelText + '%', labelX, labelY) }
-                    else  if (selectDiagramm === 'BYN' && labelText !== 0){ this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
-                    else  if (selectDiagramm === 'USD' && labelText !== 0){ this.ctx.fillText((val/Cur_OfficialRate).toFixed(0) + '$', labelX, labelY) }
                     start_angle += slice_angle;
                     color_index++;
                 }
+                start_angle = 0;
+                    for (let categ in this.options.data) {
+                        let val = this.options.data[categ];
+                        slice_angle = 2 * Math.PI * val / total_value;
+                        var pieRadius = Math.max(this.canvas.width / 2, this.canvas.height / 2);
+                        var labelX = this.canvas.width / 2 + (pieRadius / 2) * Math.cos(start_angle + slice_angle / 2);
+                        var labelY = this.canvas.height / 2 + (pieRadius / 2) * Math.sin(start_angle + slice_angle / 2);
+
+
+                        var labelText = Math.round(100 * val / total_value);
+                        this.ctx.fillStyle = 'white';
+                        this.ctx.font = 'bold 19px Arial';
+                        if (selectDiagramm === '%' && labelText !== 0) { this.ctx.fillText(labelText + '%', labelX, labelY) }
+                    else  if (selectDiagramm === 'BYN' && labelText !== 0){ this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
+                    else  if (selectDiagramm === 'USD' && labelText !== 0){ this.ctx.fillText((val/Cur_OfficialRate).toFixed(0) + '$', labelX, labelY) }
+                        
+                        start_angle += slice_angle;
+                    };
             }
         }
     }

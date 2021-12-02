@@ -30,7 +30,7 @@ const Legend = (props) => {
                 let qqq = <div key={legend.length + 1}>
                     {!editMode
                         ? <span onClick={activateEditMode} className={s.legend} style={{ backgroundColor: ` ${item.color}` }}>&nbsp;</span>
-                        : <input name={item.name} defaultValue={item.color}
+                        : <input name={item.nameRus} defaultValue={item.color}
                             className={s.inputColorValue} onBlur={onSelectChange} type="color"></input>
                     }
                     <span> - {item.nameRus} </span>

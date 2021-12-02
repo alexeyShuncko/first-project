@@ -18,19 +18,6 @@ const StatisticDateDiagram = (diagramm,eee, selectDiagramm,Cur_OfficialRate ) =>
         ctx.fill();
     }
 
-    const myVinyls =
-    {
-        food:
-        diagramm ? Number(diagramm[0]) : 0,
-        alcohol:
-        diagramm ? Number(diagramm[1]) :0,
-        apartment:
-        diagramm ? Number(diagramm[2]) : 0,
-        transport:
-        diagramm ? Number(diagramm[3]) : 0
-    }
-
-
 
     class Piechart {
         constructor(options) {
@@ -77,7 +64,8 @@ const StatisticDateDiagram = (diagramm,eee, selectDiagramm,Cur_OfficialRate ) =>
 
                         var labelText = Math.round(100 * val / total_value);
                         this.ctx.fillStyle = 'white';
-                        this.ctx.font = 'bold 18px Arial';
+                        if(labelText >= 6)  {this.ctx.font = 'bold 18px Arial'}
+                        else if (labelText <= 5) {this.ctx.font = 'bold 16px Arial'}
                         if (selectDiagramm === '%' && labelText !== 0) { this.ctx.fillText(labelText + '%', labelX, labelY) }
                     else  if (selectDiagramm === 'BYN' && labelText !== 0){ this.ctx.fillText(val.toFixed(0) + 'р', labelX, labelY) }
                     else  if (selectDiagramm === 'USD' && labelText !== 0){ this.ctx.fillText((val/Cur_OfficialRate).toFixed(0) + '$', labelX, labelY) }
@@ -93,7 +81,7 @@ const StatisticDateDiagram = (diagramm,eee, selectDiagramm,Cur_OfficialRate ) =>
     var myPiechart = new Piechart(
         {
             canvas: myCanvas,
-            data: myVinyls,
+            data: diagramm,
             colors: color
         
         }
