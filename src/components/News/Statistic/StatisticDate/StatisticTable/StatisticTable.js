@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import s from './StatisticDate.module.css';
-import DiagrammContainer from "./DIagrammContainer/DIagrammContainer";
-import StatisticTableSumm from "./StatisticTableSumm/StatisticTableSumm";
+import s from './StatisticTable.module.css';
+import StatisticTableSumm from "../StatisticTableSumm/StatisticTableSumm";
 
 
-const StatisticDate = (props) => {
+const StatisticTable = (props) => {
 
     let [editMode, setEditMode] = useState(false)
     let [editVal, setEditVal] = useState(false)
@@ -21,10 +20,6 @@ const StatisticDate = (props) => {
 
     const category = props.diagramm.category
 
-    console.log(category.map(a=>a.data.filter(a=>a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
-    && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime)) + a.nameRus)
-    )
-
      let filterTable = category
      .filter(a =>props.diagramm.activ 
         ? a.nameRus === props.diagramm.activ 
@@ -35,9 +30,8 @@ const StatisticDate = (props) => {
   
     return (
         <div className={s.statisticDate}>
-            <div className={s.statisticDateItem}>
                 <div className={s.statisticDateTable}>
-                    <div>Таблица расходов по всем  категориям за выбранный период. </div>
+                    <div>Таблица расходов по выбранной категории за выбранный период. </div>
                     {!editMode
                         ? <div>
                             <button onClick={activateEditMode}> Показать </button>
@@ -59,10 +53,10 @@ const StatisticDate = (props) => {
                                 <div className={s.statisticTable}>
                                     <div className={s.statisticName}>
                                     <span className={s.statisticNameDate}>Дата:</span>
-                                    <span className={s.statisticNameDate}>Сумма:</span>
+                                    <span className={s.statisticNameSumm}>Сумма:</span>
                                     </div>
 
-                                    {filterTable.map(a => <div key={a.id} className={s.statisticDate}>
+                                    {filterTable.map(a => <div key={a.id} className={s.table}>
                                         <span className={s.statisticDateTime}>  {a.time}  </span>
                                         <span className={s.statisticDateNum}> {a.num} </span>
                                     </div>)}
@@ -92,14 +86,8 @@ const StatisticDate = (props) => {
                         : null
                     }
                 </div>
-            </div>
-            <div className={s.statisticDateDiagramm}>
-                <DiagrammContainer 
-                 addSelectDiagrammStat={props.addSelectDiagrammStat}
-                diagramm={props.diagramm} />
-            </div>
         </div>
     )
 }
 
-export default StatisticDate
+export default StatisticTable

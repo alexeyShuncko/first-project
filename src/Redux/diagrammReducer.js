@@ -23,7 +23,7 @@ const RENAME_CATEGORY ='RENAME_CATEGORY'
 let initialState = {
     category: 
     [{
-         nameRus: 'Еда', color: '#fde23e', id: 1,
+         nameRus: 'Еда', color: '#fde23e',
         data: [
             { id: 1, time: '2021-10-28 19:04', num: 10 },
             { id: 2, time: '2021-11-01 14:59', num: 20 },
@@ -32,9 +32,9 @@ let initialState = {
             { id: 5, time: '2021-11-01 15:06', num: 52 }
         ], summ: 127
     },
-     {  nameRus: 'Алкоголь', color: '#2222d1', id: 2, data: [{ id: 1, time: '2021-10-28 19:04', num: 40 }], summ: 40 },
-     {  nameRus: 'Квартира', color: '#57d9ff', id: 3, data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
-     {  nameRus: 'Транспорт', color: '#169928', id: 4, data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 }],
+     {  nameRus: 'Алкоголь', color: '#2222d1', data: [{ id: 1, time: '2021-10-28 19:04', num: 40 }], summ: 40 },
+     {  nameRus: 'Квартира', color: '#57d9ff', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
+     {  nameRus: 'Транспорт', color: '#169928', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 }],
     activ: '',
     salary: { salaryNum: 700.01, salaryDate: '2021-11-09', salaryValueTrue: false },
     periodPo: '',
@@ -132,7 +132,7 @@ const diagrammReduser = (state = initialState, action) => {
             case ADD_CATEGORY:
                 return {
                     ...state,
-                  category:  [...state.category, { nameRus: action.name, color: action.color, id: state.category.length + 10,
+                  category:  [...state.category, { nameRus: action.name, color: action.color,
                       data: [ ], summ: 0 }]
                 }
 

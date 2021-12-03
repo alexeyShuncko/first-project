@@ -30,7 +30,7 @@ const RenameCategory =(props)=> {
                                     <option>{props.diagramm.activ} </option>
                                     {diagramm.map(a=>
                                     {if (a)  return (
-                                        <option value={a.nameRus} key={a.id}
+                                        <option value={a.nameRus} key={a.nameRus}
                                         style={{ backgroundColor: ` ${a.color}` }}>{a.nameRus}</option>)
                                         else return null
                                     }

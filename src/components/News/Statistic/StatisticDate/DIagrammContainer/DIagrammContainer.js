@@ -7,11 +7,8 @@ import StatisticDateDiagram from './StatisticDateDiagram';
 
 const DiagrammContainer = (props) => {
 
-
     let [edit, setEdit] = useState(false)
     let [editVal, setEditVal] = useState(false)
-    let [diagrammVal, setDiagrammVal] = useState(false)
-    let [diagrammSumm, setDiagrammSumm] = useState(false)
 
     const activateEditMode = () => {
         if (props.diagramm.periodPo && props.diagramm.periodS) {
@@ -21,77 +18,45 @@ const DiagrammContainer = (props) => {
     }
     const deActivateEditMode = () => {
         setEdit(false)
-        setDiagrammVal(false)
-        setDiagrammSumm(false)
     }
 
     let eee = props.diagramm.category
 
-    function arraySum(array) {
-        let sum = 0;
-        for (let salary of Object.values(array)) {
-            if (salary === undefined) {
-                sum += 0
-            }
-            else sum += salary;
-        }
-        return sum
+    const diagramm = eee.map(a => a.data)
+        .map(a => a
+            .filter(a =>
+                a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) &&
+                a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
+        )
+        .map(a => a
+            .map(a => a.num)
+            .reduce((sum, current) => sum + current, 0)
+        )
+
+    const total = diagramm.reduce((sum, current) => sum + current, 0)
+    const select = props.diagramm.selectDiagrammStat
+    const Cur_OfficialRate = props.diagramm.dollar.Cur_OfficialRate
+
+    const addSelect = (e) => {
+        props.addSelectDiagrammStat(e.target.value)
     }
-
-    function itemSelect(array) {
-        let diagramm = []
-        for (let item of Object.values(array)) {
-
-            if (item.nameRus) {
-                let x
-                let qqq = item.data.filter(a =>
-                    a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) &&
-                    a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
-                    .map(a => a.num).map(i => x += i, x = 0).reverse()[0]
-                if (qqq !== undefined) { diagramm.push(qqq) }
-                else diagramm.push(0)
-            }
-        }
-        return diagramm
-    }
-    const diagramm = itemSelect(eee)
-const total = arraySum(diagramm)
-const select = props.diagramm.selectDiagrammStat
-const Cur_OfficialRate =props.diagramm.dollar.Cur_OfficialRate
-
-const addSelect =(e)=> {
-    props.addSelectDiagrammStat(e.target.value)
-}
 
     useEffect(() => {
-
-        if (edit === true) {
+        if (edit === true && total !== 0) {
             StatisticDateDiagram(diagramm, eee, select, Cur_OfficialRate)
-            setDiagrammVal(false)
-            setDiagrammSumm(true)
-
-            if (diagramm.length === 0) {
-                setDiagrammVal(true)
-            }
         }
-
-    }, [props.diagramm, edit, diagramm, eee, select, Cur_OfficialRate]
-        //  [props.diagramm.food, 
-        //     props.diagramm.alcohol,
-        //     props.diagramm.apartment,
-        //     props.diagramm.transport, props.diagramm.selectDiagramm]
-    );
+    }, [props.diagramm, edit, diagramm, eee, select, Cur_OfficialRate, total]);
 
 
     return (
         <>
-            <div >Диаграмма расходов по всем категориям 
-               <div className={s.select}>
-                   <span className={s.selectText}>за выбранный период в </span>
-               <span className={s.selectValue}>
-                   <FormSelectDiagramm 
-                   addSelect={addSelect} 
-                   select={select}/></span> </div> 
+            <div >Диаграмма расходов по всем категориям
+                <div className={s.select}>
+                    <span className={s.selectText}>за выбранный период в </span>
+                    <span className={s.selectValue}>
+                        <FormSelectDiagramm
+                            addSelect={addSelect}
+                            select={select} /></span> </div>
             </div>
 
             {!edit
@@ -100,28 +65,26 @@ const addSelect =(e)=> {
                 </div>
                 : <div>
                     <button onClick={deActivateEditMode}> Убрать </button>
-                    {diagrammVal
+                    {total === 0
                         ? <div className={s.categoryVal}>Нет расходов за выбранный период</div>
-                        : null
+                        : <>
+                        <div><canvas id="period" width='250px' height='300px'></canvas></div>
+                        <div>
+                           Всего потрачено за выбранный период:
+                           <DiagrammTotal
+                               total={total}
+                               dollar={props.diagramm.dollar.Cur_OfficialRate} />
+                       </div>
+                       </>
                     }
-                    <div><canvas id="period"></canvas></div>
                 </div>
             }
+
             {editVal && (!props.diagramm.periodPo || !props.diagramm.periodS)
                 ? <div className={s.categoryVal}>Выбери период</div>
                 : null
             }
-            {diagrammSumm && <div>
-                Всего потрачено за выбранный период:
-                <DiagrammTotal 
-                total={total} 
-                dollar={props.diagramm.dollar.Cur_OfficialRate} />
-            </div>
-            }
-
-
         </>)
 }
-
 
 export default DiagrammContainer

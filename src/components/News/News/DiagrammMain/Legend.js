@@ -29,9 +29,9 @@ const Legend = (props) => {
             if (item.data) {
                 let qqq = <div key={legend.length + 1}>
                     {!editMode
-                        ? <span onClick={activateEditMode} className={s.legend} style={{ backgroundColor: ` ${item.color}` }}>&nbsp;</span>
+                        ? <span onMouseOver={activateEditMode}  className={s.legend} style={{ backgroundColor: ` ${item.color}` }}>&nbsp;</span>
                         : <input name={item.nameRus} defaultValue={item.color}
-                            className={s.inputColorValue} onBlur={onSelectChange} type="color"></input>
+                            className={s.inputColorValue} onChange={onSelectChange} type="color"></input>
                     }
                     <span> - {item.nameRus} </span>
                 </div>

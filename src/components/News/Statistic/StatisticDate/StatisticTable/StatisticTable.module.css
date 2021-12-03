@@ -1,6 +1,7 @@
 
 .statisticDate { 
-    display: flex;  
+    display: flex;
+    margin-bottom: 20px;  
 }
 .statisticDateItem {
 flex:1;
@@ -20,12 +21,17 @@ flex:1;
 
 .statisticNameDate {
     font-weight: bold;
- flex: 1;
+ flex: 2;
  text-align: center;
+}
+.statisticNameSumm {
+    font-weight: bold;
+    flex: 1;
+    text-align: center;
 }
 
 .statisticDateTime {
-    flex: 1;
+    flex: 2;
     border: solid black 1px;
     border-right: none;  
 }
@@ -38,7 +44,7 @@ flex:1;
 
 .statisticDateTable {
  text-align: center;
- margin-right: 20px;
+ margin-right: 10px;
 }
 
 .categoryVal {
@@ -55,4 +61,8 @@ flex:1;
 .categorySumm {
     font-weight: bold;
     border-bottom: solid 1px;
+}
+
+.table {
+display: flex;
 }
