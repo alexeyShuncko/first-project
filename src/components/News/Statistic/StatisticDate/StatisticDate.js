@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import s from './StatisticDate.module.css';
 import DiagrammContainer from "./DIagrammContainer/DIagrammContainer";
-import StatisticTableSumm from "./StatisticTableSumm/StatisticTableSumm";
 
 
 const StatisticDate = (props) => {
@@ -10,7 +9,7 @@ const StatisticDate = (props) => {
     let [editVal, setEditVal] = useState(false)
     
     const activateEditMode = () => {
-        if (props.diagramm.activ && props.diagramm.periodPo && props.diagramm.periodS) {
+        if (props.diagramm.periodPo && props.diagramm.periodS) {
             setEditMode(true)
         }
         else  setEditVal(true)
@@ -21,17 +20,41 @@ const StatisticDate = (props) => {
 
     const category = props.diagramm.category
 
-    console.log(category.map(a=>a.data.filter(a=>a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
-    && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime)) + a.nameRus)
-    )
+    let result = 
+    
+    
+     category.map(a =>[a.nameRus, a.data.filter(a=>
+         a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime) && 
+        a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))])  // фильтрую в зависимости от выбранного периода
 
-     let filterTable = category
-     .filter(a =>props.diagramm.activ 
-        ? a.nameRus === props.diagramm.activ 
-        : a.nameRus===category[0].nameRus)[0].data
-     .filter(a =>
-         a.time <= (props.diagramm.periodPo + ' ' + props.diagramm.periodPoTime)
-         && a.time >= (props.diagramm.periodS + ' ' + props.diagramm.periodSTime))
+     let newResult = result.map(a=>a[1].map(e=> Object.defineProperty(e, 'name', {
+         value: a[0],
+         writable: true,
+        enumerable: true,
+        configurable: true
+       })))                                              //добавляю свойство 'name' в каждый объект с соответствующим значением
+
+       let total = newResult[0].concat(item(newResult))  // соединяю массивы ...........
+
+       console.log(newResult)
+
+     function item(newResult) {
+     
+         for (let i=1;  i < newResult.length; i++) {
+         
+         //newResult[i]
+         
+        }
+        
+     }
+console.log(item(newResult))
+  
+
+      let totalSort =total.sort((a, b) => a.time > b.time ? 1 : -1)            //сортировка по времени 
+    
+    //console.log(result)
+    //console.log(total)
+    //console.log(totalSort) 
   
     return (
         <div className={s.statisticDate}>
@@ -45,48 +68,30 @@ const StatisticDate = (props) => {
                         : <div >
                             <button onClick={deActivateEditMode}> Убрать </button>
 
-                            {filterTable.length === 0
+                            {totalSort.length === 0
 
-                                ? <div className={s.categoryVal}>Нет расходов на 
-
-                               <span> {props.diagramm.activ.slice(-1) === 'а' 
-                                  ? props.diagramm.activ.slice(0, -1) + 'у'
-                                  : props.diagramm.activ} </span>
-
-                                  <div>за выбранный период</div></div>
+                                ? <div className={s.categoryVal}>Нет расходов за выбранный период</div>
 
                                 : <>
                                 <div className={s.statisticTable}>
                                     <div className={s.statisticName}>
+                                    <span className={s.statisticNameCateg}>Категория:</span>
                                     <span className={s.statisticNameDate}>Дата:</span>
-                                    <span className={s.statisticNameDate}>Сумма:</span>
+                                    <span className={s.statisticNameSumm}>Сумма:</span>
+                                   
                                     </div>
 
-                                    {filterTable.map(a => <div key={a.id} className={s.statisticDate}>
+                                    {totalSort.map(a => <div key={a.time} className={s.statisticDate}>
+                                        <span className={s.statisticDateName}> {a.name} </span>
                                         <span className={s.statisticDateTime}>  {a.time}  </span>
                                         <span className={s.statisticDateNum}> {a.num} </span>
+                                        
                                     </div>)}
 
                                 </div>
-                                <div className={s.statisticDateSumm}>
-                                        Потрачено на <span className={s.categorySumm}> 
-                                        {props.diagramm.activ.slice(-1) === 'а'
-                                            ? props.diagramm.activ.slice(0, -1) + 'у'
-                                            : props.diagramm.activ} </span> 
-                                            <div> за выбранный период: </div>
-                                        <StatisticTableSumm
-                                            filterTable={filterTable}
-                                            category={props.diagramm.category}
-                                            activ={props.diagramm.activ}
-                                            dollar={props.diagramm.dollar.Cur_OfficialRate} />
-                                    </div>
                                     </>}
                             
                         </div>}
-                    {editVal && !props.diagramm.activ
-                        ? <div className={s.categoryVal}>Выбери категорию</div>
-                        : null
-                    }
                     {editVal && (!props.diagramm.periodPo || !props.diagramm.periodS)
                         ? <div className={s.categoryVal}>Выбери период</div>
                         : null

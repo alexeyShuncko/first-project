@@ -25,16 +25,16 @@ let initialState = {
     [{
          nameRus: 'Еда', color: '#fde23e',
         data: [
-            { id: 1, time: '2021-10-28 19:04', num: 10 },
-            { id: 2, time: '2021-11-01 14:59', num: 20 },
-            { id: 3, time: '2021-11-01 15:01', num: 20 },
-            { id: 4, time: '2021-11-01 15:01', num: 25 },
-            { id: 5, time: '2021-11-01 15:06', num: 52 }
+            { id: 1, time: '2021-11-28 19:05', num: 10 },
+            { id: 2, time: '2021-12-01 14:59', num: 20 },
+            { id: 3, time: '2021-12-01 15:01', num: 20 },
+            { id: 4, time: '2021-12-01 15:02', num: 25 },
+            { id: 5, time: '2021-12-01 15:06', num: 52 }
         ], summ: 127
     },
-     {  nameRus: 'Алкоголь', color: '#2222d1', data: [{ id: 1, time: '2021-10-28 19:04', num: 40 }], summ: 40 },
-     {  nameRus: 'Квартира', color: '#57d9ff', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 },
-     {  nameRus: 'Транспорт', color: '#169928', data: [{ id: 1, time: '2021-10-28 19:04', num: 25 }], summ: 25 }],
+     {  nameRus: 'Алкоголь', color: '#2222d1', data: [{ id: 1, time: '2021-11-28 19:04', num: 40 }], summ: 40 },
+     {  nameRus: 'Квартира', color: '#57d9ff', data: [{ id: 1, time: '2021-11-28 19:03', num: 25 }], summ: 25 },
+     {  nameRus: 'Транспорт', color: '#169928', data: [{ id: 1, time: '2021-11-28 19:02', num: 25 }], summ: 25 }],
     activ: '',
     salary: { salaryNum: 700.01, salaryDate: '2021-11-09', salaryValueTrue: false },
     periodPo: '',
@@ -62,7 +62,7 @@ const diagrammReduser = (state = initialState, action) => {
                         if (a.nameRus === action.name) {
                             return ({...a,
                                     data: [...a.data, {
-                                        id: a.data.length + 1, time: action.time,
+                                        id: a.nameRus + String(a.data.length+1), time: action.time,
                                         num: Number(action.value)
                                     }],
                                     summ: a.summ + Number(action.value)})
