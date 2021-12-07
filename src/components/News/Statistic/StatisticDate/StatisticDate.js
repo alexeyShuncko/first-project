@@ -34,19 +34,20 @@ const StatisticDate = (props) => {
         configurable: true
        })))                                              //добавляю свойство 'name' в каждый объект с соответствующим значением
 
-       let total = newResult[0].concat(item(newResult))  // соединяю массивы ...........
+      
 
-       console.log(newResult)
 
      function item(newResult) {
-     
+     let qqq = []
          for (let i=1;  i < newResult.length; i++) {
          
-         //newResult[i]
+         qqq.push(newResult[i])
          
         }
-        
+        return qqq
      }
+     console.log(newResult[1])
+     let total = newResult[0].concat(item(newResult))  // соединяю массивы ...........
 console.log(item(newResult))
   
 
