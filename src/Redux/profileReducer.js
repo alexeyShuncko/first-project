@@ -8,6 +8,7 @@ const DELETE_POST = 'DELETE_POST'
 const SET_SAVE_PHOTO = 'SET_SAVE_PHOTO'
 const SET_UPDATE_PROFILE = 'SET_UPDATE_PROFILE'
 const SET_ERROR = 'SET_ERROR'
+const ADD_LOADING = 'ADD_LOADING'
 
 let initialState = {
     posts: [
@@ -17,7 +18,8 @@ let initialState = {
     ],
     profile: null,
     status: '',
-    error: []
+    error: [],
+    loading: false
 }
 
 const profileReduser = (state = initialState, action) => {
@@ -65,11 +67,24 @@ const profileReduser = (state = initialState, action) => {
                     .toLowerCase()
                     .slice(30))
             }
+        case ADD_LOADING:
+            return {
+                ...state,
+                loading: action.data
+            }
 
         default:
             return state
     }
 }
+
+
+
+
+export const setLoading = (data) => {
+    return { type: ADD_LOADING, data }
+}
+
 
 
 export const addPost = (values) => {
@@ -103,8 +118,8 @@ export const setError = (error) => {
 
 export const getProfileThunk = (userId) => (dispatch) => {
     getProfile(userId).then(data => {
-        console.log(data);
         dispatch(setUserProfile(data))
+        dispatch(setLoading(false))
     })
 }
 

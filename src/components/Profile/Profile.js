@@ -14,12 +14,12 @@ const Profile = (props) => {
 
     useEffect(() => {
         !props.auth.isAuth && navig('/login')
-        // props.getProfileThunk(19240)
+
     }, [props.auth.isAuth, navig])
 
-   
 
-    
+
+
 
 
 
@@ -35,12 +35,19 @@ const Profile = (props) => {
                     alt="henghog"
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        Name
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Status:
-                    </Typography>
+                    {props.profile.profile
+                        ? <Typography gutterBottom variant="h5" component="div">
+
+                            {props.profile.profile.fullName} - {props.profile.profile.aboutMe}
+                        </Typography>
+                        : null
+                    }
+
+                    {props.profile.status
+                        ? <Typography variant="body2" color="text.secondary">
+                            Status:{props.profile.status}
+                        </Typography>
+                        : null}
                     <CardActions>
                         <Button variant="contained">Follow</Button>
 

@@ -41,8 +41,13 @@ const Header = (props) => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-    props.getLogoutThunk()
+   
   };
+
+  const logout =()=> {
+    setAnchorElUser(null);
+    props.getLogoutThunk()
+  }
 
 
   const openLoginForm =()=> {
@@ -151,7 +156,10 @@ const Header = (props) => {
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp"  src={ava} />
+                    <Avatar alt="Remy Sharp"  
+                    src={props.profile.profile
+                    ? props.profile.profile.photos.large 
+                    : ava} />
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -171,7 +179,7 @@ const Header = (props) => {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <MenuItem key={setting} onClick={logout}>
                       <Typography textAlign="center">{setting}</Typography>
                     </MenuItem>
                   ))}
@@ -189,7 +197,8 @@ const Header = (props) => {
 
 let mapStateToProps = (state) => {
     return {
-        auth: state.authData
+        auth: state.authData,
+        profile: state.profileData
     }
 }
 

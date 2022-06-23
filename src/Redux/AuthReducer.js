@@ -1,4 +1,5 @@
 import { getAuth, getCaptchaURL, getLogin, getLogout } from "../API/api"
+import { getProfileThunk, getStatusThunk } from "./profileReducer"
 const SET_USER_DATA = 'SET_USER_DATA'
 const SET_LOGIN = 'SET_LOGIN'
 const SET_LOGOUT = 'SET_LOGOUT'
@@ -101,12 +102,12 @@ export const setErrPass = (err, text) => { // экшенкриэйтор
 
 
 
-
-
 export const getAuthThunk = () => async (dispatch) => { // санкриэйтор
     const data = await getAuth()
     if (data.resultCode === 0) {
         dispatch(setAuthUserData(data.data))
+        dispatch(getProfileThunk(data.data.id))
+        dispatch(getStatusThunk(data.data.id))
     }
 }
 

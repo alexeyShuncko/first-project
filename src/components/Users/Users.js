@@ -12,7 +12,7 @@ const Users = (props) => {
         setEdit(false)
     }
 
-    const arr = [1, 2, 3, 4, 5, 6]
+    const arr = [1, 2, 3, 4, 5, 6,7,8,9,10]
 
     return <div>
         <Container maxWidth={'md'} sx={{ mt: '6rem' }}>

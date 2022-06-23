@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 const Login = (props) => {
 
     const navig = useNavigate()
-
      props.auth.isAuth && navig('/profile')
 
 
