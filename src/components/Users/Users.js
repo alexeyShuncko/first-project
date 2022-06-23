@@ -1,63 +1,59 @@
-import React from 'react'
-import s from './users.module.css'
-import userPhoto from '../../Asos/Images/user.png'
-import { NavLink } from 'react-router-dom'
-import Paginator from '../comon/paginator/paginator'
+import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography } from '@mui/material'
+import React, { useState } from 'react'
+// import s from './users.module.css'
+import foto from "../../image/foto.jpg"
 
 
 
 const Users = (props) => {
+    const [edit, setEdit] = useState(true)
+
+    const following = () => {
+        setEdit(false)
+    }
+
+    const arr = [1, 2, 3, 4, 5, 6]
 
     return <div>
+        <Container maxWidth={'md'} sx={{ mt: '6rem' }}>
+            <Grid container spacing={2}>
+                {
+                    arr.map(a => (
+                        <Grid item key={a}>
+                            <Card>
+                                <CardMedia
+                                    sx={{ maxWidth: 200 }}
+                                    component="img"
+                                    height="140"
+                                    image={foto}
+                                    alt="henghog" />
+                                <CardContent>
+                                    <Typography variant="h5">
+                                        {a}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    {
+                                        edit
+                                            ? <Button
+                                                variant='contained'
+                                                color="success"
+                                                onClick={following}
+                                            >
+                                                Follow</Button>
+                                            : <Button variant='contained' color="secondary">Unfollow</Button>
+                                    }
 
-        <Paginator 
-        totalUsersCount={props.totalUsersCount }
-        pageSize={props.pageSize}
-        currentPage={props.currentPage}
-        onPageChanged={props.onPageChanged}
-        />
-        {props.users.map(u => <div key={u.id}>
-            <span>
-                <div>
-                    <NavLink to={'/profile/' + u.id}>
-                        <img alt='' src={u.photos.small != null
-                            ? u.photos.small
-                            : userPhoto
-                        } className={s.photoUrl} />
-                    </NavLink>
-                </div>
-                <div >
-                    {u.followed
-                        ? <button
-                            disabled={props.followingInProgress.some(id => id === u.id)}
-                            className={s.buttonFollow}
-                            onClick={() => {
-                                props.unfollow(u)
+                                </CardActions>
+                            </Card>
 
-                            }}>UnFollow</button>
+                        </Grid>
+                    ))
+                }
 
-                        : <button
-                            disabled={props.followingInProgress.some(id => id === u.id)}
-                            className={s.buttonFollow}
-                            onClick={() => {
-                                props.follow(u)
-                            }
-                            }>Follow</button>
-                    }
-                </div>
-            </span>
-            <span>
-                <span>
-                    <div className={s.info}>{u.name}</div>
-                    {/* <div className={s.info}>{u.status}</div> */}
-                </span>
-                <span>
-                    {/* <div>{u.location.country}</div>
-                        <div>{u.location.city}</div> */}
-                </span>
-            </span>
-        </div>)
-        }
+
+            </Grid>
+        </Container>
     </div>
 }
 

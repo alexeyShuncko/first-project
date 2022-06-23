@@ -1,80 +1,45 @@
-import React, { Component } from 'react';
+
+import React from 'react';
 import { connect } from 'react-redux';
-import{ Route, withRouter, Switch } from 'react-router-dom';
-import './App.css';
-
-import Header from './components/Header/HeaderContainer';
-import LoginContainer from './components/Login/logincontainer';
+import { Routes, Route } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Login from './components/Login/Login';
+// import Messages from './components/Messages/Messages';
 import Music from './components/Music/Music';
-import Nav from './components/Nav/Nav';
-//import News from './components/News/News';
-
-
-//import DialogsContainer from './components/Dialogs/DialogsContainer';
-//import ProfileContainer from './components/Profile/ProfileContainer';
-
+import News from './components/News/News';
+import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
-import UsersContainer from './components/Users/UsersContainer';
-import { initialiseApp } from './Redux/AppReducer'
-import { compose } from 'redux';
-import Preloader from './components/comon/preloader/Preloader';
-import { withSuspense } from './HOC/withSuspense';
-import NewsContainer from './components/News/NewsContainer';
+import Users from './components/Users/Users';
 
 
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
-const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
-class App extends Component {
 
-  componentDidMount() {
-    this.props.initialiseApp()
-}
-  render() {
 
-    if (!this.props.initialized) {
-      return <Preloader />
-    }
 
+
+const App =(props)=> {
+  
   return (
-    
-      <div className='app-wrapper'>
-        <Header />
-        <div className='app-wrapper-nav'><Nav /></div>
-        
-
-        <div className='app-wrapper-content'>
-<Switch>
-          <Route path='/dialogs' 
-          render={ withSuspense(DialogsContainer)} />
-          <Route path='/profile/:userid?' 
-          render={ withSuspense(ProfileContainer)}/>
-          <Route path='/users' 
-          render={ () => <UsersContainer /> } />
-           <Route path='/login' 
-          render={ () => <LoginContainer /> } />
-
-          <Route path='/news' render={() => <NewsContainer />} />
-          <Route path='/main' render={() => <NewsContainer />} />
-          <Route path='/statistic' render={() => <NewsContainer />} />
-          <Route path='/setting' render={() => <NewsContainer />} />
-          <Route path='/music' component={Music} />
-          <Route path='/settings' component={Settings} />
-          <Route path='*' 
-          render={ () => <div>404 not found</div> } />
-</Switch>
-        </div>
-      </div>
-    
-  );
-}}
-
-const mapStateToProps =(state)=> {
-  return {
-    initialized: state.app.initialized
-  }
+    <div>
+      <Header />
+      <Routes>
+        <Route path='/profile'  element={<Profile />} />
+        {/* <Route path='/messages'  element={<Messages />} /> */}
+        <Route path='/news'  element={<News />} />
+        <Route path='/music'  element={<Music />} />
+        <Route path='/settings'  element={<Settings />} />
+        <Route path='/users'  element={<Users />} />
+        <Route path='/login'  element={<Login />} />
+      </Routes>
+    </div>
+)
+}
+let mapStateToProps = (state) => {
+    return {
+        name: state.nameReducer
+    }
 }
 
-export default compose (
-  withRouter,
-connect(mapStateToProps, { initialiseApp }))(App)
+export default connect(mapStateToProps,{})(App)
+
+

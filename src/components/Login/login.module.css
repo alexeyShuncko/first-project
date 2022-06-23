@@ -1,20 +1,15 @@
-.form {
- 
+.photoUrl {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    padding: 10px;
 }
-
-.error {
-    color: red;
-    border: solid;
+.buttonFollow {
+    background: rgb(207, 103, 228);
     margin-left: 20px;
     border-radius: 10px;
-    padding: 5px;
-   }
-   
-   .inputError {
-       border: solid red;
-       border-radius: 5px;
-       margin-bottom: 15px;
-   }
-   .input {
-    margin-bottom: 15px;
+    border: rgb(233, 222, 70);
+}
+.info {
+    margin-left: 20px;
 }

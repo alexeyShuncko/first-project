@@ -103,6 +103,7 @@ export const setError = (error) => {
 
 export const getProfileThunk = (userId) => (dispatch) => {
     getProfile(userId).then(data => {
+        console.log(data);
         dispatch(setUserProfile(data))
     })
 }

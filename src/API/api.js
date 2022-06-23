@@ -8,11 +8,6 @@ const instance = axios.create({
     }
 })
 
-export const getDollar = async () => {
-    const response = await axios.get('https://www.nbrb.by/api/exrates/rates/431');
-    return response.data;
-}
-
 
 export const getUser = async (currentPage, pageSize) => {
     const response = await instance.get(`users?page=${currentPage}&count=${pageSize}`);
@@ -32,7 +27,7 @@ export const getAuth = async () => {
     return response.data;
 }
 export const getProfile = async (userId) => {
-    const response = await instance.get(`profile/` + userId);
+    const response = await instance.get(`profile/${userId}`);
     return response.data;
 }
 

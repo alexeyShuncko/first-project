@@ -4,6 +4,7 @@ const SET_LOGIN = 'SET_LOGIN'
 const SET_LOGOUT = 'SET_LOGOUT'
 const SET_CAPTCHA = 'SET_CAPTCHA'
 const SET_ERROR_LOGIN = 'SET_ERROR_LOGIN'
+const SET_ERROR_PASS = 'SET_ERROR_PASS'
 
 let initialState = {
     id: null,
@@ -14,7 +15,12 @@ let initialState = {
     password: null,
     rememberMe: false,
     captchaUrl: null,
-    errorLogin: null
+    errLogin: {
+        login: false, text: ''
+    },
+    errPass: {
+        pass: false, text: ''
+    }
 }
 
 const authReduser = (state = initialState, action) => {
@@ -29,11 +35,6 @@ const authReduser = (state = initialState, action) => {
                 isAuth: true
             }
 
-        // case IS_FETCHING:
-        // return {
-        //     ...state, isFetching: action.isFetching
-        // }
-
         case SET_LOGIN:
             return {
                 ...state,
@@ -45,8 +46,8 @@ const authReduser = (state = initialState, action) => {
 
         case SET_LOGOUT:
             return {
-                ...state, ...action.data,
-                isAuth: false
+                ...state, 
+                isAuth: action.data,
             }
         case SET_CAPTCHA:
             return {
@@ -56,7 +57,16 @@ const authReduser = (state = initialState, action) => {
             case SET_ERROR_LOGIN:
                 return {
                     ...state,
-                    errorLogin: action.error
+                    errLogin: {
+                        login: action.err, text: action.text
+                    }
+                }
+                case SET_ERROR_PASS:
+                return {
+                    ...state,
+                    errPass: {
+                        pass: action.err, text: action.text
+                    }
                 }
 
         default:
@@ -78,9 +88,20 @@ export const setLogout = (data) => { // экшенкриэйтор
 export const setCaptchaUrl = (captcha) => { // экшенкриэйтор
     return { type: SET_CAPTCHA, captcha }
 }
-export const setErrorLogin = (error) => { // экшенкриэйтор
-    return { type: SET_ERROR_LOGIN, error}
+
+export const setErrLogin = (err, text) => { // экшенкриэйтор
+    return { type: SET_ERROR_LOGIN, err, text}
 }
+export const setErrPass = (err, text) => { // экшенкриэйтор
+    return { type: SET_ERROR_PASS, err, text}
+}
+
+
+
+
+
+
+
 
 export const getAuthThunk = () => async (dispatch) => { // санкриэйтор
     const data = await getAuth()
@@ -94,16 +115,25 @@ export const getLoginThunk = (email, password, rememberMe, captcha) => (dispatch
         if (data.resultCode === 0) {
             dispatch(setLogin(email, password, rememberMe))
             dispatch(getAuthThunk())
-            dispatch(setErrorLogin(null))
+            dispatch(setErrLogin(false, ''))
+            dispatch(setErrPass(false, ''))
         }
-        if (data.resultCode === 1)
-        dispatch(setErrorLogin(data.messages[0]))
-        
+        if (data.resultCode === 1) {
+           
+            if (data.messages[0] === 'Enter valid Email') {
+                dispatch(setErrLogin(true, 'Невалидный емаил!'))
+            }
+            else if (data.messages[0] === 'Incorrect Email or Password') {
+                dispatch(setErrPass(true, 'Неверный пароль!'))
+            }
+        }
+     
         if (data.resultCode === 10) {
             dispatch(thunkCaptchaUrl())
         }
     })
 }
+
 
 export const thunkCaptchaUrl = () => (dispatch) => {
     getCaptchaURL().then(data => {
@@ -113,9 +143,10 @@ export const thunkCaptchaUrl = () => (dispatch) => {
 }
 
 export const getLogoutThunk = () => (dispatch) => {
-    getLogout().then(data => {
+    getLogout()
+    .then(data => {
         if (data.resultCode === 0) {
-            dispatch(setLogout(data.data))
+            dispatch(setLogout(false))
         }
     })
 }
