@@ -21,7 +21,7 @@ const App = ({ getAuthThunk, ...props }) => {
 
   useEffect(() => {
     getAuthThunk()
-  }, [getAuthThunk])
+  }, [])
 
 
 
@@ -33,12 +33,14 @@ const App = ({ getAuthThunk, ...props }) => {
           <Header />
           <Routes>
             <Route path='/profile' element={<Profile />} />
+            <Route path='/' element={<Profile />} />
+           <Route path='/login' element={<Login />} />
             {/* <Route path='/messages'  element={<Messages />} /> */}
             <Route path='/news' element={<News />} />
             <Route path='/music' element={<Music />} />
             <Route path='/settings' element={<Settings />} />
             <Route path='/users' element={<Users />} />
-            <Route path='/login' element={<Login />} />
+            
           </Routes>
         </div>
       }

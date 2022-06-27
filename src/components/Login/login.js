@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Box, Button, Checkbox, Container,  FormControlLabel,  TextField } from '@mui/material'
 import { connect } from 'react-redux'
@@ -10,10 +10,13 @@ import { useNavigate } from "react-router-dom";
 
 
 const Login = (props) => {
-
+  
     const navig = useNavigate()
-     props.auth.isAuth && navig('/profile')
-
+    useEffect(()=> {
+        props.auth.isAuth && navig('/profile') 
+    },)
+    
+ 
 
     const fomSubmit = (value) => {
         let login = document.getElementById('login')
@@ -30,6 +33,7 @@ const Login = (props) => {
         }
         else {
             props.getLoginThunk(login.value,password.value,check, null)
+        
         }
     
     }
@@ -61,6 +65,7 @@ const Login = (props) => {
                     id="login" 
                     label="Login" 
                     variant="outlined" 
+                    // autoComplete='off'
                     />
                 </div>
                 <div>
@@ -72,6 +77,7 @@ const Login = (props) => {
                     type={'password'} 
                     label="Password" 
                     variant="outlined" 
+                    autoComplete='off'
                     />
                 </div>
                 <div>

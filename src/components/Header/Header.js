@@ -54,6 +54,10 @@ const Header = (props) => {
     navig(`/login`)
   }
 
+  const mainClick =()=> {
+    navig(`/profile`)
+  }
+
 
   return (
     <AppBar position="fixed" >
@@ -63,8 +67,7 @@ const Header = (props) => {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+          onClick={mainClick}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -72,7 +75,7 @@ const Header = (props) => {
               fontWeight: 700,
               letterSpacing: '.2rem',
               color: 'inherit',
-              textDecoration: 'none',
+              cursor: 'pointer'
             }}
           >
             Social network
@@ -121,8 +124,7 @@ const Header = (props) => {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href=""
+            onClick={mainClick}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -131,7 +133,7 @@ const Header = (props) => {
               fontWeight: 700,
               letterSpacing: '.2rem',
               color: 'inherit',
-              textDecoration: 'none',
+              cursor: 'pointer'
             }}
           >
             Social network

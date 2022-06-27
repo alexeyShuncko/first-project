@@ -10,18 +10,15 @@ import { useNavigate } from "react-router-dom";
 
 
 const Profile = (props) => {
-    const navig = useNavigate()
 
-    useEffect(() => {
-        !props.auth.isAuth && navig('/login')
+    const navig = useNavigate() 
+useEffect(()=> {
+   
+    !props.auth.isAuth && navig('/login')
+},)
 
-    }, [props.auth.isAuth, navig])
-
-
-
-
-
-
+    
+ 
 
     return (
 

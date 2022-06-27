@@ -19,7 +19,7 @@ let initialState = {
     profile: null,
     status: '',
     error: [],
-    loading: false
+    loading: true
 }
 
 const profileReduser = (state = initialState, action) => {
