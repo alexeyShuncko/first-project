@@ -32,7 +32,7 @@ const App = ({ getAuthThunk, ...props }) => {
         : <div>
           <Header />
           <Routes>
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/profile/:id' element={<Profile />} />
             <Route path='/' element={<Profile />} />
            <Route path='/login' element={<Login />} />
             {/* <Route path='/messages'  element={<Messages />} /> */}

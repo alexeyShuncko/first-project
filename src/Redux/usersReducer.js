@@ -12,7 +12,7 @@ let initialState = {
     users: [
 
     ],
-    pageSize: 100,
+    pageSize: 16,
     totalUsersCount: 0,
     currentPage: 10,
     isFetching: true,
@@ -120,12 +120,19 @@ export const unfollow = (u) => (dispatch) => {
 
         dispatch(setFollowingInProgress(true, u.id))
 
-        getUnFollow(u).then(data => {
+        getUnFollow(u)
+        .then(data => {
             if (data.resultCode === 0) {
                 dispatch(unfollowSuccess(u.id))
             }
             dispatch(setFollowingInProgress(false, u.id))
         })
+        
+        .catch(()=>{
+            dispatch(unfollowSuccess(u.id))
+            dispatch(setFollowingInProgress(false, u.id))
+        })
+       
 
     }
 
@@ -133,12 +140,18 @@ export const follow = (u) =>(dispatch) => {
 
         dispatch(setFollowingInProgress(true, u.id))
 
-        getFollow(u).then(data => {
+        getFollow(u)
+        .then(data => {
             if (data.resultCode === 0) {
                 dispatch(followSuccess(u.id))
             }
             dispatch(setFollowingInProgress(false, u.id))
         })
+        .catch( () =>  {
+            dispatch(followSuccess(u.id))
+            dispatch(setFollowingInProgress(false, u.id))
+        }
+        )
 
     }
 

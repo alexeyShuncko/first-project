@@ -1,47 +1,70 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Button, Card, CardActions, CardContent, CardMedia, Container, Grid, Pagination, Typography } from '@mui/material'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 // import s from './users.module.css'
 import foto from "../../image/foto.jpg"
+import { getUsers, follow, unfollow } from "../../Redux/usersReducer";
+import { getProfileThunk } from "../../Redux/profileReducer";
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Users = (props) => {
-    const [edit, setEdit] = useState(true)
 
-    const following = () => {
-        setEdit(false)
+    const navig = useNavigate() 
+
+    useEffect(() => {
+        props.getUsers(1, props.users.pageSize)
+    }, [])
+
+
+    const getPage = (e) => {
+        props.getUsers(e.target.innerText, props.users.pageSize)
     }
 
-    const arr = [1, 2, 3, 4, 5, 6,7,8,9,10]
+
+
+
 
     return <div>
         <Container maxWidth={'md'} sx={{ mt: '6rem' }}>
+
             <Grid container spacing={2}>
-                {
-                    arr.map(a => (
-                        <Grid item key={a}>
-                            <Card>
+                {props.users.users &&
+                    props.users.users.map(a => (
+                        <Grid item key={a.name}>
+                            <Card sx={{ width: 200, cursor: 'pointer' }}
+                                onClick={() => {
+                                    props.getProfileThunk(a.id)
+                                    navig(`/profile/${a.id}`)
+                                }}>
                                 <CardMedia
                                     sx={{ maxWidth: 200 }}
                                     component="img"
                                     height="140"
-                                    image={foto}
+                                    image={a.photos.large || foto}
                                     alt="henghog" />
                                 <CardContent>
-                                    <Typography variant="h5">
-                                        {a}
+                                    <Typography variant="subtitle2" >
+                                        {a.name}
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
                                     {
-                                        edit
+                                        !a.followed
                                             ? <Button
                                                 variant='contained'
                                                 color="success"
-                                                onClick={following}
+                                                onClick={() => props.follow(a)}
                                             >
                                                 Follow</Button>
-                                            : <Button variant='contained' color="secondary">Unfollow</Button>
+                                            : <Button
+                                                variant='contained'
+                                                color="secondary"
+                                                onClick={() => props.unfollow(a)}
+                                            >
+                                                Unfollow
+                                            </Button>
                                     }
 
                                 </CardActions>
@@ -53,8 +76,18 @@ const Users = (props) => {
 
 
             </Grid>
+            <Pagination
+                count={Math.ceil(props.users.totalUsersCount / props.users.pageSize) || 16}
+                color="primary"
+                onClick={getPage}
+                sx={{ display: "flex", m: 2, justifyContent: "center" }} />
         </Container>
     </div>
 }
+let mapStateToProps = (state) => {
+    return {
+        users: state.usersPage
+    }
+}
 
-export default Users
+export default connect(mapStateToProps, { getUsers, follow, unfollow, getProfileThunk })(Users)

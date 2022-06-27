@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {MenuItem,Tooltip, Button, Avatar, Container, Typography, IconButton,
   Menu, Toolbar, Box, AppBar } from '@mui/material';
@@ -13,6 +13,12 @@ import  ava  from "../../image/1.jpg";
 
 
 const Header = (props) => {
+  let path = window.location.pathname.slice(1,window.location.pathname.length)
+  const [active, setActive] = useState(path.slice(0,1).toUpperCase() + path.slice(1,path.length))
+ 
+  useEffect(()=> {
+    setActive(path.slice(0,1).toUpperCase() + path.slice(1,path.length))
+  },[setActive,path])
   
 
   const navig = useNavigate()
@@ -27,10 +33,10 @@ const Header = (props) => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+    setAnchorElNav(event.currentTarget)
   };
-  const handleCloseNavMenu = (event) => {
-    navig(`/${event.currentTarget.innerText.toLowerCase()}`)
+  const handleCloseNavMenu = (e) => {
+    navig(`/${e.currentTarget.innerText.toLowerCase()}`)
     setAnchorElNav(null);
   };
 
@@ -55,7 +61,7 @@ const Header = (props) => {
   }
 
   const mainClick =()=> {
-    navig(`/profile`)
+    navig(`/profile/${props.auth.id}`)
   }
 
 
@@ -113,7 +119,7 @@ const Header = (props) => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center" >{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -143,7 +149,9 @@ const Header = (props) => {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block', 
+                fontSize: active === page ? '20px': '',
+                textDecoration: active === page ? 'underline': '' }}
               >
                 {page}
               </Button>
