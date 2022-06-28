@@ -1,8 +1,10 @@
 
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import Error from './components/Error/Error';
 import Header from './components/Header/Header';
+import Loading from './components/Loading/Loading';
 import Login from './components/Login/Login';
 // import Messages from './components/Messages/Messages';
 import Music from './components/Music/Music';
@@ -10,8 +12,9 @@ import News from './components/News/News';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
 import Users from './components/Users/Users';
-import { getProfileThunk, setLoading } from "./Redux/profileReducer";
-import { getAuthThunk } from "./Redux/AuthReducer";
+import { getAuthThunk,getProfileThunk } from "./Redux/profileReducer";
+
+
 
 
 
@@ -19,21 +22,32 @@ import { getAuthThunk } from "./Redux/AuthReducer";
 
 const App = ({ getAuthThunk, ...props }) => {
 
+
+  const navig = useNavigate()
+  const location = useLocation() 
+
   useEffect(() => {
     getAuthThunk()
+
+    if (location.pathname === '/') {
+      navig('/profile/19240')
+    }
   }, [])
 
 
 
+  
   return (
     <div>
-      {props.profile.loading
-        ? <div>Загрузка ... </div>
+      {
+        props.profile.serverError && <Error />
+      }
+      {!props.profile.isAuth
+        ? <Loading />
         : <div>
           <Header />
           <Routes>
-            <Route path='/profile/:id' element={<Profile />} />
-            <Route path='/' element={<Profile />} />
+            <Route path='/profile/:id'  element={<Profile />} />
            <Route path='/login' element={<Login />} />
             {/* <Route path='/messages'  element={<Messages />} /> */}
             <Route path='/news' element={<News />} />
@@ -56,6 +70,6 @@ let mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { getProfileThunk, setLoading, getAuthThunk })(App)
+export default connect(mapStateToProps, { getProfileThunk,  getAuthThunk })(App)
 
 

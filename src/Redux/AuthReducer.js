@@ -1,19 +1,19 @@
-import { getAuth, getCaptchaURL, getLogin, getLogout } from "../API/api"
-import { getProfileThunk, getStatusThunk, setLoading } from "./profileReducer"
+import { getCaptchaURL, getLogin, getLogout } from "../API/api"
+
 const SET_USER_DATA = 'SET_USER_DATA'
 const SET_LOGIN = 'SET_LOGIN'
 const SET_LOGOUT = 'SET_LOGOUT'
 const SET_CAPTCHA = 'SET_CAPTCHA'
 const SET_ERROR_LOGIN = 'SET_ERROR_LOGIN'
 const SET_ERROR_PASS = 'SET_ERROR_PASS'
+const SET_LOADING = 'SET_LOADING'
+
+
 
 let initialState = {
-    id: null,
-    email: null,
-    login: null,
-    //isFetching: true
-    isAuth: false,
-    password: null,
+   
+   
+  
     rememberMe: false,
     captchaUrl: null,
     errLogin: {
@@ -50,6 +50,11 @@ const authReduser = (state = initialState, action) => {
                 ...state, 
                 isAuth: action.data,
             }
+            case SET_LOADING:
+                return {
+                    ...state, 
+                    loading: action.data,
+                }
         case SET_CAPTCHA:
             return {
                 ...state,
@@ -97,28 +102,19 @@ export const setErrPass = (err, text) => { // экшенкриэйтор
     return { type: SET_ERROR_PASS, err, text}
 }
 
-
-
-
-
-
-export const getAuthThunk = () => async (dispatch) => { // санкриэйтор
-    const data = await getAuth()
-    if (data.resultCode === 0) {
-        dispatch(setAuthUserData(data.data))
-        dispatch(getProfileThunk(data.data.id))
-        dispatch(getStatusThunk(data.data.id))  
-    }
-    else {
-        dispatch(setLoading(false))
-    }
+export const setLoading = (data) => { // экшенкриэйтор
+    return { type: SET_LOADING, data }
 }
+
+
+
+
 
 export const getLoginThunk = (email, password, rememberMe, captcha) => (dispatch) => {
     getLogin(email, password, rememberMe, captcha).then(data => {
         if (data.resultCode === 0) {
             dispatch(setLogin(email, password, rememberMe))
-            dispatch(getAuthThunk())
+            // dispatch(getAuthThunk())
             dispatch(setErrLogin(false, ''))
             dispatch(setErrPass(false, ''))
         }

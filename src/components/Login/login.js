@@ -13,7 +13,7 @@ const Login = (props) => {
   
     const navig = useNavigate()
     useEffect(()=> {
-        props.auth.isAuth && navig('/profile') 
+        props.auth.isAuth && navig(`/profile/${props.auth.id}`) 
     },)
     
  

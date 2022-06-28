@@ -1,25 +1,29 @@
 
-import { getProfile, getStatus, savePhotoProfile, updateProfile, updateStatus } from './../API/api';
-const ADD_POST = 'ADD-POST'
-const SET_USER_PROFILE = 'SET_USER_PROFILE'
-const SET_STATUS = 'SET_STATUS'
+import { getAuth, getProfile, getStatus, savePhotoProfile, updateProfile, updateStatus } from './../API/api';
+
+
+
 const SET_UPDATE_STATUS = 'SET_UPDATE_STATUS'
-const DELETE_POST = 'DELETE_POST'
 const SET_SAVE_PHOTO = 'SET_SAVE_PHOTO'
 const SET_UPDATE_PROFILE = 'SET_UPDATE_PROFILE'
-const SET_ERROR = 'SET_ERROR'
 const ADD_LOADING = 'ADD_LOADING'
+const SET_PROFILE_LOAD = 'SET_PROFILE_LOAD'
+
+
+const SET_ID = 'SET_ID'
+const SET_USER = 'SET_USER'
+const SET_IS_AUTH = 'SET_IS_AUTH'
+const SET_PHOTO = 'SET_PHOTO'
+const SET_STATUS = 'SET_STATUS'
+
 
 let initialState = {
-    posts: [
-        { id: 1, like: 15, message: 'Hi, how are you?' },
-        { id: 2, like: 20, message: "It's my first post" },
-        { id: 3, like: 25, message: "It's my first post" }
-    ],
-    profile: null,
+    isAuth: false,
+    id: '',
+    user: '',
     status: '',
-    error: [],
-    loading: true
+    photo: '',
+    serverError: false
 }
 
 const profileReduser = (state = initialState, action) => {
@@ -27,26 +31,29 @@ const profileReduser = (state = initialState, action) => {
 
     switch (action.type) {
 
-        case ADD_POST:
-            return {
-                ...state,
-                posts: [...state.posts, { id: state.posts.length + 1, like: 1, message: action.values }]
-            }
-        case DELETE_POST:
-            return {
-                ...state,
-                posts: [...state.posts.filter(p => p.id !== action.postId)]
 
-            }
-        case SET_USER_PROFILE:
+        case SET_ID:
             return {
                 ...state,
-                profile: action.profile
+                id: action.id
+            }
+        case SET_USER:
+            return {
+                ...state,
+                user: action.user
             }
         case SET_STATUS:
             return {
                 ...state, status: action.status
             }
+        case SET_IS_AUTH:
+            return {
+                ...state, isAuth: action.data
+            }
+
+
+
+
         case SET_UPDATE_STATUS:
             return {
                 ...state, status: action.status
@@ -59,18 +66,20 @@ const profileReduser = (state = initialState, action) => {
             return {
                 ...state, profile: { ...state.profile }
             }
-        case SET_ERROR:
-            return {
-                ...state, error: action.error.map(e => e.split('')
-                    .slice(0, -1)
-                    .join('')
-                    .toLowerCase()
-                    .slice(30))
-            }
         case ADD_LOADING:
             return {
                 ...state,
                 loading: action.data
+            }
+        case SET_PHOTO:
+            return {
+                ...state,
+                photo: action.data
+            }
+        case SET_PROFILE_LOAD:
+            return {
+                ...state,
+                profileLoad: action.data
             }
 
         default:
@@ -81,26 +90,28 @@ const profileReduser = (state = initialState, action) => {
 
 
 
-export const setLoading = (data) => {
-    return { type: ADD_LOADING, data }
+
+
+export const setID = (id) => {
+    return { type: SET_ID, id }
 }
-
-
-
-export const addPost = (values) => {
-    return { type: ADD_POST, values }
+export const setUser = (user) => {
+    return { type: SET_USER, user }
 }
-export const deletePost = (postId) => {
-    return { type: DELETE_POST, postId }
-}
-
-export const setUserProfile = (profile) => {
-    return { type: SET_USER_PROFILE, profile }
-}
-
 export const setStatus = (status) => {
     return { type: SET_STATUS, status }
 }
+export const setIsAuth = (data) => {
+    return { type: SET_IS_AUTH, data }
+}
+export const setPhoto = (data) => {
+    return { type: SET_PHOTO, data }
+}
+
+
+
+
+
 export const setUpdateStatus = (status) => {
     return { type: SET_UPDATE_STATUS, status }
 }
@@ -110,17 +121,45 @@ export const setSavePhoto = (photos) => {
 export const setUpdateProfile = (profile) => {
     return { type: SET_UPDATE_PROFILE, profile }
 }
-export const setError = (error) => {
-    return { type: SET_ERROR, error }
+
+export const setProfileLoad = (data) => {
+    return { type: SET_PROFILE_LOAD, data }
+}
+export const setLoading = (data) => {
+    return { type: ADD_LOADING, data }
 }
 
 
 
+
+export const getAuthThunk = () => (dispatch) => { // санкриэйтор
+    getAuth()
+        .then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(setID(data.data.id))
+                dispatch(getProfileThunk(data.data.id))
+            }
+        })
+        .catch(()=> {
+            dispatch(setIsAuth(true))
+        })
+       
+}
+
+
+
+
 export const getProfileThunk = (userId) => (dispatch) => {
-    getProfile(userId).then(data => {
-        dispatch(setUserProfile(data))
-        dispatch(setLoading(false))
-    })
+    dispatch(setIsAuth(false))
+    getProfile(userId)
+        .then(data => {
+            dispatch(setUser(data))
+            dispatch(getStatusThunk(userId))
+            dispatch(setIsAuth(true))
+            if (userId === 19240) {
+                dispatch(setPhoto(data.photos.large)) 
+            }
+        })
 }
 
 export const getStatusThunk = (userId) => (dispatch) => {
@@ -129,6 +168,9 @@ export const getStatusThunk = (userId) => (dispatch) => {
             dispatch(setStatus(data))
         })
 }
+
+
+
 
 export const getUpdateStatus = (status) => (dispatch) => {
     updateStatus(status).then(data => {
@@ -147,11 +189,6 @@ export const getUpdateProfile = (profile, userId) => (dispatch) => {
     updateProfile(profile).then(data => {
         if (data.resultCode === 0) {
             dispatch(getProfileThunk(userId))
-            dispatch(setError([]))
-        }
-        else {
-            dispatch(setError(data.messages))
-
         }
     })
 }

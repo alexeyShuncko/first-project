@@ -6,27 +6,27 @@ import foto from "../../image/foto.jpg"
 import { getUsers, follow, unfollow } from "../../Redux/usersReducer";
 import { getProfileThunk } from "../../Redux/profileReducer";
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 
 
 
 const Users = (props) => {
 
-    const navig = useNavigate() 
+    const navig = useNavigate()
 
     useEffect(() => {
         props.getUsers(1, props.users.pageSize)
     }, [])
 
 
-    const getPage = (e) => {
-        props.getUsers(e.target.innerText, props.users.pageSize)
+
+    const handleChange = (e, page) => {
+        props.getUsers(page, props.users.pageSize)
     }
 
 
-
-
-
     return <div>
+        {props.users.users.length === 0 && <Loading />}
         <Container maxWidth={'md'} sx={{ mt: '6rem' }}>
 
             <Grid container spacing={2}>
@@ -77,9 +77,9 @@ const Users = (props) => {
 
             </Grid>
             <Pagination
+                onChange={handleChange}
                 count={Math.ceil(props.users.totalUsersCount / props.users.pageSize) || 16}
                 color="primary"
-                onClick={getPage}
                 sx={{ display: "flex", m: 2, justifyContent: "center" }} />
         </Container>
     </div>

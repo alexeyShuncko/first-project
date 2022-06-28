@@ -8,6 +8,7 @@ import CellTower from '@mui/icons-material/CellTower';
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { getLogoutThunk } from "../../Redux/AuthReducer";
+import { getProfileThunk } from "../../Redux/profileReducer";
 import  ava  from "../../image/1.jpg";
 
 
@@ -17,6 +18,10 @@ const Header = (props) => {
   const [active, setActive] = useState(path.slice(0,1).toUpperCase() + path.slice(1,path.length))
  
   useEffect(()=> {
+    if (path.includes('/')) {
+      setActive(path.slice(0,1).toUpperCase() + path.slice(1,path.indexOf('/')))
+    }
+    else 
     setActive(path.slice(0,1).toUpperCase() + path.slice(1,path.length))
   },[setActive,path])
   
@@ -36,8 +41,18 @@ const Header = (props) => {
     setAnchorElNav(event.currentTarget)
   };
   const handleCloseNavMenu = (e) => {
-    navig(`/${e.currentTarget.innerText.toLowerCase()}`)
-    setAnchorElNav(null);
+    if (props.profile.isAuth) {
+      if (e.currentTarget.innerText.toLowerCase()==='profile') {
+        if (props.profile.id !== props.profile.user.userId) {
+          props.getProfileThunk(props.profile.id)
+        }
+        navig(`/${e.currentTarget.innerText.toLowerCase()}/${props.profile.id}`)
+      }
+     else
+      navig(`/${e.currentTarget.innerText.toLowerCase()}`)
+      setAnchorElNav(null);
+    }
+   
   };
 
 
@@ -61,7 +76,10 @@ const Header = (props) => {
   }
 
   const mainClick =()=> {
-    navig(`/profile/${props.auth.id}`)
+    if (props.profile.id !== props.profile.user.userId) {
+      props.getProfileThunk(props.profile.id)
+    }
+    navig(`/profile/${props.profile.id}`)
   }
 
 
@@ -159,7 +177,7 @@ const Header = (props) => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {!props.auth.isAuth
+            {!props.profile.isAuth
               ? <Button variant="contained" onClick={openLoginForm}>Login</Button>
 
               :
@@ -167,9 +185,7 @@ const Header = (props) => {
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar alt="Remy Sharp"  
-                    src={props.profile.profile
-                    ? props.profile.profile.photos.large 
-                    : ava} />
+                    src={ props.profile.photo || ava} />
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -212,6 +228,6 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps,{getLogoutThunk})(Header)
+export default connect(mapStateToProps,{getLogoutThunk, getProfileThunk})(Header)
 
 
