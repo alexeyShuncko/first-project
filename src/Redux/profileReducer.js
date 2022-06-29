@@ -1,5 +1,5 @@
 
-import { getAuth, getProfile, getStatus, savePhotoProfile, updateProfile, updateStatus } from './../API/api';
+import { getAuth, getLogin, getLogout, getProfile, getStatus, savePhotoProfile, updateProfile, updateStatus } from './../API/api';
 
 
 
@@ -50,6 +50,7 @@ const profileReduser = (state = initialState, action) => {
             return {
                 ...state, isAuth: action.data
             }
+      
 
 
 
@@ -132,19 +133,65 @@ export const setLoading = (data) => {
 
 
 
-export const getAuthThunk = () => (dispatch) => { // санкриэйтор
+export const getAuthThunk = () => (dispatch) => { 
+    return new Promise((resolve, reject) => {
     getAuth()
         .then((data) => {
-            if (data.resultCode === 0) {
+            if (data.resultCode === 1) {
+                dispatch(setIsAuth(true))
+                resolve('login')
+            }
+            else if (data.resultCode === 0) {
+                console.log('auththunk')
                 dispatch(setID(data.data.id))
                 dispatch(getProfileThunk(data.data.id))
+                resolve('profile')
             }
         })
         .catch(()=> {
             dispatch(setIsAuth(true))
         })
-       
+    })  
 }
+
+export const getLogoutThunk = () => (dispatch) => {
+    getLogout()
+    .then(data => {
+        if (data.resultCode === 0) {
+            dispatch(setIsAuth(false))
+            dispatch(getAuthThunk()) 
+        }
+    })
+}
+
+export const getLoginThunk = (email, password, rememberMe, captcha) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+    getLogin(email, password, rememberMe, captcha)
+    .then(data => {
+        if (data.resultCode === 0) {
+            console.log('loginThunk')
+             dispatch(getAuthThunk())
+            //  resolve()
+            // dispatch(setErrLogin(false, ''))
+            // dispatch(setErrPass(false, ''))
+        }
+        // if (data.resultCode === 1) {
+           
+        //     if (data.messages[0] === 'Enter valid Email') {
+        //         dispatch(setErrLogin(true, 'Невалидный емаил!'))
+        //     }
+        //     else if (data.messages[0] === 'Incorrect Email or Password') {
+        //         dispatch(setErrPass(true, 'Неверный пароль!'))
+        //     }
+        // }
+     
+        // if (data.resultCode === 10) {
+        //     dispatch(thunkCaptchaUrl())
+        // }
+    })
+})
+}
+
 
 
 
@@ -173,24 +220,37 @@ export const getStatusThunk = (userId) => (dispatch) => {
 
 
 export const getUpdateStatus = (status) => (dispatch) => {
-    updateStatus(status).then(data => {
-        if (data.resultCode === 0) { dispatch(setUpdateStatus(status)) }
+    return new Promise((resolve, reject) => {
+    updateStatus(status)
+    .then(data => {
+        if (data.resultCode === 0) { 
+            dispatch(setUpdateStatus(status))
+            resolve() 
+        }
     })
+    .catch((err)=> reject(err))
+})
 }
+
 export const savePhoto = (file) => (dispatch) => {
     savePhotoProfile(file)
         .then(data => {
-            if (data.resultCode === 0)
+            if (data.resultCode === 0) {}
                 dispatch(setSavePhoto(data.data.photos))
         })
 }
 
 export const getUpdateProfile = (profile, userId) => (dispatch) => {
-    updateProfile(profile).then(data => {
+    return new Promise((resolve, reject) => {
+    updateProfile(profile)
+    .then(data => {
         if (data.resultCode === 0) {
             dispatch(getProfileThunk(userId))
+            resolve()
         }
     })
+    .catch((err) => reject(err))
+})
 }
 
 

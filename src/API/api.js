@@ -14,12 +14,12 @@ export const getUser = async (currentPage, pageSize) => {
     return response.data;
 }
 
-export const getFollow = async (u) => {
-    const response = await instance.post(`follow/${u.id}`);
+export const getFollow = async (id) => {
+    const response = await instance.post(`follow/${id}`);
     return response.data;
 }
-export const getUnFollow = async (u) => {
-    const response = await instance.delete(`follow/${u.id}`);
+export const getUnFollow = async (id) => {
+    const response = await instance.delete(`follow/${id}`);
     return response.data;
 }
 export const getAuth = async () => {

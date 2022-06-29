@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 
 import { Box, Button, Checkbox, Container,  FormControlLabel,  TextField } from '@mui/material'
 import { connect } from 'react-redux'
-import { getLoginThunk, setErrLogin, setErrPass } from "../../Redux/AuthReducer";
+import {  setErrLogin, setErrPass } from "../../Redux/AuthReducer";
+import { getLoginThunk } from "../../Redux/profileReducer";
 import { useNavigate } from "react-router-dom";
 
 
@@ -12,9 +13,10 @@ import { useNavigate } from "react-router-dom";
 const Login = (props) => {
   
     const navig = useNavigate()
-    useEffect(()=> {
-        props.auth.isAuth && navig(`/profile/${props.auth.id}`) 
-    },)
+
+     useEffect(()=> {
+         props.profile.isAuth && props.profile.id && navig(`/profile/${props.profile.id}`) 
+     })
     
  
 
@@ -33,6 +35,9 @@ const Login = (props) => {
         }
         else {
             props.getLoginThunk(login.value,password.value,check, null)
+        //     .then(()=> {
+        //     navig(`/profile/${props.profile.id}`) 
+        // })
         
         }
     
@@ -99,7 +104,8 @@ const Login = (props) => {
 
 let mapStateToProps = (state) => {
     return {
-        auth: state.authData
+        auth: state.authData,
+        profile: state.profileData
     }
 }
 

@@ -7,8 +7,7 @@ import CellTower from '@mui/icons-material/CellTower';
 
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { getLogoutThunk } from "../../Redux/AuthReducer";
-import { getProfileThunk } from "../../Redux/profileReducer";
+import { getProfileThunk, getLogoutThunk } from "../../Redux/profileReducer";
 import  ava  from "../../image/1.jpg";
 
 
@@ -68,6 +67,7 @@ const Header = (props) => {
   const logout =()=> {
     setAnchorElUser(null);
     props.getLogoutThunk()
+    navig(`/login`)
   }
 
 
@@ -169,7 +169,7 @@ const Header = (props) => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block', 
                 fontSize: active === page ? '20px': '',
-                textDecoration: active === page ? 'underline': '' }}
+                textDecoration: active === page ? 'overline': '' }}
               >
                 {page}
               </Button>
@@ -179,7 +179,6 @@ const Header = (props) => {
           <Box sx={{ flexGrow: 0 }}>
             {!props.profile.isAuth
               ? <Button variant="contained" onClick={openLoginForm}>Login</Button>
-
               :
               <>
                 <Tooltip title="Open settings">

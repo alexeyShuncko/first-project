@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Error from './components/Error/Error';
@@ -13,7 +13,9 @@ import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
 import Users from './components/Users/Users';
 import { getAuthThunk,getProfileThunk } from "./Redux/profileReducer";
-
+import MuiAlert from '@mui/material/Alert';
+import { Slide, Snackbar } from '@mui/material';
+import HocSnackBar from './components/HOC/HocSnackBar';
 
 
 
@@ -22,19 +24,51 @@ import { getAuthThunk,getProfileThunk } from "./Redux/profileReducer";
 
 const App = ({ getAuthThunk, ...props }) => {
 
+  const [openSnackBar, setOpenSnackBar] = useState(false)
+    const [error, setErrorSnackBar] = useState(false)
+    const [errorText, setErrorSnackBarText] = useState('')
 
   const navig = useNavigate()
-  const location = useLocation() 
+ 
 
   useEffect(() => {
     getAuthThunk()
-
-    if (location.pathname === '/') {
+    .then((path)=> {
+      if (path === 'login') {
+        console.log('login')
+        navig('/login')
+      }
+     else {
+      console.log('profile');
       navig('/profile/19240')
-    }
+     }
+    })
+
+  
   }, [])
 
 
+  
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  function Transition(props) {
+    return <Slide {...props} direction="right" />;
+  }
+
+
+  const handleCloseSnackBar =(e, reason)=> {
+    if (reason === 'clickaway') {
+        return;
+      }
+    setOpenSnackBar(false)
+}
+const handleErrorBar =(e, reason)=> {
+    if (reason === 'clickaway') {
+        return;
+      }
+      setErrorSnackBar(false)
+}
 
   
   return (
@@ -42,22 +76,51 @@ const App = ({ getAuthThunk, ...props }) => {
       {
         props.profile.serverError && <Error />
       }
+
+
+
       {!props.profile.isAuth
         ? <Loading />
         : <div>
           <Header />
           <Routes>
-            <Route path='/profile/:id'  element={<Profile />} />
+            <Route path='/profile/:id'  element={
+              HocSnackBar(Profile, 
+                openSnackBar, setOpenSnackBar, 
+                error,setErrorSnackBar,
+                errorText,setErrorSnackBarText)
+            } />
            <Route path='/login' element={<Login />} />
             {/* <Route path='/messages'  element={<Messages />} /> */}
             <Route path='/news' element={<News />} />
             <Route path='/music' element={<Music />} />
             <Route path='/settings' element={<Settings />} />
-            <Route path='/users' element={<Users />} />
+            <Route path='/users' element={
+              HocSnackBar(Users, 
+                openSnackBar, setOpenSnackBar, 
+                error,setErrorSnackBar,
+                errorText,setErrorSnackBarText)} />
             
           </Routes>
         </div>
       }
+       <Snackbar open={openSnackBar} 
+            autoHideDuration={2000} 
+            onClose={handleCloseSnackBar}
+            TransitionComponent={Transition}
+            >
+                <Alert onClose={handleCloseSnackBar} severity="success" sx={{ width: '100%' }}>
+                Changes saved!
+                </Alert>
+            </Snackbar>
+            <Snackbar open={error} 
+            autoHideDuration={2000} 
+            onClose={handleErrorBar}
+            TransitionComponent={Transition}
+            >
+                <Alert onClose={handleErrorBar} severity="error" sx={{ width: '100%' }}>
+             {errorText}!</Alert>
+            </Snackbar>
     </div>
 
 

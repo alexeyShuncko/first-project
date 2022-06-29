@@ -115,42 +115,47 @@ export const getUsers = (currentPage,pageSize) => (dispatch) => {
         })
     }
 
-export const unfollow = (u) => (dispatch) => {
+export const unfollow = (id) => (dispatch) => {
 
-        dispatch(setFollowingInProgress(true, u.id))
-
-        getUnFollow(u)
+        dispatch(setFollowingInProgress(true, id))
+        return new Promise((resolve, reject) => {
+        getUnFollow(id)
         .then(data => {
             if (data.resultCode === 0) {
-                dispatch(unfollowSuccess(u.id))
+                dispatch(unfollowSuccess(id))
+                resolve()
             }
-            dispatch(setFollowingInProgress(false, u.id))
+            dispatch(setFollowingInProgress(false, id))
         })
         
-        .catch(()=>{
-            dispatch(unfollowSuccess(u.id))
-            dispatch(setFollowingInProgress(false, u.id))
+        .catch((err)=>{
+            dispatch(unfollowSuccess(id))
+            dispatch(setFollowingInProgress(false, id))
+            reject(err)
         })
-       
+    })
 
     }
 
-export const follow = (u) =>(dispatch) => {
+export const follow = (id) =>(dispatch) => {
 
-        dispatch(setFollowingInProgress(true, u.id))
-
-        getFollow(u)
+        dispatch(setFollowingInProgress(true, id))
+        return new Promise((resolve, reject) => {
+        getFollow(id)
         .then(data => {
             if (data.resultCode === 0) {
-                dispatch(followSuccess(u.id))
+                dispatch(followSuccess(id))
+                resolve()
             }
-            dispatch(setFollowingInProgress(false, u.id))
+            dispatch(setFollowingInProgress(false, id))
         })
-        .catch( () =>  {
-            dispatch(followSuccess(u.id))
-            dispatch(setFollowingInProgress(false, u.id))
+        .catch( (err) =>  {
+            dispatch(followSuccess(id))
+            dispatch(setFollowingInProgress(false, id))
+            reject(err)
         }
         )
+    })
 
     }
 

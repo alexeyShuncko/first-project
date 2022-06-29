@@ -1,4 +1,4 @@
-import { getCaptchaURL, getLogin, getLogout } from "../API/api"
+import { getCaptchaURL } from "../API/api"
 
 const SET_USER_DATA = 'SET_USER_DATA'
 const SET_LOGIN = 'SET_LOGIN'
@@ -110,29 +110,6 @@ export const setLoading = (data) => { // экшенкриэйтор
 
 
 
-export const getLoginThunk = (email, password, rememberMe, captcha) => (dispatch) => {
-    getLogin(email, password, rememberMe, captcha).then(data => {
-        if (data.resultCode === 0) {
-            dispatch(setLogin(email, password, rememberMe))
-            // dispatch(getAuthThunk())
-            dispatch(setErrLogin(false, ''))
-            dispatch(setErrPass(false, ''))
-        }
-        if (data.resultCode === 1) {
-           
-            if (data.messages[0] === 'Enter valid Email') {
-                dispatch(setErrLogin(true, 'Невалидный емаил!'))
-            }
-            else if (data.messages[0] === 'Incorrect Email or Password') {
-                dispatch(setErrPass(true, 'Неверный пароль!'))
-            }
-        }
-     
-        if (data.resultCode === 10) {
-            dispatch(thunkCaptchaUrl())
-        }
-    })
-}
 
 
 export const thunkCaptchaUrl = () => (dispatch) => {
@@ -142,14 +119,7 @@ export const thunkCaptchaUrl = () => (dispatch) => {
     )
 }
 
-export const getLogoutThunk = () => (dispatch) => {
-    getLogout()
-    .then(data => {
-        if (data.resultCode === 0) {
-            dispatch(setLogout(false))
-        }
-    })
-}
+
 
 
 export default authReduser

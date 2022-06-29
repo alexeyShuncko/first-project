@@ -7,6 +7,7 @@ import { getUsers, follow, unfollow } from "../../Redux/usersReducer";
 import { getProfileThunk } from "../../Redux/profileReducer";
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading/Loading';
+import setting from '../../image/Settings.gif';
 
 
 
@@ -25,6 +26,28 @@ const Users = (props) => {
     }
 
 
+    const followUser =(id)=> {
+        props.follow(id)
+        .then(()=>{
+            props.setOpenSnackBar(true)
+        })
+        .catch((err)=> {
+            props.setErrorSnackBarText(err.message)
+            props.setErrorSnackBar(true)
+        })
+    }
+    const unfollowUser =(id)=> {
+        props.unfollow(id)
+        .then(()=> {
+            props.setOpenSnackBar(true)
+        })
+        .catch((err)=> {
+            props.setErrorSnackBarText(err.message)
+            props.setErrorSnackBar(true)
+        })
+    }
+
+
     return <div>
         {props.users.users.length === 0 && <Loading />}
         <Container maxWidth={'md'} sx={{ mt: '6rem' }}>
@@ -33,13 +56,14 @@ const Users = (props) => {
                 {props.users.users &&
                     props.users.users.map(a => (
                         <Grid item key={a.name}>
-                            <Card sx={{ width: 200, cursor: 'pointer' }}
-                                onClick={() => {
+                            <Card sx={{ width: 200 }}
+                               >
+                                <CardMedia
+                                 onClick={() => {
                                     props.getProfileThunk(a.id)
                                     navig(`/profile/${a.id}`)
-                                }}>
-                                <CardMedia
-                                    sx={{ maxWidth: 200 }}
+                                }}
+                                    sx={{ maxWidth: 200, cursor: 'pointer' }}
                                     component="img"
                                     height="140"
                                     image={a.photos.large || foto}
@@ -55,16 +79,23 @@ const Users = (props) => {
                                             ? <Button
                                                 variant='contained'
                                                 color="success"
-                                                onClick={() => props.follow(a)}
+                                                onClick={() => followUser(a.id)}
                                             >
                                                 Follow</Button>
                                             : <Button
                                                 variant='contained'
                                                 color="secondary"
-                                                onClick={() => props.unfollow(a)}
+                                                onClick={() => unfollowUser(a.id)}
                                             >
                                                 Unfollow
                                             </Button>
+                                    }
+                                    {
+                                       ( props.users.followingInProgress[0] === a.id) &&
+                                       <img src={setting} 
+                                       alt='settings' 
+                                       width={'35px'} 
+                                       style={{marginLeft: '10px'}}/>
                                     }
 
                                 </CardActions>
