@@ -4,8 +4,7 @@ const SET_USER_DATA = 'SET_USER_DATA'
 const SET_LOGIN = 'SET_LOGIN'
 const SET_LOGOUT = 'SET_LOGOUT'
 const SET_CAPTCHA = 'SET_CAPTCHA'
-const SET_ERROR_LOGIN = 'SET_ERROR_LOGIN'
-const SET_ERROR_PASS = 'SET_ERROR_PASS'
+
 const SET_LOADING = 'SET_LOADING'
 
 
@@ -16,12 +15,6 @@ let initialState = {
   
     rememberMe: false,
     captchaUrl: null,
-    errLogin: {
-        login: false, text: ''
-    },
-    errPass: {
-        pass: false, text: ''
-    }
 }
 
 const authReduser = (state = initialState, action) => {
@@ -60,20 +53,7 @@ const authReduser = (state = initialState, action) => {
                 ...state,
                 captchaUrl: action.captcha
             }
-            case SET_ERROR_LOGIN:
-                return {
-                    ...state,
-                    errLogin: {
-                        login: action.err, text: action.text
-                    }
-                }
-                case SET_ERROR_PASS:
-                return {
-                    ...state,
-                    errPass: {
-                        pass: action.err, text: action.text
-                    }
-                }
+         
 
         default:
             return state
@@ -95,12 +75,7 @@ export const setCaptchaUrl = (captcha) => { // экшенкриэйтор
     return { type: SET_CAPTCHA, captcha }
 }
 
-export const setErrLogin = (err, text) => { // экшенкриэйтор
-    return { type: SET_ERROR_LOGIN, err, text}
-}
-export const setErrPass = (err, text) => { // экшенкриэйтор
-    return { type: SET_ERROR_PASS, err, text}
-}
+
 
 export const setLoading = (data) => { // экшенкриэйтор
     return { type: SET_LOADING, data }

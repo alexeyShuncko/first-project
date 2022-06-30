@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Error from './components/Error/Error';
 import Header from './components/Header/Header';
 import Loading from './components/Loading/Loading';
@@ -35,11 +35,9 @@ const App = ({ getAuthThunk, ...props }) => {
     getAuthThunk()
     .then((path)=> {
       if (path === 'login') {
-        console.log('login')
         navig('/login')
       }
      else {
-      console.log('profile');
       navig('/profile/19240')
      }
     })

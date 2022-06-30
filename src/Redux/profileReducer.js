@@ -15,6 +15,8 @@ const SET_USER = 'SET_USER'
 const SET_IS_AUTH = 'SET_IS_AUTH'
 const SET_PHOTO = 'SET_PHOTO'
 const SET_STATUS = 'SET_STATUS'
+const SET_ERROR_LOGIN = 'SET_ERROR_LOGIN'
+const SET_ERROR_PASS = 'SET_ERROR_PASS'
 
 
 let initialState = {
@@ -23,7 +25,13 @@ let initialState = {
     user: '',
     status: '',
     photo: '',
-    serverError: false
+    serverError: false,
+    errLogin: {
+        login: false, text: ''
+    },
+    errPass: {
+        pass: false, text: ''
+    }
 }
 
 const profileReduser = (state = initialState, action) => {
@@ -82,6 +90,20 @@ const profileReduser = (state = initialState, action) => {
                 ...state,
                 profileLoad: action.data
             }
+            case SET_ERROR_LOGIN:
+                return {
+                    ...state,
+                    errLogin: {
+                        login: action.err, text: action.text
+                    }
+                }
+                case SET_ERROR_PASS:
+                return {
+                    ...state,
+                    errPass: {
+                        pass: action.err, text: action.text
+                    }
+                }
 
         default:
             return state
@@ -107,6 +129,12 @@ export const setIsAuth = (data) => {
 }
 export const setPhoto = (data) => {
     return { type: SET_PHOTO, data }
+}
+export const setErrLogin = (err, text) => { 
+    return { type: SET_ERROR_LOGIN, err, text}
+}
+export const setErrPass = (err, text) => { 
+    return { type: SET_ERROR_PASS, err, text}
 }
 
 
@@ -142,10 +170,10 @@ export const getAuthThunk = () => (dispatch) => {
                 resolve('login')
             }
             else if (data.resultCode === 0) {
-                console.log('auththunk')
                 dispatch(setID(data.data.id))
                 dispatch(getProfileThunk(data.data.id))
                 resolve('profile')
+               
             }
         })
         .catch(()=> {
@@ -155,39 +183,43 @@ export const getAuthThunk = () => (dispatch) => {
 }
 
 export const getLogoutThunk = () => (dispatch) => {
+    dispatch(setIsAuth(false))
+    return new Promise((resolve, reject) => {
     getLogout()
     .then(data => {
         if (data.resultCode === 0) {
-            dispatch(setIsAuth(false))
-            dispatch(getAuthThunk()) 
+            resolve() 
+            dispatch(setIsAuth(true))
         }
     })
+})
 }
 
 export const getLoginThunk = (email, password, rememberMe, captcha) => (dispatch) => {
+    dispatch(setIsAuth(false))
     return new Promise((resolve, reject) => {
     getLogin(email, password, rememberMe, captcha)
     .then(data => {
         if (data.resultCode === 0) {
-            console.log('loginThunk')
-             dispatch(getAuthThunk())
-            //  resolve()
-            // dispatch(setErrLogin(false, ''))
-            // dispatch(setErrPass(false, ''))
+            dispatch(setID(data.data.userId))
+            dispatch(getProfileThunk(data.data.userId))
+             dispatch(setErrLogin(false, ''))
+             dispatch(setErrPass(false, ''))
+             resolve(data.data.userId)
         }
-        // if (data.resultCode === 1) {
-           
-        //     if (data.messages[0] === 'Enter valid Email') {
-        //         dispatch(setErrLogin(true, 'Невалидный емаил!'))
-        //     }
-        //     else if (data.messages[0] === 'Incorrect Email or Password') {
-        //         dispatch(setErrPass(true, 'Неверный пароль!'))
-        //     }
-        // }
+         if (data.resultCode === 1) {
+            dispatch(setIsAuth(true))
+             if (data.messages[0] === 'Enter valid Email') {
+                 dispatch(setErrLogin(true, 'Невалидный емаил!'))
+             }
+             else if (data.messages[0] === 'Incorrect Email or Password') {
+                 dispatch(setErrPass(true, 'Неверный пароль!'))
+             }
+         }
      
-        // if (data.resultCode === 10) {
-        //     dispatch(thunkCaptchaUrl())
-        // }
+        //  if (data.resultCode === 10) {
+        //      dispatch(thunkCaptchaUrl())
+        //  }
     })
 })
 }
@@ -197,7 +229,7 @@ export const getLoginThunk = (email, password, rememberMe, captcha) => (dispatch
 
 
 export const getProfileThunk = (userId) => (dispatch) => {
-    dispatch(setIsAuth(false))
+   
     getProfile(userId)
         .then(data => {
             dispatch(setUser(data))
@@ -205,6 +237,7 @@ export const getProfileThunk = (userId) => (dispatch) => {
             dispatch(setIsAuth(true))
             if (userId === 19240) {
                 dispatch(setPhoto(data.photos.large)) 
+                dispatch(setIsAuth(true))
             }
         })
 }
@@ -215,8 +248,6 @@ export const getStatusThunk = (userId) => (dispatch) => {
             dispatch(setStatus(data))
         })
 }
-
-
 
 
 export const getUpdateStatus = (status) => (dispatch) => {
@@ -233,11 +264,18 @@ export const getUpdateStatus = (status) => (dispatch) => {
 }
 
 export const savePhoto = (file) => (dispatch) => {
+    return new Promise((resolve, reject) => {
     savePhotoProfile(file)
         .then(data => {
-            if (data.resultCode === 0) {}
+            if (data.resultCode === 0) {
                 dispatch(setSavePhoto(data.data.photos))
+                resolve()
+            }   
         })
+        .catch((err)=>{
+            reject(err)
+        })
+    })
 }
 
 export const getUpdateProfile = (profile, userId) => (dispatch) => {

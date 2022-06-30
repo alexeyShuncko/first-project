@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // import s from './Profile.module.css';
 import {
+    Box,
     Button, Card, CardActions, CardContent,
     CardMedia, Collapse, Container, Dialog, DialogActions,
     DialogContent, DialogContentText, DialogTitle, List, ListItem,
@@ -20,7 +21,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 
-import { getUpdateProfile, getUpdateStatus } from "../../Redux/profileReducer";
+import { getUpdateProfile, getUpdateStatus, savePhoto } from "../../Redux/profileReducer";
 import { follow, unfollow } from "../../Redux/usersReducer";
 import setting from '../../image/Settings.gif';
 
@@ -31,18 +32,24 @@ const Profile = (props) => {
 
     const [open, setOpen] = useState(false)
     const [editOpen, setEditOpen] = useState(false)
+
     const [statusEdit, setStatusEdit] = useState(false)
 
+    const [openPhotoEdit, setOpenPhotoEdit] = useState(false)
 
 
-
-
+// Диалоговое окно обработчики
     const editProfile = () => {
         setOpen(true)
     }
     const handleClose = () => {
         setOpen(false)
     }
+    const handleClick = () => {
+        setEditOpen(!editOpen)
+    }
+
+ // Редактирование профиля
     const saveProfile = () => {
 
         const data = {
@@ -96,13 +103,7 @@ const Profile = (props) => {
     }
 
 
-    const handleClick = () => {
-        setEditOpen(!editOpen)
-    }
-
-
-
-    // Обработчики редактирования профиля
+    // Обработчики редактирования статуса
 
     const handleEditStatus = () => {
         setStatusEdit(true)
@@ -119,8 +120,8 @@ const Profile = (props) => {
                 props.setErrorSnackBarText(err.message)
                 props.setErrorSnackBar(true)
             })
-
     }
+
 
     // Массив социальных сетей
     const arrContacts = [
@@ -133,8 +134,52 @@ const Profile = (props) => {
         'youtube',
         // 'mainLink'
     ]
+    // Массив иконок социальных сетей
+    const arrIcon = [
+        <TwitterIcon />,
+        <GitHubIcon />,
+        <InstagramIcon />,
+        <YouTubeIcon />
+    ]
 
+    // Изменение фото профиля
+    const handleChangeFile = (e) => {
+        console.log(e.target.files)
+        const types = [
+            'image/jpeg',
+            'image/jpg',
+            'image/png'
+        ]
+        if (e.target.files.length !== 0 && !types.includes(e.target.files[0].type)) {
+            props.setErrorSnackBarText('File type does not match!')
+            props.setErrorSnackBar(true)
+        }
+        else if (e.target.files.length === 0 ) {
+           return null
+        }
+        else {
+            setOpenPhotoEdit(true)
+        }
+    }
+    const photoEditClose =()=> {
+        setOpenPhotoEdit(false)
+    }
+    const savePhoto = () => {
+        let photo = document.getElementById('inputFile').files[0]
+        props.savePhoto(photo)
+        .then(()=> {
+            setOpenPhotoEdit(false)
+            props.setOpenSnackBar(true)
+        })
+        .catch((err)=> {
+            setOpenPhotoEdit(false)
+            props.setErrorSnackBarText(err.message)
+            props.setErrorSnackBar(true)
+        })
+       
+    }
 
+// Обработчики подписки отписки на пользователя
     const followUser = () => {
         props.follow(props.profile.user.userId)
             .then(() => {
@@ -156,24 +201,41 @@ const Profile = (props) => {
             })
     }
 
+
     return (
 
         <Container maxWidth={'md'} sx={{ mt: '6rem' }}>
             <Card sx={{ display: { xs: '', md: 'flex' }, p: '1rem' }} >
-                <CardMedia
-                    sx={{ maxWidth: 345, maxHeight: 345 }}
-                    component="img"
-                    src={props.profile.user.photos.large !== null ? props.profile.user.photos.large : ava}
-                    alt="henghog"
-                />
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <CardMedia
+                        sx={{ maxWidth: 345, maxHeight: 345 }}
+                        component="img"
+                        src={props.profile.user.photos.large !== null ? props.profile.user.photos.large : ava}
+                        alt="henghog"
+                    />
+                    {props.profile.id && props.profile.id === props.profile.user.userId
+                            ? <Button
+                                sx={{ width: '50%', mt: 2 }}
+                                variant="contained"
+                                component="label"
+                                color='warning'
+                            >Edit Photo
+                                <input
+                                id='inputFile'
+                                    onChange={handleChangeFile}
+                                    type="file"
+                                    accept=".png, .jpg, .jpeg"
+                                    hidden
+                                />
+                            </Button>
+                        : null}
+                </Box >
                 <CardContent>
                     {props.profile.user.aboutMe
                         ? <Typography gutterBottom variant="h5" component="div">
-
                             {props.profile.user.fullName} - {props.profile.user.aboutMe}
                         </Typography>
                         : <Typography gutterBottom variant="h5" component="div">
-
                             {props.profile.user.fullName}
                         </Typography>
                     }
@@ -201,43 +263,22 @@ const Profile = (props) => {
                         : null}
                     <List
                         sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', pl: 5 }}
-                        subheader={<ListSubheader>Contacts:</ListSubheader>}
-                        dense
-                    >
-                        <ListItem divider>
+                        subheader={<ListSubheader sx={{ lineHeight: 2 }}>Contacts:</ListSubheader>}
+                        dense>
+                        {
+                           arrContacts.map((a, index)=> (
+                            <ListItem divider key={a}>
                             <ListItemIcon>
-                                <TwitterIcon />
+                                {arrIcon[index]}
                             </ListItemIcon>
-                            <ListItemText id="data-twitter"
-                                primary={props.profile.user.contacts.twitter || 'no data'} />
+                            <ListItemText id={`data-${a}`}
+                                primary={props.profile.user.contacts[a] || 'no data'} />
                         </ListItem>
-                        <ListItem divider>
-                            <ListItemIcon>
-                                <InstagramIcon />
-                            </ListItemIcon>
-                            <ListItemText id="data-instagram"
-                                primary={props.profile.user.contacts.instagram || 'no data'} />
-                        </ListItem>
-
-                        <ListItem divider>
-                            <ListItemIcon>
-                                <GitHubIcon />
-                            </ListItemIcon>
-                            <ListItemText id="data-github"
-                                primary={props.profile.user.contacts.github || 'no data'} />
-                        </ListItem>
-
-                        <ListItem>
-                            <ListItemIcon>
-                                <YouTubeIcon />
-                            </ListItemIcon>
-                            <ListItemText id="data-youtube"
-                                primary={props.profile.user.contacts.youtube || 'no data'} />
-                        </ListItem>
-
+                           )) 
+                        }
                     </List>
                     <CardActions>
-                        {props.profile.id === props.profile.user.userId
+                        {props.profile.id && props.profile.id === props.profile.user.userId
                             ? <>
                                 <Button variant="contained" onClick={editProfile}>Edit Profile</Button>
                                 {!statusEdit
@@ -250,8 +291,8 @@ const Profile = (props) => {
                                         onClick={handleSaveStatus}
                                     >Save Status</Button>}
                             </>
-
-                            : props.users.users.find(a => a.id === props.profile.user.userId).followed
+                            : props.users.users.length !== 0
+                                && props.users.users.find(a => a.id === props.profile.user.userId).followed
                                 ? <Button variant="contained"
                                     color='secondary'
                                     onClick={unfollowUser}
@@ -259,7 +300,6 @@ const Profile = (props) => {
                                 : <Button variant="contained"
                                     color='success'
                                     onClick={followUser}>Follow</Button>
-
                         }
                         {
                             (props.users.followingInProgress[0] === props.profile.user.userId) &&
@@ -329,7 +369,18 @@ const Profile = (props) => {
                     <Button onClick={saveProfile} variant='contained' color='success'>Save</Button>
                 </DialogActions>
             </Dialog>
-
+            <Dialog open={openPhotoEdit} onClose={photoEditClose}>
+                <DialogTitle>Save Photo</DialogTitle>
+                <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <DialogContentText>
+                    Do you want to save the new photo?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={photoEditClose} variant='contained' color='warning'>Cancel</Button>
+                    <Button onClick={savePhoto} variant='contained' color='success'>Save Photo</Button>
+                </DialogActions>
+            </Dialog>
         </Container>
     )
 }
@@ -343,5 +394,5 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    { getUpdateProfile, getUpdateStatus, follow, unfollow })(Profile)
+    { getUpdateProfile, getUpdateStatus, follow, unfollow, savePhoto })(Profile)
 

@@ -7,8 +7,9 @@ import CellTower from '@mui/icons-material/CellTower';
 
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { getProfileThunk, getLogoutThunk } from "../../Redux/profileReducer";
+import { getProfileThunk, getLogoutThunk, setID } from "../../Redux/profileReducer";
 import  ava  from "../../image/1.jpg";
+
 
 
 
@@ -40,7 +41,7 @@ const Header = (props) => {
     setAnchorElNav(event.currentTarget)
   };
   const handleCloseNavMenu = (e) => {
-    if (props.profile.isAuth) {
+    if (props.profile.isAuth && props.profile.id) {
       if (e.currentTarget.innerText.toLowerCase()==='profile') {
         if (props.profile.id !== props.profile.user.userId) {
           props.getProfileThunk(props.profile.id)
@@ -67,7 +68,11 @@ const Header = (props) => {
   const logout =()=> {
     setAnchorElUser(null);
     props.getLogoutThunk()
-    navig(`/login`)
+    .then(()=> {
+      navig(`/login`)
+      props.setID('')
+    })
+   
   }
 
 
@@ -76,10 +81,14 @@ const Header = (props) => {
   }
 
   const mainClick =()=> {
-    if (props.profile.id !== props.profile.user.userId) {
+    if (props.profile.id && props.profile.id !== props.profile.user.userId) {
       props.getProfileThunk(props.profile.id)
+    
     }
-    navig(`/profile/${props.profile.id}`)
+    else if (props.profile.id) {
+      navig(`/profile/${props.profile.id}`)
+    }
+
   }
 
 
@@ -142,7 +151,7 @@ const Header = (props) => {
               ))}
             </Menu>
           </Box>
-
+         
 
           <CellTower sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
@@ -177,7 +186,7 @@ const Header = (props) => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {!props.profile.isAuth
+            {path === 'login'
               ? <Button variant="contained" onClick={openLoginForm}>Login</Button>
               :
               <>
@@ -227,6 +236,6 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps,{getLogoutThunk, getProfileThunk})(Header)
+export default connect(mapStateToProps,{getLogoutThunk, getProfileThunk, setID})(Header)
 
 

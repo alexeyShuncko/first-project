@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { Box, Button, Checkbox, Container,  FormControlLabel,  TextField } from '@mui/material'
 import { connect } from 'react-redux'
-import {  setErrLogin, setErrPass } from "../../Redux/AuthReducer";
+import {  setErrLogin, setErrPass, setID } from "../../Redux/profileReducer";
 import { getLoginThunk } from "../../Redux/profileReducer";
 import { useNavigate } from "react-router-dom";
 
@@ -14,9 +14,9 @@ const Login = (props) => {
   
     const navig = useNavigate()
 
-     useEffect(()=> {
-         props.profile.isAuth && props.profile.id && navig(`/profile/${props.profile.id}`) 
-     })
+    //  useEffect(()=> {
+    //      props.profile.isAuth && props.profile.id && navig(`/profile/${props.profile.id}`) 
+    //  })
     
  
 
@@ -35,9 +35,9 @@ const Login = (props) => {
         }
         else {
             props.getLoginThunk(login.value,password.value,check, null)
-        //     .then(()=> {
-        //     navig(`/profile/${props.profile.id}`) 
-        // })
+            .then((id)=> {
+             navig(`/profile/${id}`)
+         })
         
         }
     
@@ -45,10 +45,10 @@ const Login = (props) => {
 
 
     const handleChange =(e)=> {
-       if (e.target.id === 'login' && props.auth.errLogin.login) {
+       if (e.target.id === 'login' && props.profile.errLogin.login) {
         props.setErrLogin(false, '')
        }
-       if (e.target.id === 'password' && props.auth.errPass.pass) {
+       if (e.target.id === 'password' && props.profile.errPass.pass) {
         props.setErrPass(false, '')   
        }
     }
@@ -65,8 +65,8 @@ const Login = (props) => {
                 <div>
                     <TextField 
                     onChange={handleChange} 
-                    error={props.auth.errLogin.login} 
-                    helperText={props.auth.errLogin.text}
+                    error={props.profile.errLogin.login} 
+                    helperText={props.profile.errLogin.text}
                     id="login" 
                     label="Login" 
                     variant="outlined" 
@@ -76,8 +76,8 @@ const Login = (props) => {
                 <div>
                     <TextField 
                     onChange={handleChange} 
-                    error={props.auth.errPass.pass} 
-                    helperText={props.auth.errPass.text}
+                    error={props.profile.errPass.pass} 
+                    helperText={props.profile.errPass.text}
                     id="password" 
                     type={'password'} 
                     label="Password" 
@@ -109,4 +109,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps,{getLoginThunk, setErrLogin, setErrPass})(Login)
+export default connect(mapStateToProps,{getLoginThunk, setErrLogin, setErrPass, setID})(Login)
