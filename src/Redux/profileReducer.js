@@ -17,6 +17,7 @@ const SET_PHOTO = 'SET_PHOTO'
 const SET_STATUS = 'SET_STATUS'
 const SET_ERROR_LOGIN = 'SET_ERROR_LOGIN'
 const SET_ERROR_PASS = 'SET_ERROR_PASS'
+const SET_ERROR_SERVER = 'SET_ERROR_SERVER'
 
 
 let initialState = {
@@ -58,7 +59,12 @@ const profileReduser = (state = initialState, action) => {
             return {
                 ...state, isAuth: action.data
             }
-      
+        case SET_ERROR_SERVER:
+            return {
+                ...state,
+                serverError: action.data
+            }
+
 
 
 
@@ -90,20 +96,20 @@ const profileReduser = (state = initialState, action) => {
                 ...state,
                 profileLoad: action.data
             }
-            case SET_ERROR_LOGIN:
-                return {
-                    ...state,
-                    errLogin: {
-                        login: action.err, text: action.text
-                    }
+        case SET_ERROR_LOGIN:
+            return {
+                ...state,
+                errLogin: {
+                    login: action.err, text: action.text
                 }
-                case SET_ERROR_PASS:
-                return {
-                    ...state,
-                    errPass: {
-                        pass: action.err, text: action.text
-                    }
+            }
+        case SET_ERROR_PASS:
+            return {
+                ...state,
+                errPass: {
+                    pass: action.err, text: action.text
                 }
+            }
 
         default:
             return state
@@ -130,12 +136,19 @@ export const setIsAuth = (data) => {
 export const setPhoto = (data) => {
     return { type: SET_PHOTO, data }
 }
-export const setErrLogin = (err, text) => { 
-    return { type: SET_ERROR_LOGIN, err, text}
+export const setErrLogin = (err, text) => {
+    return { type: SET_ERROR_LOGIN, err, text }
 }
-export const setErrPass = (err, text) => { 
-    return { type: SET_ERROR_PASS, err, text}
+export const setErrPass = (err, text) => {
+    return { type: SET_ERROR_PASS, err, text }
 }
+export const setErrorServer = (data) => {
+    return { type: SET_ERROR_SERVER, data }
+}
+
+
+
+
 
 
 
@@ -161,67 +174,67 @@ export const setLoading = (data) => {
 
 
 
-export const getAuthThunk = () => (dispatch) => { 
+export const getAuthThunk = () => (dispatch) => {
     return new Promise((resolve, reject) => {
-    getAuth()
-        .then((data) => {
-            if (data.resultCode === 1) {
+        getAuth()
+            .then((data) => {
+                if (data.resultCode === 1) {
+                    dispatch(setIsAuth(true))
+                    resolve('login')
+                }
+                else if (data.resultCode === 0) {
+                    dispatch(setID(data.data.id))
+                    dispatch(getProfileThunk(data.data.id))
+                    resolve('profile')
+
+                }
+            })
+            .catch(() => {
                 dispatch(setIsAuth(true))
-                resolve('login')
-            }
-            else if (data.resultCode === 0) {
-                dispatch(setID(data.data.id))
-                dispatch(getProfileThunk(data.data.id))
-                resolve('profile')
-               
-            }
-        })
-        .catch(()=> {
-            dispatch(setIsAuth(true))
-        })
-    })  
+            })
+    })
 }
 
 export const getLogoutThunk = () => (dispatch) => {
     dispatch(setIsAuth(false))
     return new Promise((resolve, reject) => {
-    getLogout()
-    .then(data => {
-        if (data.resultCode === 0) {
-            resolve() 
-            dispatch(setIsAuth(true))
-        }
+        getLogout()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    resolve()
+                    dispatch(setIsAuth(true))
+                }
+            })
     })
-})
 }
 
 export const getLoginThunk = (email, password, rememberMe, captcha) => (dispatch) => {
     dispatch(setIsAuth(false))
     return new Promise((resolve, reject) => {
-    getLogin(email, password, rememberMe, captcha)
-    .then(data => {
-        if (data.resultCode === 0) {
-            dispatch(setID(data.data.userId))
-            dispatch(getProfileThunk(data.data.userId))
-             dispatch(setErrLogin(false, ''))
-             dispatch(setErrPass(false, ''))
-             resolve(data.data.userId)
-        }
-         if (data.resultCode === 1) {
-            dispatch(setIsAuth(true))
-             if (data.messages[0] === 'Enter valid Email') {
-                 dispatch(setErrLogin(true, 'Невалидный емаил!'))
-             }
-             else if (data.messages[0] === 'Incorrect Email or Password') {
-                 dispatch(setErrPass(true, 'Неверный пароль!'))
-             }
-         }
-     
-        //  if (data.resultCode === 10) {
-        //      dispatch(thunkCaptchaUrl())
-        //  }
+        getLogin(email, password, rememberMe, captcha)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setID(data.data.userId))
+                    dispatch(getProfileThunk(data.data.userId))
+                    dispatch(setErrLogin(false, ''))
+                    dispatch(setErrPass(false, ''))
+                    resolve(data.data.userId)
+                }
+                if (data.resultCode === 1) {
+                    dispatch(setIsAuth(true))
+                    if (data.messages[0] === 'Enter valid Email') {
+                        dispatch(setErrLogin(true, 'Невалидный емаил!'))
+                    }
+                    else if (data.messages[0] === 'Incorrect Email or Password') {
+                        dispatch(setErrPass(true, 'Неверный пароль!'))
+                    }
+                }
+
+                //  if (data.resultCode === 10) {
+                //      dispatch(thunkCaptchaUrl())
+                //  }
+            })
     })
-})
 }
 
 
@@ -229,16 +242,19 @@ export const getLoginThunk = (email, password, rememberMe, captcha) => (dispatch
 
 
 export const getProfileThunk = (userId) => (dispatch) => {
-   
+
     getProfile(userId)
         .then(data => {
             dispatch(setUser(data))
             dispatch(getStatusThunk(userId))
             dispatch(setIsAuth(true))
             if (userId === 19240) {
-                dispatch(setPhoto(data.photos.large)) 
+                dispatch(setPhoto(data.photos.large))
                 dispatch(setIsAuth(true))
             }
+        })
+        .catch(() => {
+            dispatch(setErrorServer(true))
         })
 }
 
@@ -252,43 +268,43 @@ export const getStatusThunk = (userId) => (dispatch) => {
 
 export const getUpdateStatus = (status) => (dispatch) => {
     return new Promise((resolve, reject) => {
-    updateStatus(status)
-    .then(data => {
-        if (data.resultCode === 0) { 
-            dispatch(setUpdateStatus(status))
-            resolve() 
-        }
+        updateStatus(status)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setUpdateStatus(status))
+                    resolve()
+                }
+            })
+            .catch((err) => reject(err))
     })
-    .catch((err)=> reject(err))
-})
 }
 
 export const savePhoto = (file) => (dispatch) => {
     return new Promise((resolve, reject) => {
-    savePhotoProfile(file)
-        .then(data => {
-            if (data.resultCode === 0) {
-                dispatch(setSavePhoto(data.data.photos))
-                resolve()
-            }   
-        })
-        .catch((err)=>{
-            reject(err)
-        })
+        savePhotoProfile(file)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(setSavePhoto(data.data.photos))
+                    resolve()
+                }
+            })
+            .catch((err) => {
+                reject(err)
+            })
     })
 }
 
 export const getUpdateProfile = (profile, userId) => (dispatch) => {
     return new Promise((resolve, reject) => {
-    updateProfile(profile)
-    .then(data => {
-        if (data.resultCode === 0) {
-            dispatch(getProfileThunk(userId))
-            resolve()
-        }
+        updateProfile(profile)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(getProfileThunk(userId))
+                    resolve()
+                }
+            })
+            .catch((err) => reject(err))
     })
-    .catch((err) => reject(err))
-})
 }
 
 
