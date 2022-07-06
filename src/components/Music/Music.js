@@ -1,5 +1,5 @@
 import { Box, Container, IconButton, Slider, Stack, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Music.module.css';
 
 
@@ -10,15 +10,23 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import { connect } from 'react-redux';
-import { setActivTreck, setDurationValue, setActive, setDuration } from "../../Redux/musicReducer";
+import {  setDurationValue, 
+    setActive, setDuration, setIndexSong, setVolumeValue } from "../../Redux/musicReducer";
 
 
 
-const Music = ({ setDurationValue, setDuration, ...props }) => {
+const Music = ({ setDurationValue, setDuration, 
+    setIndexSong, setVolumeValue, ...props }) => {
 
-    const [volumeValue, setVolumeValue] = useState(30)
-    const [indexSong, setIndexSong] = useState(0)
+    
     const [durationType, setDurationType] = useState(false)
+
+    let active = props.music.active
+    useEffect(() => {
+        active &&
+            play()
+    }, [])
+
 
 
 
@@ -28,10 +36,10 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
     }
     const handleChange = (event, newValue) => {
         setVolumeValue(newValue)
-        document.getElementById('player').volume = volumeValue * 0.01
+        document.getElementById('player').volume = props.music.volumeValue * 0.01
     }
     const volumeMinus = () => {
-        const minus10 = volumeValue - 10
+        const minus10 = props.music.volumeValue - 10
         if (minus10 > 0) {
             setVolumeValue(minus10)
             document.getElementById('player').volume = minus10 * 0.01
@@ -44,7 +52,7 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
 
 
     const volumePlus = () => {
-        const plus10 = volumeValue + 10
+        const plus10 = props.music.volumeValue + 10
         if (plus10 < 100) {
             setVolumeValue(plus10)
             document.getElementById('player').volume = plus10 * 0.01
@@ -58,7 +66,7 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
 
     const play = () => {
 
-        document.getElementById('player').volume = volumeValue * 0.01
+        document.getElementById('player').volume = props.music.volumeValue * 0.01
 
         document.getElementById('player').play()
 
@@ -78,11 +86,12 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
 
 
     const next = () => {
-        if (indexSong === props.music.arrMusicName.length - 1) {
+        setDurationValue(0)
+        if (props.music.indexSong === props.music.arrMusicName.length - 1) {
             setIndexSong(0)
         }
         else {
-            setIndexSong(prev => prev + 1)
+            setIndexSong(props.music.indexSong + 1)
         }
 
         if (props.music.active) {
@@ -94,7 +103,7 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
     }
 
     const prev = () => {
-        setIndexSong(prev => prev - 1)
+        setIndexSong(props.music.indexSong - 1)
         if (props.music.active) {
             document.getElementById('player').oncanplay = play
         }
@@ -116,13 +125,14 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
     return (
         <Container maxWidth={'md'} sx={{ mt: '6rem' }}>
             <audio
-                src={props.music.arrMusicName[indexSong].path}
+                type="audio/mp3"
+                src={props.music.arrMusicName[props.music.indexSong].path}
                 id='player'
                 onEnded={next}
             ></audio>
 
             <Box sx={{ textAlign: 'center' }}>
-                <Typography variant='h5'>{props.music.arrMusicName[indexSong].name}</Typography>
+                <Typography variant='h5'>{props.music.arrMusicName[props.music.indexSong].name}</Typography>
                 <Stack spacing={2} direction="row" alignItems="center" >
                     <Slider
                         aria-label="Duration"
@@ -160,7 +170,7 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
                 </Box>
 
 
-                {indexSong !== 0
+                {props.music.indexSong !== 0
                     ? <IconButton onClick={prev} >
                         <SkipPreviousIcon />
                     </IconButton>
@@ -177,7 +187,7 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
                     </IconButton>
                 }
 
-                {indexSong !== props.music.arrMusicName.length - 1
+                {props.music.indexSong !== props.music.arrMusicName.length - 1
 
                     ? <IconButton onClick={next} >
                         <SkipNextIcon />
@@ -188,7 +198,7 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
                 }
 
                 <Stack spacing={2} direction="row" sx={{ ml: '35%', mr: '35%' }} alignItems="center">
-                    {volumeValue !== 0
+                    {props.music.volumeValue !== 0
                         ? <IconButton onClick={volumeMinus}>
                             <VolumeDown color={'action'} />
                         </IconButton>
@@ -198,8 +208,8 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
                     }
 
 
-                    <Slider aria-label="Volume" size='small' value={volumeValue} onChange={handleChange} />
-                    {volumeValue !== 100
+                    <Slider aria-label="Volume" size='small' value={props.music.volumeValue} onChange={handleChange} />
+                    {props.music.volumeValue !== 100
                         ? <IconButton onClick={volumePlus}>
                             <VolumeUp color={'action'} />
                         </IconButton>
@@ -214,16 +224,23 @@ const Music = ({ setDurationValue, setDuration, ...props }) => {
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 {
                     props.music.arrMusicName.map((a, index) => (
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-
-                            {!props.music.active && index === indexSong
-                                ? <IconButton onClick={play} >
+                        <Box sx={{ display: 'flex', alignItems: 'center' }} key={index}>
+                            {index === props.music.indexSong
+                                ? !props.music.active
+                                    ? <IconButton onClick={play} >
+                                        <PlayArrowIcon sx={{ fontSize: '2rem' }} />
+                                    </IconButton>
+                                    : <IconButton onClick={stop} >
+                                        <PauseIcon sx={{ fontSize: '2rem' }} />
+                                    </IconButton>
+                                : <IconButton onClick={() => {
+                                    setIndexSong(index)
+                                    document.getElementById('player').oncanplay = play
+                                }} >
                                     <PlayArrowIcon sx={{ fontSize: '2rem' }} />
                                 </IconButton>
-                                : <IconButton onClick={stop} >
-                                    <PauseIcon sx={{ fontSize: '2rem' }} />
-                                </IconButton>
                             }
+
 
                             <Typography key={index}>{a.name}</Typography>
                         </Box>
@@ -241,4 +258,5 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { setActivTreck, setDurationValue, setActive, setDuration })(Music)
+export default connect(mapStateToProps,
+    { setDurationValue, setActive, setDuration, setIndexSong, setVolumeValue })(Music)

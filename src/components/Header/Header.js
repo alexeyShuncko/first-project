@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from "react";
 
-import {MenuItem,Tooltip, Button, Avatar, Container, Typography, IconButton,
-  Menu, Toolbar, Box, AppBar } from '@mui/material';
+import {
+  MenuItem, Tooltip, Button, Avatar, Container, Typography, IconButton,
+  Menu, Toolbar, Box, AppBar
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CellTower from '@mui/icons-material/CellTower';
 
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProfileThunk, getLogoutThunk, setID } from "../../Redux/profileReducer";
-import  ava  from "../../image/1.jpg";
+import ava from "../../image/1.jpg";
+import Player from "../Music/Player/Player";
 
 
 
 
 const Header = (props) => {
-  let path = window.location.pathname.slice(1,window.location.pathname.length)
-  const [active, setActive] = useState(path.slice(0,1).toUpperCase() + path.slice(1,path.length))
- 
-  useEffect(()=> {
+  let path = window.location.pathname.slice(1, window.location.pathname.length)
+  const [active, setActive] = useState(path.slice(0, 1).toUpperCase() + path.slice(1, path.length))
+
+  useEffect(() => {
     if (path.includes('/')) {
-      setActive(path.slice(0,1).toUpperCase() + path.slice(1,path.indexOf('/')))
+      setActive(path.slice(0, 1).toUpperCase() + path.slice(1, path.indexOf('/')))
     }
-    else 
-    setActive(path.slice(0,1).toUpperCase() + path.slice(1,path.length))
-  },[setActive,path])
-  
+    else
+      setActive(path.slice(0, 1).toUpperCase() + path.slice(1, path.length))
+  }, [setActive, path])
+
 
   const navig = useNavigate()
 
-  const pages = ['Profile', 
-  // 'Messages', 
-  'News', 'Music', 'Settings', 'Users'];
+  const pages = ['Profile',
+    // 'Messages', 
+    'News', 'Music', 'Settings', 'Users'];
   const settings = ['Logout'];
 
 
@@ -42,17 +45,17 @@ const Header = (props) => {
   };
   const handleCloseNavMenu = (e) => {
     if (props.profile.isAuth && props.profile.id) {
-      if (e.currentTarget.innerText.toLowerCase()==='profile') {
+      if (e.currentTarget.innerText.toLowerCase() === 'profile') {
         if (props.profile.id !== props.profile.user.userId) {
           props.getProfileThunk(props.profile.id)
         }
         navig(`/${e.currentTarget.innerText.toLowerCase()}/${props.profile.id}`)
       }
-     else
-      navig(`/${e.currentTarget.innerText.toLowerCase()}`)
+      else
+        navig(`/${e.currentTarget.innerText.toLowerCase()}`)
       setAnchorElNav(null);
     }
-   
+
   };
 
 
@@ -62,28 +65,28 @@ const Header = (props) => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-   
+
   };
 
-  const logout =()=> {
+  const logout = () => {
     setAnchorElUser(null);
     props.getLogoutThunk()
-    .then(()=> {
-      navig(`/login`)
-      props.setID('')
-    })
-   
+      .then(() => {
+        navig(`/login`)
+        props.setID('')
+      })
+
   }
 
 
-  const openLoginForm =()=> {
+  const openLoginForm = () => {
     navig(`/login`)
   }
 
-  const mainClick =()=> {
+  const mainClick = () => {
     if (props.profile.id && props.profile.id !== props.profile.user.userId) {
       props.getProfileThunk(props.profile.id)
-    
+
     }
     else if (props.profile.id) {
       navig(`/profile/${props.profile.id}`)
@@ -100,7 +103,7 @@ const Header = (props) => {
           <Typography
             variant="h6"
             noWrap
-          onClick={mainClick}
+            onClick={mainClick}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -151,38 +154,56 @@ const Header = (props) => {
               ))}
             </Menu>
           </Box>
-         
 
-          <CellTower sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            onClick={mainClick}
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.2rem',
-              color: 'inherit',
-              cursor: 'pointer'
-            }}
-          >
-            Social network
-          </Typography>
+         
+             
+              <Typography
+                variant="h5"
+                noWrap
+                onClick={mainClick}
+                sx={{
+                  mr: 2,
+                  display: { xs: 'flex', md: 'none' },
+                  flexDirection: 'column',
+                
+                  flexGrow: 1,
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.2rem',
+                  color: 'inherit',
+                  cursor: 'pointer'
+                }}
+              >
+                <div>
+                <CellTower sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                Social network
+                </div>
+              
+                <Box sx={{  display: { xs: 'flex', md: 'none' } }}>
+                <Player />
+              </Box>
+              </Typography>
+      
+          
+
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block', 
-                fontSize: active === page ? '20px': '',
-                textDecoration: active === page ? 'overline': '' }}
+                sx={{
+                  my: 2, color: 'white', display: 'block',
+                  fontSize: active === page ? '20px' : '',
+                  textDecoration: active === page ? 'overline' : ''
+                }}
               >
                 {page}
               </Button>
             ))}
+          </Box>
+          <Box sx={{ mr: 3, display: { xs: 'none', md: 'flex' } }}>
+            <Player />
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -192,8 +213,8 @@ const Header = (props) => {
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp"  
-                    src={ props.profile.photo || ava} />
+                    <Avatar alt="Remy Sharp"
+                      src={props.profile.photo || ava} />
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -230,12 +251,12 @@ const Header = (props) => {
 
 
 let mapStateToProps = (state) => {
-    return {
-        auth: state.authData,
-        profile: state.profileData
-    }
+  return {
+    auth: state.authData,
+    profile: state.profileData
+  }
 }
 
-export default connect(mapStateToProps,{getLogoutThunk, getProfileThunk, setID})(Header)
+export default connect(mapStateToProps, { getLogoutThunk, getProfileThunk, setID })(Header)
 
 
