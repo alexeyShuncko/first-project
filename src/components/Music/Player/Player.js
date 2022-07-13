@@ -1,6 +1,8 @@
 import React from "react";
 import { IconButton } from "@mui/material";
 
+import s from './Player.module.css'
+
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
@@ -66,8 +68,14 @@ const Player =({setDurationValue,setDuration,setIndexSong,...props})=> {
 
   
   return (
-    <div>
-      <audio
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <div className={s.stringMove}>
+        <span>
+        {props.music.arrMusicName[props.music.indexSong].name}
+        </span>
+        </div>
+        <div>
+        <audio
                 type="audio/mp3"
                 src={props.music.arrMusicName[props.music.indexSong].path}
                 id='player'
@@ -83,10 +91,10 @@ const Player =({setDurationValue,setDuration,setIndexSong,...props})=> {
                 }
                 {props.music.active
                     ? <IconButton onClick={stop} >
-                        <PauseIcon sx={{ fontSize: '3rem' }} />
+                        <PauseIcon sx={{ fontSize: '2rem' }} />
                     </IconButton>
                     : <IconButton onClick={play} >
-                        <PlayArrowIcon sx={{ fontSize: '3rem' }} />
+                        <PlayArrowIcon sx={{ fontSize: '2rem' }} />
                     </IconButton>
                 }
 
@@ -99,6 +107,8 @@ const Player =({setDurationValue,setDuration,setIndexSong,...props})=> {
                         <SkipNextIcon />
                     </IconButton>
                 }
+        </div>
+      
     </div>
 )
 }

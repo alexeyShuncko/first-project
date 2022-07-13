@@ -7,7 +7,7 @@ import React from 'react';
 const News = (props) => {
 
     return (
-       <Container maxWidth={'md'} sx={{ mt: '2rem' }}>
+       <Container maxWidth={'md'} sx={{ mt: '6rem' }}>
         News
        </Container>
     )

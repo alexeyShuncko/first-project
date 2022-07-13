@@ -124,12 +124,6 @@ const Music = ({ setDurationValue, setDuration,
 
     return (
         <Container maxWidth={'md'} sx={{ mt: '6rem' }}>
-            <audio
-                type="audio/mp3"
-                src={props.music.arrMusicName[props.music.indexSong].path}
-                id='player'
-                onEnded={next}
-            ></audio>
 
             <Box sx={{ textAlign: 'center' }}>
                 <Typography variant='h5'>{props.music.arrMusicName[props.music.indexSong].name}</Typography>
@@ -197,7 +191,10 @@ const Music = ({ setDurationValue, setDuration,
                     </IconButton>
                 }
 
-                <Stack spacing={2} direction="row" sx={{ ml: '35%', mr: '35%' }} alignItems="center">
+                <Stack spacing={2} direction="row" 
+                sx={{ display: 'flex', justifyContent: 'center' }} 
+                alignItems="center"
+                >
                     {props.music.volumeValue !== 0
                         ? <IconButton onClick={volumeMinus}>
                             <VolumeDown color={'action'} />
@@ -208,7 +205,13 @@ const Music = ({ setDurationValue, setDuration,
                     }
 
 
-                    <Slider aria-label="Volume" size='small' value={props.music.volumeValue} onChange={handleChange} />
+                    <Slider 
+                    sx={{width: { xs: '50vw', md: '20vw' }}}
+                    aria-label="Volume" 
+                    size='small' 
+                    value={props.music.volumeValue} 
+                    onChange={handleChange} 
+                    />
                     {props.music.volumeValue !== 100
                         ? <IconButton onClick={volumePlus}>
                             <VolumeUp color={'action'} />

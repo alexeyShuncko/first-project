@@ -215,7 +215,7 @@ const Profile = (props) => {
                     />
                     {props.profile.id && props.profile.id === props.profile.user.userId
                             ? <Button
-                                sx={{ width: '50%', mt: 2 }}
+                                sx={{ mt: 2 }}
                                 variant="contained"
                                 component="label"
                                 color='warning'

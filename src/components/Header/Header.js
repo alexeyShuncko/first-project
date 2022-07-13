@@ -99,7 +99,7 @@ const Header = (props) => {
     <AppBar position="fixed" >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <CellTower sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <CellTower sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -115,7 +115,7 @@ const Header = (props) => {
             }}
           >
             Social network
-          </Typography>
+          </Typography> */}
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -157,7 +157,7 @@ const Header = (props) => {
 
          
              
-              <Typography
+              {/* <Typography
                 variant="h5"
                 noWrap
                 onClick={mainClick}
@@ -179,10 +179,12 @@ const Header = (props) => {
                 Social network
                 </div>
               
-                <Box sx={{  display: { xs: 'flex', md: 'none' } }}>
+               
+              </Typography> */}
+              <Box 
+              sx={{  display: { xs: 'flex', md: 'none' }, flexGrow: 1, }}>
                 <Player />
               </Box>
-              </Typography>
       
           
 
@@ -202,11 +204,11 @@ const Header = (props) => {
               </Button>
             ))}
           </Box>
-          <Box sx={{ mr: 3, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}>
             <Player />
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, pl: '12px' }}>
             {path === 'login'
               ? <Button variant="contained" onClick={openLoginForm}>Login</Button>
               :

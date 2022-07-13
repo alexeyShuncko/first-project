@@ -107,7 +107,7 @@ const handleErrorBar =(e, reason)=> {
             onClose={handleCloseSnackBar}
             TransitionComponent={Transition}
             >
-                <Alert onClose={handleCloseSnackBar} severity="success" sx={{ width: '100%' }}>
+                <Alert onClose={handleCloseSnackBar} severity="success" sx={{ width: {md:'100%', xs: '50%'} }}>
                 Changes saved!
                 </Alert>
             </Snackbar>
@@ -116,7 +116,7 @@ const handleErrorBar =(e, reason)=> {
             onClose={handleErrorBar}
             TransitionComponent={Transition}
             >
-                <Alert onClose={handleErrorBar} severity="error" sx={{ width: '100%' }}>
+                <Alert onClose={handleErrorBar} severity="error" sx={{ width: {md:'100%', xs: '50%'} }}>
              {errorText}!</Alert>
             </Snackbar>
     </div>

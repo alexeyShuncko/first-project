@@ -26,25 +26,25 @@ const Users = (props) => {
     }
 
 
-    const followUser =(id)=> {
+    const followUser = (id) => {
         props.follow(id)
-        .then(()=>{
-            props.setOpenSnackBar(true)
-        })
-        .catch((err)=> {
-            props.setErrorSnackBarText(err.message)
-            props.setErrorSnackBar(true)
-        })
+            .then(() => {
+                props.setOpenSnackBar(true)
+            })
+            .catch((err) => {
+                props.setErrorSnackBarText(err.message)
+                props.setErrorSnackBar(true)
+            })
     }
-    const unfollowUser =(id)=> {
+    const unfollowUser = (id) => {
         props.unfollow(id)
-        .then(()=> {
-            props.setOpenSnackBar(true)
-        })
-        .catch((err)=> {
-            props.setErrorSnackBarText(err.message)
-            props.setErrorSnackBar(true)
-        })
+            .then(() => {
+                props.setOpenSnackBar(true)
+            })
+            .catch((err) => {
+                props.setErrorSnackBarText(err.message)
+                props.setErrorSnackBar(true)
+            })
     }
 
 
@@ -56,13 +56,13 @@ const Users = (props) => {
                 {props.users.users &&
                     props.users.users.map(a => (
                         <Grid item key={a.name}>
-                            <Card sx={{ width: 200 }}
-                               >
+                            <Card sx={{ maxWidth: {xs: 180, md: 200} }}
+                            >
                                 <CardMedia
-                                 onClick={() => {
-                                    props.getProfileThunk(a.id)
-                                    navig(`/profile/${a.id}`)
-                                }}
+                                    onClick={() => {
+                                        props.getProfileThunk(a.id)
+                                        navig(`/profile/${a.id}`)
+                                    }}
                                     sx={{ maxWidth: 200, cursor: 'pointer' }}
                                     component="img"
                                     height="140"
@@ -91,21 +91,17 @@ const Users = (props) => {
                                             </Button>
                                     }
                                     {
-                                       ( props.users.followingInProgress[0] === a.id) &&
-                                       <img src={setting} 
-                                       alt='settings' 
-                                       width={'35px'} 
-                                       style={{marginLeft: '10px'}}/>
+                                        (props.users.followingInProgress[0] === a.id) &&
+                                        <img src={setting}
+                                            alt='settings'
+                                            width={'35px'}
+                                            style={{ marginLeft: '10px' }} />
                                     }
-
                                 </CardActions>
                             </Card>
-
                         </Grid>
                     ))
                 }
-
-
             </Grid>
             <Pagination
                 onChange={handleChange}
@@ -113,6 +109,7 @@ const Users = (props) => {
                 color="primary"
                 sx={{ display: "flex", m: 2, justifyContent: "center" }} />
         </Container>
+       
     </div>
 }
 let mapStateToProps = (state) => {
