@@ -106,7 +106,7 @@ const News = (props) => {
                 <DialogTitle>New news</DialogTitle>
                 <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
                     <DialogContentText>
-                        Change one or more profile fields.
+                    Fill in the name and text of the news.
                     </DialogContentText>
                     <TextField
                         onChange={inputHandler}

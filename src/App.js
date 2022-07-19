@@ -24,6 +24,7 @@ import HocSnackBar from './components/HOC/HocSnackBar';
 
 const App = ({ getAuthThunk, ...props }) => {
 
+
   const [openSnackBar, setOpenSnackBar] = useState(false)
     const [error, setErrorSnackBar] = useState(false)
     const [errorText, setErrorSnackBarText] = useState('')
@@ -95,7 +96,7 @@ const handleErrorBar =(e, reason)=> {
                   setOpenSnackBar={setOpenSnackBar} />
                  } />
             <Route path='/music' element={<Music />} />
-            <Route path='/settings' element={<Settings />} />
+            <Route path='/settings' element={<Settings  setOpenSnackBar={setOpenSnackBar}/>} />
             <Route path='/users' element={
               HocSnackBar(Users, 
                 openSnackBar, setOpenSnackBar, 

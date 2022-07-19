@@ -195,7 +195,7 @@ const Header = (props) => {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{
-                  my: 2, color: 'white', display: 'block',
+                  my: 2, color: 'inherit', display: 'block',
                   fontSize: active === page ? '20px' : '',
                   textDecoration: active === page ? 'overline' : ''
                 }}
