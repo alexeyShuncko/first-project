@@ -7,7 +7,7 @@ const Error =(props)=> {
   
   return (
     <div className={s.load}>
-       Ошибка со стороны сервера ...<img src={setting} alt='settings'/>
+       Server Side Error ...<img src={setting} alt='settings'/>
     </div>
 )
 }

@@ -7,7 +7,7 @@ const Loading =(props)=> {
   
   return (
     <div className={s.load}>
-       Загрузка ...<img src={setting} alt='settings'/>
+       Loading ...<img src={setting} alt='settings'/>
     </div>
 )
 }
