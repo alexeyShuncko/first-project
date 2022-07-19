@@ -51,20 +51,19 @@ const Users = (props) => {
 
     return <div>
         {props.users.users.length === 0 && <Loading />}
-        <Container maxWidth={'md'} sx={{ mt: '6rem' }}>
+        <Container maxWidth={'md'} sx={{  mt: '6rem' }}>
 
             <Grid container spacing={2}>
                 {props.users.users &&
                     props.users.users.map(a => (
-                        <Grid item key={a.name}>
-                            <Card sx={{ maxWidth: {xs: 180, md: 200} }}
-                            >
+                        <Grid item key={a.name} xs={6} md={3} sm={4}>
+                            <Card>
                                 <CardMedia
                                     onClick={() => {
                                         props.getProfileThunk(a.id)
                                         navig(`/profile/${a.id}`)
                                     }}
-                                    sx={{ width: 200, cursor: 'pointer' }}
+                                    sx={{ cursor: 'pointer' }}
                                     component="img"
                                     height="140"
                                     image={a.photos.large || foto}
@@ -105,10 +104,11 @@ const Users = (props) => {
                 }
             </Grid>
             <Pagination
+            size= 'small'
                 onChange={handleChange}
                 count={Math.ceil(props.users.totalUsersCount / props.users.pageSize) || 16}
                 color="primary"
-                sx={{ display: "flex", m: 2, justifyContent: "center" }} />
+                sx={{ display: "flex", my: 4,  justifyContent: "center" }} />
         </Container>
        
     </div>
