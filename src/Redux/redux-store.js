@@ -5,6 +5,7 @@ import profileReduser from "./profileReducer";
 import usersReduser from "./usersReducer";
 import  thunkMiddleware from "redux-thunk"
 import musicReducer from "./musicReducer";
+import newsReducer from "./newsReducer";
 
 
 
@@ -15,7 +16,8 @@ let reducers = combineReducers(
         messagesData: messagesReduser,
         usersPage: usersReduser,
         authData: authReduser,
-        musicData: musicReducer
+        musicData: musicReducer,
+        newsData: newsReducer
       
     }
 )

@@ -23,6 +23,7 @@ const Users = (props) => {
 
     const handleChange = (e, page) => {
         props.getUsers(page, props.users.pageSize)
+        window.scrollTo(0,0)
     }
 
 

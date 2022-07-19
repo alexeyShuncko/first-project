@@ -90,7 +90,10 @@ const handleErrorBar =(e, reason)=> {
             } />
            <Route path='/login' element={<Login />} />
             {/* <Route path='/messages'  element={<Messages />} /> */}
-            <Route path='/news' element={<News />} />
+            <Route path='/news' element={
+                <News 
+                  setOpenSnackBar={setOpenSnackBar} />
+                 } />
             <Route path='/music' element={<Music />} />
             <Route path='/settings' element={<Settings />} />
             <Route path='/users' element={
@@ -108,7 +111,7 @@ const handleErrorBar =(e, reason)=> {
             TransitionComponent={Transition}
             >
                 <Alert onClose={handleCloseSnackBar} severity="success" sx={{ width: {md:'100%', xs: '50%'} }}>
-                Changes saved!
+                Saved!
                 </Alert>
             </Snackbar>
             <Snackbar open={error} 
