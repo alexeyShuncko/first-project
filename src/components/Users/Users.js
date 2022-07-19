@@ -64,7 +64,7 @@ const Users = (props) => {
                                         props.getProfileThunk(a.id)
                                         navig(`/profile/${a.id}`)
                                     }}
-                                    sx={{ maxWidth: 200, cursor: 'pointer' }}
+                                    sx={{ width: 200, cursor: 'pointer' }}
                                     component="img"
                                     height="140"
                                     image={a.photos.large || foto}

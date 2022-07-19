@@ -292,6 +292,7 @@ const Profile = (props) => {
                                     >Save Status</Button>}
                             </>
                             : props.users.users.length !== 0
+                                && props.users.users.find(a => a.id === props.profile.user.userId) 
                                 && props.users.users.find(a => a.id === props.profile.user.userId).followed
                                 ? <Button variant="contained"
                                     color='secondary'
