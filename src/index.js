@@ -2,7 +2,7 @@ import React from 'react';
 import store from './Redux/redux-store';
 import './index.css';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createRoot } from 'react-dom/client';
 import { ThemeProvider, createTheme } from '@mui/material';
@@ -24,11 +24,11 @@ const root = createRoot(container)
 
 root.render(
 
-  <BrowserRouter>
+  <HashRouter>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
       <App theme={theme}/>
       </ThemeProvider>
     </Provider>
-  </BrowserRouter>);
+  </HashRouter>);
 

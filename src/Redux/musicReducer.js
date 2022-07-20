@@ -1,7 +1,6 @@
 import treck1 from '../music/BoomfunkMCs-Freestyler.mp3'
 import treck2 from '../music/Ausländer.mp3'
 import treck3 from '../music/EURYTHMICS - Sweet Dreams (Are Made Of This).mp3'
-import treck4 from '../music/Чичерина - ТуЛуЛа.mp3'
 import treck5 from '../music/Depeche Mode - Personal Jesus.mp3'
 
 
@@ -16,8 +15,7 @@ let initialState = {
         { path: treck1, name: 'BoomfunkMCs-Freestyler', id: 0 },
         { path: treck2, name: 'Ausländer', id: 1 },
         { path: treck3, name: 'EURYTHMICS - Sweet Dreams (Are Made Of This)', id: 2 },
-        { path: treck4, name: 'Чичерина - ТуЛуЛа', id: 3 },
-        { path: treck5, name: 'Depeche Mode - Personal Jesus', id: 4 }
+        { path: treck5, name: 'Depeche Mode - Personal Jesus', id: 3 }
     ],
     durationValue: 0,
     duration: '',
