@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/first-project/static/css/main.4e4fc048.css",
-    "main.js": "/first-project/static/js/main.f5481e02.js",
+    "main.js": "/first-project/static/js/main.4a5db930.js",
     "static/media/BoomfunkMCs-Freestyler.mp3": "/first-project/static/media/BoomfunkMCs-Freestyler.6acc3a9701781682e2fe.mp3",
     "static/media/Ausländer.mp3": "/first-project/static/media/Ausländer.35411ff3045031f619ef.mp3",
     "static/media/EURYTHMICS - Sweet Dreams (Are Made Of This).mp3": "/first-project/static/media/EURYTHMICS - Sweet Dreams (Are Made Of This).6d09a436ca3a1016e985.mp3",
@@ -11,10 +11,10 @@
     "static/media/1.jpg": "/first-project/static/media/1.ea18692d5a19827c4936.jpg",
     "index.html": "/first-project/index.html",
     "main.4e4fc048.css.map": "/first-project/static/css/main.4e4fc048.css.map",
-    "main.f5481e02.js.map": "/first-project/static/js/main.f5481e02.js.map"
+    "main.4a5db930.js.map": "/first-project/static/js/main.4a5db930.js.map"
   },
   "entrypoints": [
     "static/css/main.4e4fc048.css",
-    "static/js/main.f5481e02.js"
+    "static/js/main.4a5db930.js"
   ]
 }
