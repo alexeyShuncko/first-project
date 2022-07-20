@@ -57,6 +57,7 @@ const Profile = (props) => {
             lookingForAJob: props.profile.user.lookingForAJob,
             lookingForAJobDescription: props.profile.user.lookingForAJobDescription,
             fullName: document.getElementById('name').value,
+            aboutMe: document.getElementById('aboutMe').value,
             contacts: {
                 github:
                     document.getElementById('github')

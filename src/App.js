@@ -75,10 +75,7 @@ const handleErrorBar =(e, reason)=> {
       {
         props.profile.serverError && <Error />
       }
-
-
-
-      {!props.profile.isAuth
+      {!props.profile.isAuth 
         ? <Loading />
         : <div>
           <Header />
