@@ -1,5 +1,5 @@
 Проект социальной сети. Находится в постоянной разработке ...
 
 Тестовые данные для входа:
-      login:free@samuraijs.com
-      password:free
+      login: free@samuraijs.com  
+      password: free
