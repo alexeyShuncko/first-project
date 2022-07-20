@@ -17,7 +17,9 @@ import Player from "../Music/Player/Player";
 
 
 const Header = (props) => {
-  let path =  window.location.href.slice(38,  window.location.href.length)
+  let index = window.location.href.lastIndexOf('#')
+  console.log(index)
+  let path =  window.location.href.slice(index+2,  window.location.href.length)
   const [active, setActive] = useState(path.slice(0, 1).toUpperCase() + path.slice(1, path.length))
 
   useEffect(() => {
