@@ -21,15 +21,16 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 
-import { getUpdateProfile, getUpdateStatus, savePhoto } from "../../Redux/profileReducer";
+import { getProfileThunk, getUpdateProfile, getUpdateStatus, savePhoto } from "../../Redux/profileReducer";
 import { follow, unfollow } from "../../Redux/usersReducer";
 import setting from '../../image/Settings.gif';
 import Friends from './Friends';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const Profile = (props) => {
 
+    const navig = useNavigate()
 
     const [open, setOpen] = useState(false)
     const [editOpen, setEditOpen] = useState(false)
@@ -296,13 +297,32 @@ const Profile = (props) => {
                             : props.users.users.length !== 0
                                 && props.users.users.find(a => a.id === props.profile.user.userId)
                                 && props.users.users.find(a => a.id === props.profile.user.userId).followed
-                                ? <Button variant="contained"
-                                    color='secondary'
-                                    onClick={unfollowUser}
-                                >Unfollow</Button>
-                                : <Button variant="contained"
-                                    color='success'
-                                    onClick={followUser}>Follow</Button>
+
+                                ? <>
+                                    <Button variant="contained"
+                                        color='secondary'
+                                        onClick={unfollowUser}
+                                    >Unfollow</Button>
+                                    <Button variant="contained"
+                                        color='warning'
+                                        onClick={() => {
+                                            props.getProfileThunk(props.profile.id)
+                                            navig(`/profile/${props.profile.id}`)
+                                        }}
+                                    >My page</Button>
+                                </>
+                                : <>
+                                    <Button variant="contained"
+                                        color='success'
+                                        onClick={followUser}>Follow</Button>
+                                    <Button variant="contained"
+                                        color='warning'
+                                        onClick={() => {
+                                            props.getProfileThunk(props.profile.id)
+                                            navig(`/profile/${props.profile.id}`)
+                                        }}
+                                    >My page</Button>
+                                </>
                         }
                         {
                             (props.users.followingInProgress[0] === props.profile.user.userId) &&
@@ -315,8 +335,8 @@ const Profile = (props) => {
                 </CardContent>
             </Card>
             {
-                props.profile.id && props.profile.id === props.profile.user.userId && props.users.users.length !==0 &&
-               <Friends users={props.users.users}/>
+                props.profile.id && props.profile.id === props.profile.user.userId && props.users.users.length !== 0 &&
+                <Friends users={props.users.users} getProfileThunk={props.getProfileThunk} />
             }
 
             <Dialog open={open} onClose={handleClose}>
@@ -402,5 +422,5 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    { getUpdateProfile, getUpdateStatus, follow, unfollow, savePhoto })(Profile)
+    { getUpdateProfile, getUpdateStatus, follow, unfollow, savePhoto, getProfileThunk })(Profile)
 

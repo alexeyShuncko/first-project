@@ -1,9 +1,11 @@
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import React from "react";
 import ava from '../../image/foto.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const Friends = (props) => {
-
+    
+    const navig = useNavigate()
     const arrFollow = props.users.filter(u => u.followed === true)
 
 
@@ -26,6 +28,10 @@ const Friends = (props) => {
                         {
                             arrFollow.map(a => (
                                 <Grid item
+                                onClick={() => {
+                                    props.getProfileThunk(a.id)
+                                    navig(`/profile/${a.id}`)
+                                }}
                                     key={a.id}
                                     md={1}
                                     sm={2}

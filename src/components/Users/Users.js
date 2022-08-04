@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 // import s from './users.module.css'
 import foto from "../../image/foto.jpg"
-import { getUsers, follow, unfollow } from "../../Redux/usersReducer";
+import { getUsers, follow, unfollow, setCurrenPage } from "../../Redux/usersReducer";
 import { getProfileThunk } from "../../Redux/profileReducer";
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading/Loading';
@@ -16,12 +16,13 @@ const Users = (props) => {
     const navig = useNavigate()
 
     useEffect(() => {
-        props.getUsers(1, props.users.pageSize)
+        props.getUsers(props.users.currentPage, props.users.pageSize)
     }, [])
 
 
 
     const handleChange = (e, page) => {
+        props.setCurrenPage(page)
         props.getUsers(page, props.users.pageSize)
         window.scrollTo(0,0)
     }
@@ -108,6 +109,7 @@ const Users = (props) => {
                 onChange={handleChange}
                 count={Math.ceil(props.users.totalUsersCount / props.users.pageSize) || 16}
                 color="primary"
+                page={props.users.currentPage ? props.users.currentPage : 1}
                 sx={{ display: "flex", my: 4,  justifyContent: "center" }} />
         </Container>
        
@@ -119,4 +121,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { getUsers, follow, unfollow, getProfileThunk })(Users)
+export default connect(mapStateToProps, { getUsers, follow, unfollow, getProfileThunk, setCurrenPage })(Users)
