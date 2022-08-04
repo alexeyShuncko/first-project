@@ -24,6 +24,7 @@ import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import { getUpdateProfile, getUpdateStatus, savePhoto } from "../../Redux/profileReducer";
 import { follow, unfollow } from "../../Redux/usersReducer";
 import setting from '../../image/Settings.gif';
+import Friends from './Friends';
 
 
 
@@ -38,7 +39,7 @@ const Profile = (props) => {
     const [openPhotoEdit, setOpenPhotoEdit] = useState(false)
 
 
-// Диалоговое окно обработчики
+    // Диалоговое окно обработчики
     const editProfile = () => {
         setOpen(true)
     }
@@ -49,7 +50,7 @@ const Profile = (props) => {
         setEditOpen(!editOpen)
     }
 
- // Редактирование профиля
+    // Редактирование профиля
     const saveProfile = () => {
 
         const data = {
@@ -155,32 +156,32 @@ const Profile = (props) => {
             props.setErrorSnackBarText('File type does not match!')
             props.setErrorSnackBar(true)
         }
-        else if (e.target.files.length === 0 ) {
-           return null
+        else if (e.target.files.length === 0) {
+            return null
         }
         else {
             setOpenPhotoEdit(true)
         }
     }
-    const photoEditClose =()=> {
+    const photoEditClose = () => {
         setOpenPhotoEdit(false)
     }
     const savePhoto = () => {
         let photo = document.getElementById('inputFile').files[0]
         props.savePhoto(photo)
-        .then(()=> {
-            setOpenPhotoEdit(false)
-            props.setOpenSnackBar(true)
-        })
-        .catch((err)=> {
-            setOpenPhotoEdit(false)
-            props.setErrorSnackBarText(err.message)
-            props.setErrorSnackBar(true)
-        })
-       
+            .then(() => {
+                setOpenPhotoEdit(false)
+                props.setOpenSnackBar(true)
+            })
+            .catch((err) => {
+                setOpenPhotoEdit(false)
+                props.setErrorSnackBarText(err.message)
+                props.setErrorSnackBar(true)
+            })
+
     }
 
-// Обработчики подписки отписки на пользователя
+    // Обработчики подписки отписки на пользователя
     const followUser = () => {
         props.follow(props.profile.user.userId)
             .then(() => {
@@ -206,7 +207,7 @@ const Profile = (props) => {
     return (
 
         <Container maxWidth={'md'} sx={{ mt: '6rem' }}>
-            <Card sx={{ display: { xs: '', md: 'flex' }, p: '1rem' }} >
+            <Card sx={{ display: { xs: '', md: 'flex' }, p: '1rem', mb: 2 }} >
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <CardMedia
                         sx={{ maxWidth: 345, maxHeight: 345 }}
@@ -215,20 +216,20 @@ const Profile = (props) => {
                         alt="henghog"
                     />
                     {props.profile.id && props.profile.id === props.profile.user.userId
-                            ? <Button
-                                sx={{ mt: 2 }}
-                                variant="contained"
-                                component="label"
-                                color='warning'
-                            >Edit Photo
-                                <input
+                        ? <Button
+                            sx={{ mt: 2 }}
+                            variant="contained"
+                            component="label"
+                            color='warning'
+                        >Edit Photo
+                            <input
                                 id='inputFile'
-                                    onChange={handleChangeFile}
-                                    type="file"
-                                    accept=".png, .jpg, .jpeg"
-                                    hidden
-                                />
-                            </Button>
+                                onChange={handleChangeFile}
+                                type="file"
+                                accept=".png, .jpg, .jpeg"
+                                hidden
+                            />
+                        </Button>
                         : null}
                 </Box >
                 <CardContent>
@@ -267,15 +268,15 @@ const Profile = (props) => {
                         subheader={<ListSubheader sx={{ lineHeight: 2 }}>Contacts:</ListSubheader>}
                         dense>
                         {
-                           arrContacts.map((a, index)=> (
-                            <ListItem divider key={a}>
-                            <ListItemIcon>
-                                {arrIcon[index]}
-                            </ListItemIcon>
-                            <ListItemText id={`data-${a}`}
-                                primary={props.profile.user.contacts[a] || 'no data'} />
-                        </ListItem>
-                           )) 
+                            arrContacts.map((a, index) => (
+                                <ListItem divider key={a}>
+                                    <ListItemIcon>
+                                        {arrIcon[index]}
+                                    </ListItemIcon>
+                                    <ListItemText id={`data-${a}`}
+                                        primary={props.profile.user.contacts[a] || 'no data'} />
+                                </ListItem>
+                            ))
                         }
                     </List>
                     <CardActions>
@@ -293,7 +294,7 @@ const Profile = (props) => {
                                     >Save Status</Button>}
                             </>
                             : props.users.users.length !== 0
-                                && props.users.users.find(a => a.id === props.profile.user.userId) 
+                                && props.users.users.find(a => a.id === props.profile.user.userId)
                                 && props.users.users.find(a => a.id === props.profile.user.userId).followed
                                 ? <Button variant="contained"
                                     color='secondary'
@@ -313,6 +314,11 @@ const Profile = (props) => {
                     </CardActions>
                 </CardContent>
             </Card>
+            {
+                props.profile.id && props.profile.id === props.profile.user.userId && props.users.users.length !==0 &&
+               <Friends users={props.users.users}/>
+            }
+
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Profile</DialogTitle>
                 <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -375,7 +381,7 @@ const Profile = (props) => {
                 <DialogTitle>Save Photo</DialogTitle>
                 <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
                     <DialogContentText>
-                    Do you want to save the new photo?
+                        Do you want to save the new photo?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
