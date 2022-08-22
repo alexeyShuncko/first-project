@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/first-project/static/css/main.4e4fc048.css",
-    "main.js": "/first-project/static/js/main.5fa12a3c.js",
+    "main.css": "/first-project/static/css/main.cdb5df79.css",
+    "main.js": "/first-project/static/js/main.cebed4c5.js",
     "static/media/BoomfunkMCs-Freestyler.mp3": "/first-project/static/media/BoomfunkMCs-Freestyler.6acc3a9701781682e2fe.mp3",
     "static/media/Ausländer.mp3": "/first-project/static/media/Ausländer.35411ff3045031f619ef.mp3",
     "static/media/EURYTHMICS - Sweet Dreams (Are Made Of This).mp3": "/first-project/static/media/EURYTHMICS - Sweet Dreams (Are Made Of This).6d09a436ca3a1016e985.mp3",
@@ -10,11 +10,11 @@
     "static/media/Settings.gif": "/first-project/static/media/Settings.fb57e94dd02875668e16.gif",
     "static/media/1.jpg": "/first-project/static/media/1.ea18692d5a19827c4936.jpg",
     "index.html": "/first-project/index.html",
-    "main.4e4fc048.css.map": "/first-project/static/css/main.4e4fc048.css.map",
-    "main.5fa12a3c.js.map": "/first-project/static/js/main.5fa12a3c.js.map"
+    "main.cdb5df79.css.map": "/first-project/static/css/main.cdb5df79.css.map",
+    "main.cebed4c5.js.map": "/first-project/static/js/main.cebed4c5.js.map"
   },
   "entrypoints": [
-    "static/css/main.4e4fc048.css",
-    "static/js/main.5fa12a3c.js"
+    "static/css/main.cdb5df79.css",
+    "static/js/main.cebed4c5.js"
   ]
 }
