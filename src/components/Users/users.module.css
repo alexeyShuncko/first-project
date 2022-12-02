@@ -4,12 +4,14 @@
     border-radius: 50px;
     padding: 10px;
 }
+
 .buttonFollow {
     background: rgb(207, 103, 228);
     margin-left: 20px;
     border-radius: 10px;
     border: rgb(233, 222, 70);
 }
+
 .info {
     margin-left: 20px;
 }

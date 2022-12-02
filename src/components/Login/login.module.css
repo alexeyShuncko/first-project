@@ -16,7 +16,6 @@
     margin-left: 20px;
 }
 
-
 .title {
     position: absolute;
     text-align: center;
@@ -30,10 +29,8 @@
     border: 1px solid rgb(158, 157, 157)
 }
 
-
 .textCopy {
     cursor: pointer;
     position: relative;
     font-weight: 600;
 }
-

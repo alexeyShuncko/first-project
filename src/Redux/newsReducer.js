@@ -1,15 +1,14 @@
-import foto1 from '../image/news/foto.jpg'
+import foto1 from '../image/news/foto.jpg';
 
-
-const ADD_NEWS = 'ADD_NEWS'
-
-
+const ADD_NEWS = 'ADD_NEWS';
 
 let initialState = {
-     arrNews: [
-        {
-            name: 'Do Whales Sleep?', date: '22-02-2022 16:27', photo: foto1,
-            text: `Whales are mammals, so in many ways, they are just like human beings. 
+  arrNews: [
+    {
+      name: 'Do Whales Sleep?',
+      date: '22-02-2022 16:27',
+      photo: foto1,
+      text: `Whales are mammals, so in many ways, they are just like human beings. 
             The most important difference is that humans and whales live in different environments and 
             whales have a special respiratory system that enables them to stay underwater for several 
             minutes without breathing oxygen. For this reason, they are said to be voluntary breathers. 
@@ -22,11 +21,14 @@ let initialState = {
              The only way they can sleep is by remaining partially conscious. 
              It is believed that only one hemisphere of the whale’s brain sleeps at a time, 
              so they rest but are never completely asleep. They can do so most probably near the surface 
-             so that they can come up for air easily.`, id: 1
-        },
-        {
-            name: 'The Great Wall of China', date: '20-03-2022 12:15', photo: foto1,
-            text: `The Great Wall of China, one of the greatest wonders of the world, was first built between 
+             so that they can come up for air easily.`,
+      id: 1,
+    },
+    {
+      name: 'The Great Wall of China',
+      date: '20-03-2022 12:15',
+      photo: foto1,
+      text: `The Great Wall of China, one of the greatest wonders of the world, was first built between 
             220–206 BC. In fact, it began as independent walls for different states when it was first built, 
             and did not become the “Great” wall until the Qin Dynasty. Emperor Qin Shihuang succeeded in his 
             effort to have the walls joined together to serve as fortification to protect the northern borders 
@@ -39,11 +41,14 @@ let initialState = {
             Richard Halliburton’s claim was contradicted by astronauts Neil Armstrong and Yang Liwei. 
             A more plausible assumption would be to say that the Great Wall can be visible from a low 
             orbit of the Earth which is not unique in this regard as many other artificial constructions 
-            can be seen from that height.`, id: 2
-        },
-        {
-            name: 'Education', date: '16-04-2022 06:29', photo: foto1,
-            text: `Education encompasses both the teaching and learning of knowledge, 
+            can be seen from that height.`,
+      id: 2,
+    },
+    {
+      name: 'Education',
+      date: '16-04-2022 06:29',
+      photo: foto1,
+      text: `Education encompasses both the teaching and learning of knowledge, 
             proper conduct, and technical competency. It thus focuses on the cultivation of skills, 
             trades or professions, as well as mental, moral & aesthetic development.
 
@@ -80,11 +85,14 @@ let initialState = {
              include undergraduate and postgraduate education, as well as vocational education and training. 
              Colleges and universities are the main institutions that provide tertiary education. Collectively, 
              these are sometimes known as tertiary institutions. Tertiary education generally results in the 
-             receipt of certificates, diplomas, or academic degrees.`, id: 3
-        },
-        {
-            name: 'Reassessing the Impacts of Brain Drain on Developing Countries', date: '03-05-2022 15:01', photo: foto1,
-            text: `Brain drain, which is the action of having highly skilled and educated people leaving their 
+             receipt of certificates, diplomas, or academic degrees.`,
+      id: 3,
+    },
+    {
+      name: 'Reassessing the Impacts of Brain Drain on Developing Countries',
+      date: '03-05-2022 15:01',
+      photo: foto1,
+      text: `Brain drain, which is the action of having highly skilled and educated people leaving their 
             country to work abroad, has become one of the developing countries concern. Brain drain is also 
             referred to as human capital flight. More and more third world science and technology educated 
             people are heading for more prosperous countries seeking higher wages and better working conditions. 
@@ -107,11 +115,14 @@ let initialState = {
             drain. A more global view must take into consideration the provision of adequate working and 
             living conditions in the sending countries. Another option should involve encouraging the 
             expatriates to contribute their skill to the development of their countries without necessarily 
-            physically relocating.`, id: 4
-        },
-        {
-            name: 'Mickey Mouse', date: '29-05-2022 13:20', photo: foto1,
-            text: `LMickey Mouse is a cartoon character who has become an icon for the Walt Disney Company.
+            physically relocating.`,
+      id: 4,
+    },
+    {
+      name: 'Mickey Mouse',
+      date: '29-05-2022 13:20',
+      photo: foto1,
+      text: `LMickey Mouse is a cartoon character who has become an icon for the Walt Disney Company.
              Mickey Mouse is short for Mitchell Mouse. It was created in 1928 by Walt Disney and Ub Iwerks 
              and voiced by Walt Disney.
 
@@ -127,11 +138,14 @@ let initialState = {
             will begin to re-brand the Mickey Mouse character by moving away from his pleasant, cheerful 
             image and reintroducing the more devious side of his personality, starting with the upcoming 
             Epic Mickey, a Mickey Mouse video game. The Walt Disney Company thus intends to show the 
-            mischievous side of Mickey’s personality.`, id: 5
-        },
-        {
-            name: 'What does cloud computing mean?', date: '03-06-2022 19:06', photo: foto1,
-            text: `Cloud computing means storing and accessing data and programs over the Internet instead 
+            mischievous side of Mickey’s personality.`,
+      id: 5,
+    },
+    {
+      name: 'What does cloud computing mean?',
+      date: '03-06-2022 19:06',
+      photo: foto1,
+      text: `Cloud computing means storing and accessing data and programs over the Internet instead 
             of your computer’s hard drive. It involves computing over a network, where a program or application 
             may run on many connected computers at the same time.
 
@@ -154,36 +168,27 @@ let initialState = {
             store one’s data on someone else’s computer? The cloud service provider needs to establish 
             clear and relevant policies that describe how the data of each cloud user will be accessed 
             and used. Cloud service users should also be able to encrypt data that is processed or stored 
-            within the cloud to prevent unauthorized access.`, id: 6
-        },
-
-    ]
-}
+            within the cloud to prevent unauthorized access.`,
+      id: 6,
+    },
+  ],
+};
 
 const newsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ADD_NEWS:
+      return {
+        ...state,
+        arrNews: [...state.arrNews, action.data],
+      };
 
-
-    switch (action.type) {
-
-        case ADD_NEWS:
-            return {
-                ...state,
-                arrNews: [...state.arrNews, action.data]
-            }
-
-        default:
-            return state
-    }
-}
-
+    default:
+      return state;
+  }
+};
 
 export const addNews = (data) => {
-    return { type: ADD_NEWS, data }
-}
+  return { type: ADD_NEWS, data };
+};
 
-
-
-
-
-
-export default newsReducer
+export default newsReducer;

@@ -1,14 +1,14 @@
 .newsContainerItems {
-    display: flex;
+  display: flex;
 }
 
 .newsContainerNav {
-  flex:1;
+  flex: 1;
   margin: 20px;
-  
+
 }
 
 .newsContainerContent {
-    flex:8;
-    margin-top: 20px;
+  flex: 8;
+  margin-top: 20px;
 }
